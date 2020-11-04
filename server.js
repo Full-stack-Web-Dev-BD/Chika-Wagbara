@@ -4,7 +4,7 @@ const bodyParser=require('body-parser');
 const passport=require('passport');
 const path=require('path');
 const users=require('./routes/users');
-const projects=require('./routes/products')
+const branchs=require('./routes/branchs')
 const products=require('./routes/products')
 const contacts=require('./routes/contacts');
 
@@ -31,8 +31,8 @@ mongoose
 
 
 //use routes
-app.use('/api/users',users);
-app.use('/api/projects',projects);
+app.use('/api/users', users);
+app.use('/api/branchs', branchs);
 app.use('/api/products',products);
 app.use('/api/contacts',contacts);
 
