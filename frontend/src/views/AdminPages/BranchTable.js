@@ -15,9 +15,13 @@ import {
   TablePagination,
   TableRow,
   Typography,
-  makeStyles
+  makeStyles,
+  Menu,
+  MenuItem,
+  Button
 } from '@material-ui/core';
 import getInitials from 'src/utils/getInitials';
+import BranchCreateModal from './BranchCreateModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -26,151 +30,401 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+let branches = [
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+  {
+
+    name: "name",
+    location: "location",
+    address: "address",
+    city: "city",
+    state: "state",
+    phone1: "phone1",
+    phone2: "phone2",
+    email: "email",
+    branchId: "branchId",
+  },
+]
+
+
 const BranchTable = ({ className, customers, ...rest }) => {
   const classes = useStyles();
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
-
-  const handleSelectAll = (event) => {
-    let newSelectedCustomerIds;
-
-    if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
-    } else {
-      newSelectedCustomerIds = [];
-    }
-
-    setSelectedCustomerIds(newSelectedCustomerIds);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
-
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedCustomerIds.indexOf(id);
-    let newSelectedCustomerIds = [];
-
-    if (selectedIndex === -1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
-    } else if (selectedIndex === 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
-    } else if (selectedIndex === selectedCustomerIds.length - 1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, selectedIndex),
-        selectedCustomerIds.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelectedCustomerIds(newSelectedCustomerIds);
+  const handleClose = () => {
+    setAnchorEl(null);
   };
-
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
-
   return (
-    <Card
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      <PerfectScrollbar>
-        <Box minWidth={1050}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedCustomerIds.length === customers.length}
-                    color="primary"
-                    indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < customers.length
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
-                <TableCell>
-                  Name
-                </TableCell>
-                <TableCell>
-                  Email
-                </TableCell>
-                <TableCell>
-                  Location
-                </TableCell>
-                <TableCell>
-                  Phone
-                </TableCell>
-                <TableCell>
-                  Registration date
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {customers.slice(0, limit).map((customer) => (
-                <TableRow
-                  hover
-                  key={customer.id}
-                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.id)}
-                      value="true"
-                    />
-                  </TableCell>
+    <div>
+      <div className="d-flex">
+      <h2 className="mb3">Branches</h2>
+        <BranchCreateModal />
+      </div>
+      <Card
+        className={clsx(classes.root, className)}
+        {...rest}
+      >
+        <PerfectScrollbar>
+          <Box minWidth={1050}>
+            <Table>
+              <TableHead>
+                <TableRow>
                   <TableCell>
-                    <Box
-                      alignItems="center"
-                      display="flex"
-                    >
-                      <Avatar
-                        className={classes.avatar}
-                        src={customer.avatarUrl}
-                      >
-                        {getInitials(customer.name)}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {customer.name}
-                      </Typography>
-                    </Box>
-                  </TableCell>
+                    Branch Name
+                </TableCell>
                   <TableCell>
-                    {customer.email}
-                  </TableCell>
+                    Location
+                </TableCell>
                   <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
-                  </TableCell>
+                    Address
+                </TableCell>
                   <TableCell>
-                    {customer.phone}
-                  </TableCell>
+                    City
+                </TableCell>
                   <TableCell>
-                    {moment(customer.createdAt).format('DD/MM/YYYY')}
-                  </TableCell>
+                    State
+                </TableCell>
+                  <TableCell>
+                    Phone
+                </TableCell>
+                  <TableCell>
+                    Email
+                </TableCell>
+                  <TableCell>
+                    Branch ID
+                </TableCell>
+                  <TableCell>
+                    Action
+                </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Box>
-      </PerfectScrollbar>
-      <TablePagination
-        component="div"
-        count={customers.length}
-        onChangePage={handlePageChange}
-        onChangeRowsPerPage={handleLimitChange}
-        page={page}
-        rowsPerPage={limit}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
-    </Card>
+              </TableHead>
+              <TableBody>
+                {branches.map(el => (
+                  <TableRow
+                    hover
+                  >
+                    <TableCell>
+                      <Box
+                        alignItems="center"
+                        display="flex"
+                      >
+                        <Typography
+                          color="textPrimary"
+                          variant="body1"
+                        >
+                          {el.name}
+                        </Typography>
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      {el.location}
+                    </TableCell>
+                    <TableCell>
+                      {el.address}
+                    </TableCell>
+                    <TableCell>
+                      {el.city}
+                    </TableCell>
+                    <TableCell>
+                      {el.state}
+                    </TableCell>
+                    <TableCell>
+                      {el.phone1}
+                    </TableCell>
+                    <TableCell>
+                      {el.email}
+                    </TableCell>
+                    <TableCell>
+                      {el.branchId}
+                    </TableCell>
+                    <TableCell>
+                      <div>
+                        <Button aria-controls="simple-menu" variant="contained" size="small" color="secondary" aria-haspopup="true" onClick={handleClick}>Action</Button>
+                        <Menu
+                          id="simple-menu"
+                          anchorEl={anchorEl}
+                          keepMounted
+                          open={Boolean(anchorEl)}
+                          onClose={handleClose}
+                        >
+                          <MenuItem onClick={handleClose}>Edit</MenuItem>
+                          <MenuItem onClick={handleClose}>Delete</MenuItem>
+                        </Menu>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
+        </PerfectScrollbar>
+      </Card>
+    </div>
   );
 };
 
