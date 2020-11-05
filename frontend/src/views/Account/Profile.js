@@ -69,6 +69,9 @@ const Profile = ({ className, ...rest }) => {
           >
             {`${moment().format('hh:mm A')} ${user.timezone}`}
           </Typography>
+          <div className="text-center mt-5 mb-2">
+          <Button color="secondary" size="small" variant="contained" className="btn-danger">Log out</Button>
+          </div>
         </Box>
       </CardContent>
       <Divider />
@@ -80,6 +83,7 @@ const Profile = ({ className, ...rest }) => {
         >
           Upload picture
         </Button>
+        <input type="file" style={{display:'none'}} id="uploadPP" />
       </CardActions>
     </Card>
   );

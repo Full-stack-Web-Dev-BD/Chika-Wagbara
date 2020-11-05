@@ -5,14 +5,15 @@ import { Formik } from 'formik';
 import {
   Box,
   Button,
-  Checkbox,
   Container,
-  FormHelperText,
+  Grid,
   Link,
   TextField,
   Typography,
   makeStyles
 } from '@material-ui/core';
+import FacebookIcon from 'src/icons/Facebook';
+import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,14 +25,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const RegisterView = () => {
+const LandingPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
 
   return (
     <Page
       className={classes.root}
-      title="Register"
+      title="Login"
     >
       <Box
         display="flex"
@@ -42,21 +43,13 @@ const RegisterView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: '',
-              firstName: '',
-              lastName: '',
-              password: '',
-              policy: false
+              email: 'demo@devias.io',
+              password: 'Password123'
             }}
-            validationSchema={
-              Yup.object().shape({
-                email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
-                password: Yup.string().max(255).required('password is required'),
-                policy: Yup.boolean().oneOf([true], 'This field must be checked')
-              })
-            }
+            validationSchema={Yup.object().shape({
+              email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+              password: Yup.string().max(255).required('Password is required')
+            })}
             onSubmit={() => {
               navigate('/app/dashboard', { replace: true });
             }}
@@ -76,40 +69,64 @@ const RegisterView = () => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    Create new account
+                    Sign in
                   </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
-                    Use your email to create new account
+                    Sign in on the internal platform
                   </Typography>
                 </Box>
-                <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
-                  fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="First name"
-                  margin="normal"
-                  name="firstName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.firstName}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
-                  fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label="Last name"
-                  margin="normal"
-                  name="lastName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  variant="outlined"
-                />
+                <Grid
+                  container
+                  spacing={3}
+                >
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                  >
+                    <Button
+                      color="primary"
+                      fullWidth
+                      startIcon={<FacebookIcon />}
+                      onClick={handleSubmit}
+                      size="large"
+                      variant="contained"
+                    >
+                      Login with Facebook
+                    </Button>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                  >
+                    <Button
+                      fullWidth
+                      startIcon={<GoogleIcon />}
+                      onClick={handleSubmit}
+                      size="large"
+                      variant="contained"
+                    >
+                      Login with Google
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Box
+                  mt={3}
+                  mb={1}
+                >
+                  <Typography
+                    align="center"
+                    color="textSecondary"
+                    variant="body1"
+                  >
+                    or login with email address
+                  </Typography>
+                </Box>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -136,38 +153,6 @@ const RegisterView = () => {
                   value={values.password}
                   variant="outlined"
                 />
-                <Box
-                  alignItems="center"
-                  display="flex"
-                  ml={-1}
-                >
-                  <Checkbox
-                    checked={values.policy}
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    I have read the
-                    {' '}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
-                </Box>
-                {Boolean(touched.policy && errors.policy) && (
-                  <FormHelperText error>
-                    {errors.policy}
-                  </FormHelperText>
-                )}
                 <Box my={2}>
                   <Button
                     color="primary"
@@ -177,21 +162,21 @@ const RegisterView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign up now
+                    Sign in now
                   </Button>
                 </Box>
                 <Typography
                   color="textSecondary"
                   variant="body1"
                 >
-                  Have an account?
+                  Don&apos;t have an account?
                   {' '}
                   <Link
                     component={RouterLink}
-                    to="/login"
+                    to="/register"
                     variant="h6"
                   >
-                    Sign in
+                    Sign up
                   </Link>
                 </Typography>
               </form>
@@ -203,4 +188,4 @@ const RegisterView = () => {
   );
 };
 
-export default RegisterView;
+export default LandingPage;

@@ -15,6 +15,7 @@ import {
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
+  Bell,
   Lock as LockIcon,
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
@@ -23,6 +24,7 @@ import {
   Users as UsersIcon
 } from 'react-feather';
 import NavItem from './NavItem';
+import { Business, DashboardOutlined, GroupWork, PermIdentity, Replay, Rowing, Store } from '@material-ui/icons';
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',
@@ -32,45 +34,60 @@ const user = {
 
 const items = [
   {
-    href: '/app/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
+    href: '/admin/dashboard',
+    icon: DashboardOutlined,
+    title: 'Finance Analytics'
   },
   {
-    href: '/app/customers',
-    icon: UsersIcon,
-    title: 'Customers'
+    href: '/admin/activityLog',
+    icon: Rowing,
+    title: 'Activity Log'
   },
   {
-    href: '/app/products',
-    icon: ShoppingBagIcon,
-    title: 'Products'
+    href: '/admin/branch',
+    icon: Business,
+    title: 'Branch'
   },
   {
-    href: '/app/account',
-    icon: UserIcon,
+    href: '/admin/staffManagement',
+    icon: GroupWork,
+    title: 'Staff Management'
+  },
+  {
+    href: '/admin/testManagement',
+    icon: Replay,
+    title: 'Test Management'
+  },
+  {
+    href: '/admin/warehouseInventorySetup',
+    icon: Store,
+    title: 'Warehouse Inventory Setup'
+  },
+  {
+    href: '/admin/account',
+    icon: PermIdentity,
     title: 'Account'
   },
   {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
+    href: '/admin/notifications',
+    icon: Bell,
+    title: 'Notifications'
   },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Login'
-  },
-  {
-    href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
-  }
+  // {
+  //   href: '/login',
+  //   icon: LockIcon,
+  //   title: 'Login'
+  // },
+  // {
+  //   href: '/register',
+  //   icon: UserPlusIcon,
+  //   title: 'Register'
+  // },
+  // {
+  //   href: '/404',
+  //   icon: AlertCircleIcon,
+  //   title: 'Error'
+  // }
 ];
 
 const useStyles = makeStyles(() => ({
@@ -97,7 +114,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   const content = (
@@ -116,7 +132,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           className={classes.avatar}
           component={RouterLink}
           src={user.avatar}
-          to="/app/account"
+          to="/admin/account"
         />
         <Typography
           className={classes.name}
@@ -156,14 +172,13 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           gutterBottom
           variant="h4"
         >
-          Need more?
+          Need Suport ?
         </Typography>
-        <Typography
+        {/* <Typography
           align="center"
           variant="body2"
         >
-          Upgrade to PRO version and access 20 more screens
-        </Typography>
+        </Typography> */}
         <Box
           display="flex"
           justifyContent="center"
@@ -174,8 +189,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
             component="a"
             href="https://react-material-kit.devias.io"
             variant="contained"
-          >
-            See PRO version
+          >Suport Team
           </Button>
         </Box>
       </Box>

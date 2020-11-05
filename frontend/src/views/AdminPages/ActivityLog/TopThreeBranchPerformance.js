@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TasksProgress = ({ className, ...rest }) => {
+const TopThreeBranchPerformance = ({ branchName,earning,persent,className, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -45,13 +45,13 @@ const TasksProgress = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TASKS PROGRESS
+              {branchName}
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              75.5%
+              {earning}
             </Typography>
           </Grid>
           <Grid item>
@@ -62,7 +62,7 @@ const TasksProgress = ({ className, ...rest }) => {
         </Grid>
         <Box mt={3}>
           <LinearProgress
-            value={75.5}
+            value={persent}
             variant="determinate"
           />
         </Box>
@@ -71,8 +71,8 @@ const TasksProgress = ({ className, ...rest }) => {
   );
 };
 
-TasksProgress.propTypes = {
+TopThreeBranchPerformance.propTypes = {
   className: PropTypes.string
 };
 
-export default TasksProgress;
+export default TopThreeBranchPerformance;

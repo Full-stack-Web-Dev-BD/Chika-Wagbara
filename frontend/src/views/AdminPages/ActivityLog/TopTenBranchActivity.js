@@ -22,34 +22,34 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 const data = [
   {
     id: uuid(),
-    name: 'Dropbox',
-    imageUrl: '/static/images/products/product_1.png',
-    updatedAt: moment().subtract(2, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Medium Corporation',
-    imageUrl: '/static/images/products/product_2.png',
-    updatedAt: moment().subtract(2, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Slack',
+    name: 'Branch Name',
     imageUrl: '/static/images/products/product_3.png',
-    updatedAt: moment().subtract(3, 'hours')
+    status: "A short description"
   },
   {
     id: uuid(),
-    name: 'Lyft',
-    imageUrl: '/static/images/products/product_4.png',
-    updatedAt: moment().subtract(5, 'hours')
+    name: 'Branch Name',
+    imageUrl: '/static/images/products/product_3.png',
+    status: "A short description"
   },
   {
     id: uuid(),
-    name: 'GitHub',
-    imageUrl: '/static/images/products/product_5.png',
-    updatedAt: moment().subtract(9, 'hours')
-  }
+    name: 'Branch Name',
+    imageUrl: '/static/images/products/product_3.png',
+    status: "A short description"
+  },
+  {
+    id: uuid(),
+    name: 'Branch Name',
+    imageUrl: '/static/images/products/product_3.png',
+    status: "A short description"
+  },
+  {
+    id: uuid(),
+    name: 'Branch Name',
+    imageUrl: '/static/images/products/product_3.png',
+    status: "A short description"
+  },
 ];
 
 const useStyles = makeStyles(({
@@ -62,7 +62,7 @@ const useStyles = makeStyles(({
   }
 }));
 
-const LatestProducts = ({ className, ...rest }) => {
+const TopTenBranchActivity = ({ className, ...rest }) => {
   const classes = useStyles();
   const [products] = useState(data);
 
@@ -73,7 +73,7 @@ const LatestProducts = ({ className, ...rest }) => {
     >
       <CardHeader
         subtitle={`${products.length} in total`}
-        title="Latest Products"
+        title="Top 10 Branch  Activity"
       />
       <Divider />
       <List>
@@ -91,7 +91,7 @@ const LatestProducts = ({ className, ...rest }) => {
             </ListItemAvatar>
             <ListItemText
               primary={product.name}
-              secondary={`Updated ${product.updatedAt.fromNow()}`}
+              secondary={`Updated ${product.status}`}
             />
             <IconButton
               edge="end"
@@ -121,8 +121,8 @@ const LatestProducts = ({ className, ...rest }) => {
   );
 };
 
-LatestProducts.propTypes = {
+TopTenBranchActivity.propTypes = {
   className: PropTypes.string
 };
 
-export default LatestProducts;
+export default TopTenBranchActivity;

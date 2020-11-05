@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Container,
-  makeStyles
+  makeStyles,
+  Toolbar
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import Notifications from './Notifications';
-import Password from './Password';
+
+import data from './data';
+import BranchTable from './BranchTable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,22 +19,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SettingsView = () => {
+const StaffManagement = () => {
   const classes = useStyles();
+  const [customers] = useState(data);
 
   return (
     <Page
       className={classes.root}
-      title="Settings"
+      title="Customers"
     >
-      <Container maxWidth="lg">
-        <Notifications />
+      <Container maxWidth={false}>
+        <Toolbar />
         <Box mt={3}>
-          <Password />
+          <BranchTable customers={customers} />
         </Box>
       </Container>
     </Page>
   );
 };
 
-export default SettingsView;
+export default StaffManagement

@@ -14,8 +14,10 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
-import Logo from 'src/components/Logo';
 
+
+
+const logo='/static/images/assets/logo.png'
 const useStyles = makeStyles(() => ({
   root: {},
   avatar: {
@@ -39,8 +41,8 @@ const TopBar = ({
       {...rest}
     >
       <Toolbar>
-        <RouterLink to="/">
-          <Logo />
+        <RouterLink to="/admin">{/* Here will need to write logic for diff dashboard for now admin is static  */}
+          <img style={{width:'120px'}} src={logo} />
         </RouterLink>
         <Box flexGrow={1} />
         <Hidden mdDown>

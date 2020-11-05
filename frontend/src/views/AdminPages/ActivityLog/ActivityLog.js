@@ -4,15 +4,12 @@ import {
   Grid,
   makeStyles
 } from '@material-ui/core';
+
 import Page from 'src/components/Page';
-import Budget from './Budget';
-import LatestOrders from './LatestOrders';
-import LatestProducts from './LatestProducts';
-import Sales from './Sales';
-import TasksProgress from './TasksProgress';
-import TotalCustomers from './TotalCustomers';
 import TotalProfit from './TotalProfit';
-import TrafficByDevice from './TrafficByDevice';
+import TopThreeBranchPerformance from './TopThreeBranchPerformance';
+import BranchActivity from './BranchActivity';
+import TopTenBranchActivity from './TopTenBranchActivity';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,15 +20,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Dashboard = () => {
+const FinanceAnalytics = () => {
   const classes = useStyles();
 
   return (
     <Page
       className={classes.root}
-      title="Dashboard"
+      title="Finance Analytics"
     >
       <Container maxWidth={false}>
+        <h3>Top 3 Branch Activity</h3>
         <Grid
           container
           spacing={3}
@@ -43,7 +41,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <Budget />
+            <TopThreeBranchPerformance branchName="Branch A" earning={"$" + 55354} persent={78.4} />
           </Grid>
           <Grid
             item
@@ -52,7 +50,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalCustomers />
+            <TopThreeBranchPerformance branchName="Branch B" earning={"$" + 46323} persent={57} />
           </Grid>
           <Grid
             item
@@ -61,7 +59,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TasksProgress />
+            <TopThreeBranchPerformance branchName="Branch C" earning={"$" + 24133} persent={55} />
           </Grid>
           <Grid
             item
@@ -70,7 +68,17 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalProfit />
+            <TotalProfit totalProfit={"$" + 34982} />
+          </Grid>
+          <Grid
+            
+            item
+            lg={4}
+            md={6}
+            xl={3}
+            xs={12}
+          >
+            <TopTenBranchActivity />
           </Grid>
           <Grid
             item
@@ -79,34 +87,7 @@ const Dashboard = () => {
             xl={9}
             xs={12}
           >
-            <Sales />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <TrafficByDevice />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <LatestProducts />
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
-            <LatestOrders />
+            <BranchActivity />
           </Grid>
         </Grid>
       </Container>
@@ -114,4 +95,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default FinanceAnalytics;

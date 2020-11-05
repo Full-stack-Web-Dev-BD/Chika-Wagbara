@@ -92,7 +92,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const LatestOrders = ({ className, ...rest }) => {
+const BranchActivity = ({ className, ...rest }) => {
   const classes = useStyles();
   const [orders] = useState(data);
 
@@ -101,7 +101,7 @@ const LatestOrders = ({ className, ...rest }) => {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <CardHeader title="Latest Orders" />
+      <CardHeader title="Branch Activity" />
       <Divider />
       <PerfectScrollbar>
         <Box minWidth={800}>
@@ -109,10 +109,10 @@ const LatestOrders = ({ className, ...rest }) => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Order Ref
+                  Branch Name
                 </TableCell>
                 <TableCell>
-                  Customer
+                  Branch Manager
                 </TableCell>
                 <TableCell sortDirection="desc">
                   <Tooltip
@@ -123,7 +123,7 @@ const LatestOrders = ({ className, ...rest }) => {
                       active
                       direction="desc"
                     >
-                      Date
+                      Created Date
                     </TableSortLabel>
                   </Tooltip>
                 </TableCell>
@@ -178,8 +178,8 @@ const LatestOrders = ({ className, ...rest }) => {
   );
 };
 
-LatestOrders.propTypes = {
+BranchActivity.propTypes = {
   className: PropTypes.string
 };
 
-export default LatestOrders;
+export default BranchActivity;

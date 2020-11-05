@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Account = () => {
+const AccountView = () => {
   const classes = useStyles();
 
   return (
@@ -52,4 +52,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default AccountView;
