@@ -20,7 +20,19 @@ const branchSchema=new Schema({
 		require:true
     },
     state:{
-		type:Array
+		type:String
+	},
+	phone1:{
+		type:String
+	},
+	phone2:{
+		type:String
+	},
+	email:{
+		type:String
+	},
+	branchId:{
+		type:String
 	},
 	date:{
 		type:Date,
@@ -28,4 +40,4 @@ const branchSchema=new Schema({
 	}
 })
 
-module.exports=Project=mongoose.model('projects', projectSchema);
+module.exports=Branch=mongoose.model('branchs', branchSchema);
