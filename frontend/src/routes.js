@@ -2,8 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 // Admin Component
-import Branch from './views/AdminPages/Branch';
-import StaffManagement from './views/AdminPages/StaffManagement';
+import Branch from './views/AdminPages/Branch/Branch';
 import TestManagement from './views/AdminPages/TestManagement';
 import WarehouseInventorySetup from './views/AdminPages/WarehouseInventorySetup';
 import ActivityLog from './views/AdminPages/ActivityLog/ActivityLog';
@@ -22,6 +21,7 @@ import LandingPage from './views/auth/LandingPage';
 import NotFoundView from 'src/views/errors/NotFoundView';
 import NotificationView from './views/CommonComponent/NotificationView';
 import AccountView from './views/Account/AccountView';
+import Staff from './views/AdminPages/Staff/Staff';
 
 const routes = [
   
@@ -32,7 +32,7 @@ const routes = [
       { path: 'dashboard', element: <FinanceAnalytics /> },
       { path: 'activityLog', element: <ActivityLog /> },
       { path: 'branch', element: <Branch /> },
-      { path: 'staffManagement', element: <StaffManagement /> },
+      { path: 'staffManagement', element: <Staff /> },
       { path: 'testManagement', element: <TestManagement /> },
       { path: 'warehouseInventorySetup', element: <WarehouseInventorySetup /> },
       { path: 'account', element: <AccountView /> },

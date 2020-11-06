@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -20,9 +20,9 @@ import {
   MenuItem,
   Button
 } from '@material-ui/core';
-import getInitials from 'src/utils/getInitials';
-import BranchCreateModal from './BranchCreateModal';
-import BranchUpdateModal from './BranchUpdateModal';
+import Axios from 'axios';
+import StaffCreateModal from './StaffCreateModal';
+import StaffUpdateModal from './StaffUpdateModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -39,8 +39,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -51,8 +51,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -63,8 +63,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -75,8 +75,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -87,8 +87,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -99,8 +99,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -111,8 +111,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -123,8 +123,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -135,8 +135,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -147,8 +147,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -159,8 +159,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -171,8 +171,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -183,8 +183,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -195,8 +195,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -207,8 +207,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -219,8 +219,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -231,8 +231,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -243,8 +243,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -255,8 +255,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -267,8 +267,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -279,8 +279,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -291,8 +291,8 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
@@ -303,29 +303,52 @@ let branches = [
     address: "address",
     city: "city",
     state: "state",
-    phone1: "phone1",
-    phone2: "phone2",
+    phone1: "98120341",
+    phone2: "98120342",
     email: "email",
     branchId: "branchId",
   },
 ]
 
 
-const BranchTable = ({ className, customers, ...rest }) => {
+const StaffTable = ({ className, customers, ...rest }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [allBranch, setAllBranch] = useState([])
+
+
+  useEffect(() => {
+    Axios.get('/getbraqnchapi')
+      .then(res => {
+        setAllBranch(res.data)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }, [])
+
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const deleteBranch = (id) => {
+    Axios.delete(`/deleteApi/${id}`)
+      .then(res => {
+        window.location.reload()
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
   return (
     <div>
-      <div className="d-flex">
-      <h2 className="mb3">Branches</h2>
-        <BranchCreateModal />
-      </div>
+      <h2 >All Staff</h2>
+      <div className="p2"></div>
+      <StaffCreateModal />
       <Card
         className={clsx(classes.root, className)}
         {...rest}
@@ -413,8 +436,8 @@ const BranchTable = ({ className, customers, ...rest }) => {
                           open={Boolean(anchorEl)}
                           onClose={handleClose}
                         >
-                          <MenuItem onClick={handleClose}> <BranchUpdateModal branch={el} /> </MenuItem>
-                          <MenuItem onClick={handleClose}>Delete</MenuItem>
+                          <MenuItem onClick={handleClose}> <StaffUpdateModal staff={el} /> </MenuItem>
+                          <MenuItem onClick={e => deleteBranch(el._id)}>Delete</MenuItem>
                         </Menu>
                       </div>
                     </TableCell>
@@ -429,9 +452,9 @@ const BranchTable = ({ className, customers, ...rest }) => {
   );
 };
 
-BranchTable.propTypes = {
+StaffTable.propTypes = {
   className: PropTypes.string,
   customers: PropTypes.array.isRequired
 };
 
-export default BranchTable;
+export default StaffTable;

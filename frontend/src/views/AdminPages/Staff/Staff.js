@@ -8,7 +8,7 @@ import {
 import Page from 'src/components/Page';
 
 import data from './data';
-import BranchTable from './BranchTable';
+import StaffTable from './StaffTable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const StaffManagement = () => {
+const Staff = () => {
   const classes = useStyles();
   const [customers] = useState(data);
 
@@ -31,11 +31,11 @@ const StaffManagement = () => {
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-          <BranchTable customers={customers} />
+          <StaffTable customers={customers} />
         </Box>
       </Container>
     </Page>
   );
 };
 
-export default StaffManagement
+export default Staff;
