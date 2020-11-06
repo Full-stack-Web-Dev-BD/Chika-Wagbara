@@ -6,6 +6,9 @@ const path=require('path');
 const users=require('./routes/users');
 const branchs=require('./routes/branchs')
 const staffs=require('./routes/staffs')
+const countries=require('./routes/countries')
+const states=require('./routes/states')
+const cities=require('./routes/cities')
 
 
 const app=express();
@@ -33,6 +36,9 @@ mongoose
 app.use('/api/users', users);
 app.use('/api/branchs', branchs);
 app.use('/api/staffs', staffs);
+app.use('/api/countries', countries);
+app.use('/api/states', states);
+app.use('/api/cities', cities);
 
 if(process.env.NODE_ENV==='production'){
   app.use(express.static("client/build"));

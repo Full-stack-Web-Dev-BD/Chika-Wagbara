@@ -1,31 +1,28 @@
 const express=require('express');
 const passport=require('passport');
-const Branch=require('../models/Branch');
+const State=require('../models/State');
+const City=require('../models/City');
+
 
 const router=express.Router();
 
-router.post('/newBranch', passport.authenticate('jwt', {session:false}), (req, res)=>{
-  if(req.user.user_role==="admin"){
-    const newBranch= new Branch({
-      name:req.body.name,
-      location:req.body.location,
-      city:req.body.city,
-      address:req.body.address,
-      state:req.body.state,
-      phone1:req.body.phone1,
-      phone2:req.body.phone2,
-      email:req.body.email,
-      branchId:req.body.branchId
-    })
-    newBranch.save()
-    .then(branch=> res.json(branch))
-    .catch(err=> res.json(err));
-  }  
+router.post('/newCity/:id', passport.authenticate('jwt', {session:false}), (req, res)=>{
+    if(req.user.user_role==="admin"){
+        State.findById(req.params.id).then(state=>{
+            const newCity= new State({
+            name:req.body.name
+            })
+            newCity.save().then(city=>{
+                state.cities.push(city._id)
+                state.save().then(data=> res.json(data))
+            }).catch(err=> res.json(err));
+        })
+    }  
 })
 
-router.get('/allBranch', passport.authenticate('jwt', {session:false}), (req, res)=>{
+router.get('/allState', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin"){
-    Branch.find()
+    City.find()
      .then(data=> res.json(data))
      .catch(err=> res.json(err))
   }
@@ -34,7 +31,7 @@ router.get('/allBranch', passport.authenticate('jwt', {session:false}), (req, re
 router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   let id = req.params.id;
   if(req.user.user_role==="admin"){
-    Branch.findById(id)
+    City.findById(id)
     .then(data=> res.json(data))
     .catch(err=> res.json(err));
   }
@@ -42,7 +39,7 @@ router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(
 
 router.post('/update/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   if(req.user.user_role==="admin"){
-    Branch.findByIdAndUpdate({_id:req.params.id}, req.body).then(data=>{
+    City.findByIdAndUpdate({_id:req.params.id}, req.body).then(data=>{
       res.json(data)
     }).catch((err)=>{
       console.log(err);
@@ -52,7 +49,7 @@ router.post('/update/:id', passport.authenticate('jwt', {session:false}), functi
 
 router.delete('/delete/:id', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin"){
-    Branch.findByIdAndRemove({_id:req.params.id})
+    City.findByIdAndRemove({_id:req.params.id})
       .then(data=> res.json(data))
       .catch(err=> console.log(err));
   }    
