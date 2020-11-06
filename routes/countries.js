@@ -1,31 +1,23 @@
 const express=require('express');
 const passport=require('passport');
-const Branch=require('../models/Branch');
+const Country=require('../models/Country');
 
 const router=express.Router();
 
-router.post('/newBranch', passport.authenticate('jwt', {session:false}), (req, res)=>{
+router.post('/newCountry', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin"){
-    const newBranch= new Branch({
-      name:req.body.name,
-      location:req.body.location,
-      city:req.body.city,
-      address:req.body.address,
-      state:req.body.state,
-      phone1:req.body.phone1,
-      phone2:req.body.phone2,
-      email:req.body.email,
-      branchId:req.body.branchId
+    const newCountry= new Country({
+      name:req.body.name
     })
-    newBranch.save()
-    .then(branch=> res.json(branch))
+    newCountry.save()
+    .then(country=> res.json(country))
     .catch(err=> res.json(err));
   }  
 })
 
-router.get('/allBranch', passport.authenticate('jwt', {session:false}), (req, res)=>{
+router.get('/allCountry', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin"){
-    Branch.find()
+    Country.find()
      .then(data=> res.json(data))
      .catch(err=> res.json(err))
   }
@@ -34,7 +26,7 @@ router.get('/allBranch', passport.authenticate('jwt', {session:false}), (req, re
 router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   let id = req.params.id;
   if(req.user.user_role==="admin"){
-    Branch.findById(id)
+    Country.findById(id)
     .then(data=> res.json(data))
     .catch(err=> res.json(err));
   }
@@ -42,7 +34,7 @@ router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(
 
 router.post('/update/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   if(req.user.user_role==="admin"){
-    Branch.findByIdAndUpdate({_id:req.params.id}, req.body).then(data=>{
+    Country.findByIdAndUpdate({_id:req.params.id}, req.body).then(data=>{
       res.json(data)
     }).catch((err)=>{
       console.log(err);
@@ -52,7 +44,7 @@ router.post('/update/:id', passport.authenticate('jwt', {session:false}), functi
 
 router.delete('/delete/:id', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin"){
-    Branch.findByIdAndRemove({_id:req.params.id})
+    Country.findByIdAndRemove({_id:req.params.id})
       .then(data=> res.json(data))
       .catch(err=> console.log(err));
   }    
