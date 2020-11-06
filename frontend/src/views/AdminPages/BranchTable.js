@@ -22,6 +22,7 @@ import {
 } from '@material-ui/core';
 import getInitials from 'src/utils/getInitials';
 import BranchCreateModal from './BranchCreateModal';
+import BranchUpdateModal from './BranchUpdateModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -412,7 +413,7 @@ const BranchTable = ({ className, customers, ...rest }) => {
                           open={Boolean(anchorEl)}
                           onClose={handleClose}
                         >
-                          <MenuItem onClick={handleClose}>Edit</MenuItem>
+                          <MenuItem onClick={handleClose}> <BranchUpdateModal branch={el} /> </MenuItem>
                           <MenuItem onClick={handleClose}>Delete</MenuItem>
                         </Menu>
                       </div>

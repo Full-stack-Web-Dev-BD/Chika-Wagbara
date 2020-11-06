@@ -59,7 +59,7 @@ const routes = [
     children: [
       { path: 'login', element: <LandingPage /> },
       { path: '404', element: <NotFoundView /> },
-      { path: '/', element: <Navigate to="/admin" /> },
+      { path: '/', element: <Navigate to="/admin/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }
