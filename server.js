@@ -5,8 +5,7 @@ const passport=require('passport');
 const path=require('path');
 const users=require('./routes/users');
 const branchs=require('./routes/branchs')
-// const products=require('./routes/products')
-const contacts=require('./routes/contacts');
+const staffs=require('./routes/staffs')
 
 
 const app=express();
@@ -33,8 +32,7 @@ mongoose
 //use routes
 app.use('/api/users', users);
 app.use('/api/branchs', branchs);
-// app.use('/api/products',products);
-app.use('/api/contacts',contacts);
+app.use('/api/staffs', staffs);
 
 if(process.env.NODE_ENV==='production'){
   app.use(express.static("client/build"));
