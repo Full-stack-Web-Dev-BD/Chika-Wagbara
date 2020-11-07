@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 const LandingPage = () => {
   const classes = useStyles();
-  const navigate = useNavigate();
 
   return (
     <Page
@@ -50,9 +49,6 @@ const LandingPage = () => {
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
           >
             {({
               errors,
