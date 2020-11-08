@@ -14,7 +14,7 @@ import {
   UserPlus as UserPlusIcon,
   Users as UsersIcon
 } from 'react-feather';
-import { Business, DashboardOutlined, GroupWork, PermIdentity, Replay, Rowing, Store } from '@material-ui/icons';
+import { Business, DashboardOutlined, GroupWork, PermIdentity, Replay, Rowing, Store, TextsmsTwoTone } from '@material-ui/icons';
 
 
 import { SidebarNav } from './components';
@@ -67,6 +67,11 @@ const Sidebar = props => {
       href: '/admin/staffManagement',
       icon: <GroupWork/>,
       title: 'Staff Management'
+    },
+    {
+      href: '/admin/testManagement',
+      icon: <TextsmsTwoTone/>,
+      title: 'Test Management'
     },
     {
       href: '/admin/taskManagement',

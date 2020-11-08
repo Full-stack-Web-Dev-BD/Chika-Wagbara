@@ -6,9 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { TextField } from '@material-ui/core';
-import uID from 'src/utils/uIDGenerator12Digite';
-import { getAge } from 'src/utils/AgeCalculator';
-import Axios from 'axios';
+import { StreetviewOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -26,43 +24,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StaffCreateModal({getAllStaff}) {
+export default function ViewStaffDetails({staff}) {
 
-  const [title, settitle] = useState('')
-  const [firstName, setfirstName] = useState('')
-  const [lastName, setlastName] = useState('')
-  const [otherName, setotherName] = useState('')
-  const [gender, setgender] = useState('')
-  const [dateOfBirth, setdateOfBirth] = useState('')
-  const [maritialStatus, setmaritialStatus] = useState('')
-  const [mobileNumber1, setmobileNumber1] = useState('')
-  const [mobileNumber2, setmobileNumber2] = useState('')
-  const [email1, setemail1] = useState('')
-  const [email2, setemail2] = useState('')
-  const [jobTitle, setjobTitle] = useState('')
-  const [department, setdepartment] = useState('')
-  const [level, setlevel] = useState('')
-  const [salaryBand, setsalaryBand] = useState('')
-  const [manager, setmanager] = useState('')
-  const [primaryJobLocation, setprimaryJobLocation] = useState('')
-  const [address, setaddress] = useState('')
-  const [locationofAddress, setlocationofAddress] = useState('')
-  const [nationality, setnationality] = useState('')
-  const [stateofOrigin, setstateofOrigin] = useState('')
-  const [lga, setlga] = useState('')
-  const [religion, setreligion] = useState('')
-  const [primaryInsurer, setprimaryInsurer] = useState('')
-  const [emergencyContactName, setemergencyContactName] = useState('')
-  const [emergencyContactEmail, setemergencyContactEmail] = useState('')
-  const [emergencyContactPhone, setemergencyContactPhone] = useState('')
-  const [nextofKinName, setnextofKinName] = useState('')
-  const [nextofKinContactEmail, setnextofKinContactEmail] = useState('')
-  const [nextofKinContactPhone, setnextofKinContactPhone] = useState('')
-  const [nextofKinContactAddress, setnextofKinContactAddress] = useState('')
-  const [dateofEmployment, setdateofEmployment] = useState('')
-  const [bankName, setbankName] = useState('')
-  const [bankAccountNumber, setbankAccountNumber] = useState('')
-  const [digitalSignature, setdigitalSignature] = useState('')
+  const [title, settitle] = useState(staff.title)
+  const [firstName, setfirstName] = useState(staff.firstName)
+  const [lastName, setlastName] = useState(staff.lastName)
+  const [otherName, setotherName] = useState(staff.otherName)
+  const [gender, setgender] = useState(staff.gender)
+  const [dateOfBirth, setdateOfBirth] = useState(staff.dateOfBirth)
+  const [maritialStatus, setmaritialStatus] = useState(staff.maritialStatus)
+  const [mobileNumber1, setmobileNumber1] = useState(staff.mobileNumber1)
+  const [mobileNumber2, setmobileNumber2] = useState(staff.mobileNumber2)
+  const [email1, setemail1] = useState(staff.email1)
+  const [email2, setemail2] = useState(staff.email2)
+  const [jobTitle, setjobTitle] = useState(staff.jobTitle)
+  const [department, setdepartment] = useState(staff.department)
+  const [level, setlevel] = useState(staff.level)
+  const [salaryBand, setsalaryBand] = useState(staff.salaryBand)
+  const [manager, setmanager] = useState(staff.manager)
+  const [primaryJobLocation, setprimaryJobLocation] = useState(staff.primaryJobLocation)
+  const [address, setaddress] = useState(staff.address)
+  const [locationofAddress, setlocationofAddress] = useState(staff.locationofAddress)
+  const [nationality, setnationality] = useState(staff.nationality)
+  const [stateofOrigin, setstateofOrigin] = useState(staff.stateofOrigin)
+  const [lga, setlga] = useState(staff.lga)
+  const [religion, setreligion] = useState(staff.religion)
+  const [primaryInsurer, setprimaryInsurer] = useState(staff.primaryInsurer)
+  const [emergencyContactName, setemergencyContactName] = useState(staff.emergencyContactName)
+  const [emergencyContactEmail, setemergencyContactEmail] = useState(staff.emergencyContactEmail)
+  const [emergencyContactPhone, setemergencyContactPhone] = useState(staff.emergencyContactPhone)
+  const [nextofKinName, setnextofKinName] = useState(staff.nextofKinName)
+  const [nextofKinContactEmail, setnextofKinContactEmail] = useState(staff.nextofKinContactEmail)
+  const [nextofKinContactPhone, setnextofKinContactPhone] = useState(staff.nextofKinContactPhone)
+  const [nextofKinContactAddress, setnextofKinContactAddress] = useState(staff.nextofKinContactAddress)
+  const [dateofEmployment, setdateofEmployment] = useState(staff.dateofEmployment)
+  const [bankName, setbankName] = useState(staff.bankName)
+  const [bankAccountNumber, setbankAccountNumber] = useState(staff.bankAccountNumber)
+  const [digitalSignature, setdigitalSignature] = useState(staff.digitalSignature)
 
 
   const [open, setOpen] = React.useState(false);
@@ -74,63 +72,10 @@ export default function StaffCreateModal({getAllStaff}) {
   const handleClose = () => {
     setOpen(false);
   };
-  const submitHandler = (e) => {
-    e.preventDefault()
-
-    const staffNo = uID
-    const age = getAge(dateOfBirth)
-    let staffInfo = {
-      staffNo:staffNo,
-      age:age,
-      title,
-      firstName,
-      lastName,
-      otherName,
-      gender,
-      dateOfBirth,
-      maritialStatus,
-      mobileNumber1,
-      mobileNumber2,
-      email1,
-      email2,
-      jobTitle,
-      department,
-      level,
-      salaryBand,
-      manager,
-      primaryJobLocation,
-      address,
-      locationofAddress,
-      nationality,
-      stateofOrigin,
-      lga,
-      religion,
-      primaryInsurer,
-      emergencyContactName,
-      emergencyContactEmail,
-      emergencyContactPhone,
-      nextofKinName,
-      nextofKinContactEmail,
-      nextofKinContactPhone,
-      nextofKinContactAddress,
-      dateofEmployment,
-      bankName,
-      bankAccountNumber,
-      digitalSignature,
-    }
-    Axios.post('/api/staffs/newStaff',staffInfo)
-    .then(res=>{
-      handleClose()
-      getAllStaff()
-    })
-    .catch(err=>{
-      console.log(err);
-    })
-  }
 
   return (
     <React.Fragment>
-      <Button variant="contained" className="mr4" size="small" color="primary" onClick={handleClickOpen}>Add Staff</Button>
+      <span  title="View Full Details" style={{cursor:"pointer"}} onClick={handleClickOpen}><StreetviewOutlined/> </span>
       <Dialog
         fullWidth={true}
         maxWidth='lg'
@@ -140,15 +85,17 @@ export default function StaffCreateModal({getAllStaff}) {
       >
         <DialogTitle id="max-width-dialog-title">Add Staff</DialogTitle>
         <DialogContent>
-          <form onSubmit={e => submitHandler(e)}>
+          <form >
             <div className="row">
               <div className="col-md-4">
                 <TextField
+                  disabled
                   autoFocus
                   onChange={e => { settitle(e.target.value) }}
                   required
                   margin="dense"
                   id="title"
+                  value={title}
                   label="Title"
                   type="text"
                   fullWidth
@@ -158,10 +105,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setfirstName(e.target.value) }}
                   required
                   margin="dense"
                   id="firstName"
+                  value={firstName}
                   label="First Name"
                   type="text"
                   fullWidth
@@ -171,10 +120,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setlastName(e.target.value) }}
                   required
                   margin="dense"
                   id="lastName"
+                  value={lastName}
                   label="Last Name"
                   type="text"
                   fullWidth
@@ -184,10 +135,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   required
                   onChange={e => { setotherName(e.target.value) }}
                   margin="dense"
                   id="otherName"
+                  value={otherName}
                   label="Other Name"
                   type="text"
                   fullWidth
@@ -197,9 +150,11 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setgender(e.target.value) }}
                   margin="dense"
                   id="gender"
+                  value={gender}
                   label="Gender"
                   type="text"
                   fullWidth
@@ -214,9 +169,11 @@ export default function StaffCreateModal({getAllStaff}) {
                   <option value="Other">Other</option>
                 </TextField>
                 {/* <TextField
+                  disabled
                   onChange={e => { setgender(e.target.value) }}
                   margin="dense"
                   id="gender"
+                  value={gender}
                   label="Gender"
                   type="text"
                   fullWidth
@@ -226,10 +183,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setdateOfBirth(e.target.value) }}
                   required
                   margin="dense"
                   id="dateOfBirth"
+                  value={dateOfBirth}
                   label="Date Of Birth"
                   type="date"
                   fullWidth
@@ -239,9 +198,11 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setmaritialStatus(e.target.value) }}
                   margin="dense"
                   id="maritialStatus"
+                  value={maritialStatus}
                   label="Maritial Status"
                   type="text"
                   fullWidth
@@ -251,10 +212,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setmobileNumber1(e.target.value) }}
                   required
                   margin="dense"
                   id="mobileNumber1"
+                  value={mobileNumber1}
                   label="Mobile Number 1"
                   type="number"
                   fullWidth
@@ -264,10 +227,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setmobileNumber2(e.target.value) }}
                   required
                   margin="dense"
                   id="mobileNumber2"
+                  value={mobileNumber2}
                   label="Mobile Number 2"
                   type="number"
                   fullWidth
@@ -277,10 +242,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setemail1(e.target.value) }}
                   required
                   margin="dense"
                   id="email1"
+                  value={email1}
                   label="Email 1"
                   type="email"
                   fullWidth
@@ -290,10 +257,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setemail2(e.target.value) }}
                   required
                   margin="dense"
                   id="email2"
+                  value={email2}
                   label="Email 2"
                   type="email"
                   fullWidth
@@ -303,9 +272,11 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setjobTitle(e.target.value) }}
                   margin="dense"
                   id="jobTitle"
+                  value={jobTitle}
                   label="Job Title"
                   type="text"
                   fullWidth
@@ -315,9 +286,11 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setdepartment(e.target.value) }}
                   margin="dense"
                   id="department"
+                  value={department}
                   label="Department"
                   type="text"
                   fullWidth
@@ -327,10 +300,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setlevel(e.target.value) }}
                   required
                   margin="dense"
                   id="level"
+                  value={level}
                   label="Level"
                   type="text"
                   fullWidth
@@ -340,10 +315,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setsalaryBand(e.target.value) }}
                   required
                   margin="dense"
                   id="salaryBand"
+                  value={salaryBand}
                   label="salaryBand"
                   type="text"
                   fullWidth
@@ -353,10 +330,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setmanager(e.target.value) }}
                   required
                   margin="dense"
                   id="manager"
+                  value={manager}
                   label="Manager"
                   type="text"
                   fullWidth
@@ -366,10 +345,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setprimaryJobLocation(e.target.value) }}
                   required
                   margin="dense"
                   id="primaryJobLocation"
+                  value={primaryJobLocation}
                   label="Primary Job Location"
                   type="text"
                   fullWidth
@@ -379,10 +360,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setaddress(e.target.value) }}
                   required
                   margin="dense"
                   id="address"
+                  value={address}
                   label="Address"
                   type="text"
                   fullWidth
@@ -392,9 +375,11 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setlocationofAddress(e.target.value) }}
                   margin="dense"
                   id="locationofAddress"
+                  value={locationofAddress}
                   label="Location of Address"
                   type="text"
                   fullWidth
@@ -404,10 +389,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setnationality(e.target.value) }}
                   required
                   margin="dense"
                   id="nationality"
+                  value={nationality}
                   label="Nationality"
                   type="text"
                   fullWidth
@@ -417,10 +404,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setstateofOrigin(e.target.value) }}
                   required
                   margin="dense"
                   id="stateofOrigin"
+                  value={stateofOrigin}
                   label="State of Origin"
                   type="text"
                   fullWidth
@@ -430,10 +419,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setlga(e.target.value) }}
                   required
                   margin="dense"
                   id="lga"
+                  value={lga}
                   label="LGA"
                   type="text"
                   fullWidth
@@ -443,10 +434,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setreligion(e.target.value) }}
                   required
                   margin="dense"
                   id="religion"
+                  value={religion}
                   label="Religion"
                   type="text"
                   fullWidth
@@ -456,10 +449,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setprimaryInsurer(e.target.value) }}
                   required
                   margin="dense"
                   id="primaryInsurer"
+                  value={primaryInsurer}
                   label="Primary Insurer"
                   type="text"
                   fullWidth
@@ -469,10 +464,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setemergencyContactName(e.target.value) }}
                   required
                   margin="dense"
                   id="emergencyContactName"
+                  value={emergencyContactName}
                   label="Emergency Contact Name"
                   type="text"
                   fullWidth
@@ -482,10 +479,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setemergencyContactEmail(e.target.value) }}
                   required
                   margin="dense"
                   id="emergencyContactEmail"
+                  value={emergencyContactEmail}
                   label="Emergency Contact Email"
                   type="text"
                   fullWidth
@@ -495,10 +494,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setemergencyContactPhone(e.target.value) }}
                   required
                   margin="dense"
                   id="emergencyContactPhone"
+                  value={emergencyContactPhone}
                   label="Emergency Contact Phone"
                   type="text"
                   fullWidth
@@ -508,10 +509,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setnextofKinName(e.target.value) }}
                   required
                   margin="dense"
                   id="nextofKinName"
+                  value={nextofKinName}
                   label="Next of Kin Name"
                   type="text"
                   fullWidth
@@ -521,10 +524,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setnextofKinContactEmail(e.target.value) }}
                   required
                   margin="dense"
                   id="nextofKinContactEmail"
+                  value={nextofKinContactEmail}
                   label="Next of Kin Contact Email"
                   type="email"
                   fullWidth
@@ -534,10 +539,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setnextofKinContactPhone(e.target.value) }}
                   required
                   margin="dense"
                   id="nextofKinContactPhone"
+                  value={nextofKinContactPhone}
                   label="Next of Kin Contact Phone"
                   type="number"
                   fullWidth
@@ -547,10 +554,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setnextofKinContactAddress(e.target.value) }}
                   required
                   margin="dense"
                   id="nextofKinContactAddress"
+                  value={nextofKinContactAddress}
                   label=" Next of Kin Contact Address"
                   type="text"
                   fullWidth
@@ -560,10 +569,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setdateofEmployment(e.target.value) }}
                   required
                   margin="dense"
                   id="dateofEmployment"
+                  value={dateofEmployment}
                   label="Date of Employment"
                   type="Date"
                   fullWidth
@@ -573,10 +584,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setbankName(e.target.value) }}
                   required
                   margin="dense"
                   id="bankName"
+                  value={bankName}
                   label="Bank Name"
                   type="text"
                   fullWidth
@@ -586,10 +599,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setbankAccountNumber(e.target.value) }}
                   required
                   margin="dense"
                   id="bankAccountNumber"
+                  value={bankAccountNumber}
                   label="Bank Account Number"
                   type="text"
                   fullWidth
@@ -598,10 +613,12 @@ export default function StaffCreateModal({getAllStaff}) {
 
               <div className="col-md-4">
                 <TextField
+                  disabled
                   onChange={e => { setdigitalSignature(e.target.value) }}
                   required
                   margin="dense"
                   id="digitalSignature"
+                  value={digitalSignature}
                   label="Digital Signature"
                   type="text"
                   fullWidth
@@ -611,8 +628,7 @@ export default function StaffCreateModal({getAllStaff}) {
 
             </div>
             <DialogActions>
-              <Button onClick={handleClose} color="primary" size="small" variant="contained" >Cancel</Button>
-              <Button onClick={e => { }} color="primary" size="small" variant="contained" type="submit" >Submit</Button>
+              <Button onClick={handleClose} color="primary" size="small" variant="contained" >Close</Button>
             </DialogActions>
           </form>
         </DialogContent>

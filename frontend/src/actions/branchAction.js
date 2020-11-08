@@ -1,163 +1,75 @@
 import axios from 'axios';
 
-import {
-  ADD_POST,
-  GET_ERRORS,
-  CLEAR_ERRORS,
-  GET_POSTS,
-  GET_POST,
-  POST_LOADING,
-  DELETE_POST
-} from './types';
-
-// Add Post
-export const addPost = postData => dispatch => {
-  dispatch(clearErrors());
+import * as Types from './types'
+// Get Branch
+export const getAllBranch = () => dispatch => {
   axios
-    .post('/api/posts', postData)
+    .get('/api/branchs/allBranch')
     .then(res =>
       dispatch({
-        type: ADD_POST,
+        type: Types.GET_ALL_BRANCH,
+        payload: {
+          allBranch:res.data
+        }
+      })
+    )
+    .catch(err =>{
+      console.log(err);
+    });
+};
+
+// Get single Branch
+export const getSingleBranch = (id) => dispatch => {
+  axios
+    .get(`/api/getSingle/${id}`)
+    .then(res =>
+      dispatch({
+        type: Types.GET_SINGLE_BRANCH,
         payload: res.data
       })
     )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    .catch(err =>{
+      console.log(err);
+    });
 };
 
-// Get Posts
-export const getPosts = () => dispatch => {
-  dispatch(setPostLoading());
+// Create Branch
+export const createBranch = branchInfo => dispatch => {
   axios
-    .get('/api/posts')
+    .get(`/api/posts/newBranch`,branchInfo)
     .then(res =>
       dispatch({
-        type: GET_POSTS,
+        type: Types.CREATE_BRANCH,
         payload: res.data
       })
     )
-    .catch(err =>
-      dispatch({
-        type: GET_POSTS,
-        payload: null
-      })
-    );
+    .catch(err =>{
+      console.log(err);
+    });
+};
+// Edit Branch
+export const editBranch = branchInfo => dispatch => {
+  axios
+    .get(`/api/posts/update/${branchInfo._id}`,branchInfo)
+    .then(res =>{
+      getAllBranch()
+    })
+    .catch(err =>{
+      console.log(err);
+    });
 };
 
-// Get Post
-export const getPost = id => dispatch => {
-  dispatch(setPostLoading());
+// Delete Branch
+export const deleteBranch = id => dispatch => {
   axios
-    .get(`/api/posts/${id}`)
+    .delete(`/api/delete/${id}`)
     .then(res =>
       dispatch({
-        type: GET_POST,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_POST,
-        payload: null
-      })
-    );
-};
-
-// Delete Post
-export const deletePost = id => dispatch => {
-  axios
-    .delete(`/api/posts/${id}`)
-    .then(res =>
-      dispatch({
-        type: DELETE_POST,
+        type: Types.DELETE_BRANCH,
         payload: id
       })
     )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Add Like
-export const addLike = id => dispatch => {
-  axios
-    .post(`/api/posts/like/${id}`)
-    .then(res => dispatch(getPosts()))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Remove Like
-export const removeLike = id => dispatch => {
-  axios
-    .post(`/api/posts/unlike/${id}`)
-    .then(res => dispatch(getPosts()))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Add Comment
-export const addComment = (postId, commentData) => dispatch => {
-  dispatch(clearErrors());
-  axios
-    .post(`/api/posts/comment/${postId}`, commentData)
-    .then(res =>
-      dispatch({
-        type: GET_POST,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Delete Comment
-export const deleteComment = (postId, commentId) => dispatch => {
-  axios
-    .delete(`/api/posts/comment/${postId}/${commentId}`)
-    .then(res =>
-      dispatch({
-        type: GET_POST,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Set loading state
-export const setPostLoading = () => {
-  return {
-    type: POST_LOADING
-  };
-};
-
-// Clear errors
-export const clearErrors = () => {
-  return {
-    type: CLEAR_ERRORS
-  };
+    .catch(err =>{
+      console.log(err);
+    });
 };

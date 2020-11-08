@@ -20,9 +20,11 @@ import {
   MenuItem,
   Button
 } from '@material-ui/core';
-import Axios from 'axios';
+import axios from 'axios';
 import StaffCreateModal from './StaffCreateModal';
-import StaffUpdateModal from './StaffUpdateModal';
+import { DeleteOutline } from '@material-ui/icons';
+import ViewStaffDetails from './ViewStaffDetails';
+import UpdateStaff from './UpdateStaff';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -31,314 +33,45 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-let branches = [
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-]
-
 
 const StaffTable = ({ className, customers, ...rest }) => {
+  const [allStaff, setAllStaff] = useState([])
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [allBranch, setAllBranch] = useState([])
-
-
-  useEffect(() => {
-    Axios.get('/getbraqnchapi')
+  const getAllStaff = () => {
+    axios
+      .get('/api/staffs/allStaff')
       .then(res => {
-        setAllBranch(res.data)
+        setAllStaff(res.data)
       })
       .catch(err => {
         console.log(err);
+      });
+  };
+
+  // Get single 
+  const getSingleBranch = (id) => {
+    axios
+      .get(`/api/staffs/getSingle/${id}`)
+      .then(res => {
+
       })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  // Delete Branch
+
+
+  useEffect(() => {
+    getAllStaff()
   }, [])
 
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const deleteBranch = (id) => {
-    Axios.delete(`/deleteApi/${id}`)
+  const deleteStaff = (id) => {
+    axios.delete(`/api/staffs/delete/${id}`)
       .then(res => {
-        window.location.reload()
+        getAllStaff()
       })
       .catch(err => {
         console.log(err);
@@ -348,7 +81,7 @@ const StaffTable = ({ className, customers, ...rest }) => {
     <div>
       <h2 >All Staff</h2>
       <div className="p2"></div>
-      <StaffCreateModal />
+      <StaffCreateModal getAllStaff={getAllStaff} />
       <Card
         className={clsx(classes.root, className)}
         {...rest}
@@ -359,28 +92,19 @@ const StaffTable = ({ className, customers, ...rest }) => {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    Branch Name
+                    Staff ID
                 </TableCell>
                   <TableCell>
-                    Location
+                    First Name
                 </TableCell>
                   <TableCell>
-                    Address
-                </TableCell>
-                  <TableCell>
-                    City
-                </TableCell>
-                  <TableCell>
-                    State
-                </TableCell>
-                  <TableCell>
-                    Phone
+                    Last Name
                 </TableCell>
                   <TableCell>
                     Email
                 </TableCell>
                   <TableCell>
-                    Branch ID
+                    Phone
                 </TableCell>
                   <TableCell>
                     Action
@@ -388,57 +112,30 @@ const StaffTable = ({ className, customers, ...rest }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {branches.map(el => (
+                {allStaff.map(el => (
                   <TableRow
                     hover
                   >
                     <TableCell>
-                      <Box
-                        alignItems="center"
-                        display="flex"
-                      >
-                        <Typography
-                          color="textPrimary"
-                          variant="body1"
-                        >
-                          {el.name}
-                        </Typography>
-                      </Box>
+                      {el.staffNo}
                     </TableCell>
                     <TableCell>
-                      {el.location}
+                      {el.firstName}
                     </TableCell>
                     <TableCell>
-                      {el.address}
+                      {el.lastName}
                     </TableCell>
                     <TableCell>
-                      {el.city}
+                      {el.email1}
                     </TableCell>
                     <TableCell>
-                      {el.state}
-                    </TableCell>
-                    <TableCell>
-                      {el.phone1}
-                    </TableCell>
-                    <TableCell>
-                      {el.email}
-                    </TableCell>
-                    <TableCell>
-                      {el.branchId}
+                      {el.mobileNumber1}
                     </TableCell>
                     <TableCell>
                       <div>
-                        <Button aria-controls="simple-menu" variant="contained" size="small" color="secondary" aria-haspopup="true" onClick={handleClick}>Action</Button>
-                        <Menu
-                          id="simple-menu"
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
-                        >
-                          <MenuItem onClick={handleClose}> <StaffUpdateModal staff={el} /> </MenuItem>
-                          <MenuItem onClick={e => deleteBranch(el._id)}>Delete</MenuItem>
-                        </Menu>
+                        <UpdateStaff staff={el} getAllStaff={getAllStaff} />
+                        <span onClick={e => deleteStaff(el._id)}><DeleteOutline style={{ cursor: "pointer" }} /></span>
+                        <ViewStaffDetails staff={el} />
                       </div>
                     </TableCell>
                   </TableRow>

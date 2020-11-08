@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Avatar,
@@ -22,9 +21,9 @@ import {
 } from '@material-ui/core';
 import BranchCreateModal from './BranchCreateModal';
 import BranchUpdateModal from './BranchUpdateModal';
-import Axios from 'axios';
+import axios from 'axios';
 import ViewBranchDetails from './ViewBranchDetails';
-
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 const useStyles = makeStyles((theme) => ({
   root: {},
   avatar: {
@@ -313,22 +312,58 @@ let branches = [
 
 
 const BranchTable = ({ className, customers, ...rest }) => {
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [allBranch, setAllBranch] = useState([])
-  
-  
-  useEffect(()=>{
-    Axios.get('/getbraqnchapi')
-    .then(res=>{
-      setAllBranch(res.data)
-    })
-    .catch(err=>{
-      console.log(err);
-    })
-  },[])
-  
-  
+
+  const getAllBranch = () => {
+    axios
+      .get('/api/branchs/allBranch')
+      .then(res => {
+
+        setAllBranch(res.data)
+        console.log(res.data);
+      }
+      )
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  // Get single Branch
+  const getSingleBranch = (id) => {
+    axios
+      .get(`/api/branchs/getSingle/${id}`)
+      .then(res => {
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  // Delete Branch
+  const deleteBranch = id => {
+    handleClose()
+    let confirm = window.confirm("Are you sure to delete this Branch  ? ")
+    if (confirm) {
+      axios
+        .delete(`/api/branchs/delete/${id}`)
+        .then(res => {
+          getAllBranch()
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
+
+  useEffect(() => {
+    getAllBranch()
+  }, [])
+
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -336,20 +371,11 @@ const BranchTable = ({ className, customers, ...rest }) => {
     setAnchorEl(null);
   };
 
-  const deleteBranch=(id)=>{
-    Axios.delete(`/deleteApi/${id}`)
-    .then(res=>{
-      window.location.reload()
-    })
-    .catch(err=>{
-      console.log(err);
-    })
-  }
   return (
     <div>
       <div className="d-flex">
-      <h2 className="mb3">Branches</h2>
-        <BranchCreateModal />
+        <h2 className="mb3">Branches</h2>
+        <BranchCreateModal getAllBranch={getAllBranch} />
       </div>
       <Card
         className={clsx(classes.root, className)}
@@ -360,7 +386,7 @@ const BranchTable = ({ className, customers, ...rest }) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell >
                     Branch Name
                 </TableCell>
                   <TableCell>
@@ -375,13 +401,13 @@ const BranchTable = ({ className, customers, ...rest }) => {
                   <TableCell>
                     Email
                 </TableCell>
-                  <TableCell>
+                  <TableCell >
                     Action
                 </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {branches.map(el => (
+                {allBranch.map(el => (
                   <TableRow
                     hover
                   >
@@ -412,18 +438,9 @@ const BranchTable = ({ className, customers, ...rest }) => {
                     </TableCell>
                     <TableCell>
                       <div>
-                        <Button aria-controls="simple-menu" variant="contained" size="small" color="secondary" aria-haspopup="true" onClick={handleClick}>Action</Button>
-                        <Menu
-                          id="simple-menu"
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
-                        >
-                          <MenuItem onClick={handleClose}> <BranchUpdateModal branch={el} /> </MenuItem>
-                          <MenuItem > <ViewBranchDetails branch={el} /> </MenuItem>
-                          <MenuItem onClick={e=>deleteBranch(el._id)}>Delete</MenuItem>
-                        </Menu>
+                        <BranchUpdateModal branch={el} getAllBranch={getAllBranch} />
+                        <span onClick={e => deleteBranch(el._id)}><DeleteOutlineIcon style={{ cursor: "pointer" }} /></span>
+                        <ViewBranchDetails branch={el} />
                       </div>
                     </TableCell>
                   </TableRow>
@@ -441,5 +458,7 @@ BranchTable.propTypes = {
   className: PropTypes.string,
   customers: PropTypes.array.isRequired
 };
-
+const mapStateToProps = (state) => ({
+  branch: state.branch
+})
 export default BranchTable;

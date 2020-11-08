@@ -7,7 +7,6 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 
-import data from './data';
 import BranchTable from './BranchTable';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Branch = () => {
   const classes = useStyles();
-  const [customers] = useState(data);
 
   return (
     <Page
@@ -31,7 +29,7 @@ const Branch = () => {
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-          <BranchTable customers={customers} />
+          <BranchTable />
         </Box>
       </Container>
     </Page>

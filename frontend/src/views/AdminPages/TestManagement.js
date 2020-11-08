@@ -6,9 +6,6 @@ import {
   Toolbar
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-
-import StaffTable from './StaffTable';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -18,22 +15,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Staff = () => {
+const TestManagement = () => {
   const classes = useStyles();
 
   return (
     <Page
       className={classes.root}
-      title="Customers"
+      title="Test Management"
     >
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-          <StaffTable  />
+            <div>
+            </div>
         </Box>
       </Container>
     </Page>
   );
 };
 
-export default Staff;
+export default TestManagement;

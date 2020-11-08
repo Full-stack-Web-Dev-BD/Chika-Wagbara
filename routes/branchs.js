@@ -30,8 +30,8 @@ router.get('/allBranch', passport.authenticate('jwt', {session:false}), (req, re
      .catch(err=> res.json(err))
   }
 })
-
-router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
+// you was put "edit " insted of getSingle 
+router.get('/getSingle/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   let id = req.params.id;
   if(req.user.user_role==="admin"){
     Branch.findById(id)
