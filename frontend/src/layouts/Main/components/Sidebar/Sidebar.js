@@ -69,9 +69,9 @@ const Sidebar = props => {
       title: 'Staff Management'
     },
     {
-      href: '/admin/testManagement',
+      href: '/admin/taskManagement',
       icon: <Replay/>,
-      title: 'Test Management'
+      title: 'Task Management'
     },
     {
       href: '/admin/warehouseInventorySetup',

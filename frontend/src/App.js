@@ -15,7 +15,6 @@ import store from './store';
 
 //import routes from 'src/routes';
 import Branch from './views/AdminPages/Branch/Branch';
-import TestManagement from './views/AdminPages/TestManagement';
 import WarehouseInventorySetup from './views/AdminPages/WarehouseInventorySetup';
 import ActivityLog from './views/AdminPages/ActivityLog/ActivityLog';
 import FinanceAnalytics from './views/AdminPages/FinanceAnalytics/FinanceAnalytics';
@@ -29,6 +28,7 @@ import Staff from './views/AdminPages/Staff/Staff';
 import SignIn from './layouts/home/auth/SignIn';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 import { RouteWithLayout } from './components';
+import TaskManagement from './views/AdminPages/TaskManagement/TaskManagement';
 
 const browserHistory = createBrowserHistory();
 
@@ -93,10 +93,10 @@ const App = () => {
           </Switch>
           <Switch>
             <RouteWithLayout
-              component={TestManagement}
+              component={TaskManagement}
               exact
               layout={MainLayout}
-              path="/admin/testManagement"
+              path="/admin/taskManagement"
             />
           </Switch>
           <Switch>
@@ -105,6 +105,22 @@ const App = () => {
               exact
               layout={MainLayout}
               path="/admin/warehouseInventorySetup"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={AccountView}
+              exact
+              layout={MainLayout}
+              path="/admin/account"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={NotificationView}
+              exact
+              layout={MainLayout}
+              path="/admin/Notifications"
             />
           </Switch>
         </Router>

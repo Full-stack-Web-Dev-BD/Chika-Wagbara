@@ -20,10 +20,10 @@ import {
   MenuItem,
   Button
 } from '@material-ui/core';
-import getInitials from 'src/utils/getInitials';
 import BranchCreateModal from './BranchCreateModal';
 import BranchUpdateModal from './BranchUpdateModal';
 import Axios from 'axios';
+import ViewBranchDetails from './ViewBranchDetails';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -367,12 +367,6 @@ const BranchTable = ({ className, customers, ...rest }) => {
                     Location
                 </TableCell>
                   <TableCell>
-                    Address
-                </TableCell>
-                  <TableCell>
-                    City
-                </TableCell>
-                  <TableCell>
                     State
                 </TableCell>
                   <TableCell>
@@ -380,9 +374,6 @@ const BranchTable = ({ className, customers, ...rest }) => {
                 </TableCell>
                   <TableCell>
                     Email
-                </TableCell>
-                  <TableCell>
-                    Branch ID
                 </TableCell>
                   <TableCell>
                     Action
@@ -411,12 +402,6 @@ const BranchTable = ({ className, customers, ...rest }) => {
                       {el.location}
                     </TableCell>
                     <TableCell>
-                      {el.address}
-                    </TableCell>
-                    <TableCell>
-                      {el.city}
-                    </TableCell>
-                    <TableCell>
                       {el.state}
                     </TableCell>
                     <TableCell>
@@ -424,9 +409,6 @@ const BranchTable = ({ className, customers, ...rest }) => {
                     </TableCell>
                     <TableCell>
                       {el.email}
-                    </TableCell>
-                    <TableCell>
-                      {el.branchId}
                     </TableCell>
                     <TableCell>
                       <div>
@@ -439,6 +421,7 @@ const BranchTable = ({ className, customers, ...rest }) => {
                           onClose={handleClose}
                         >
                           <MenuItem onClick={handleClose}> <BranchUpdateModal branch={el} /> </MenuItem>
+                          <MenuItem > <ViewBranchDetails branch={el} /> </MenuItem>
                           <MenuItem onClick={e=>deleteBranch(el._id)}>Delete</MenuItem>
                         </Menu>
                       </div>

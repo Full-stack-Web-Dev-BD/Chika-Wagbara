@@ -15,7 +15,7 @@ const RouteWithLayout = props => {
             <Component {...matchProps} />
           </Layout>
         ):
-        <Redirect to="/admin" />
+        <Redirect to="/" />
       )}
     />
   );

@@ -186,7 +186,6 @@ const SignIn = (props) => {
       password:formState.values.password
     }
     dispatch(loginUser(userData));
-    history.push('/dashboard');
   };
 
   const hasError = field =>
@@ -315,21 +314,8 @@ const SignIn = (props) => {
                   type="submit"
                   variant="contained"
                 >
-                  Sign in now
+                  Sign in 
                 </Button>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Don't have an account?{' '}
-                  <Link
-                    component={RouterLink}
-                    to="/sign-up"
-                    variant="h6"
-                  >
-                    Sign up
-                  </Link>
-                </Typography>
               </form>
             </div>
           </div>

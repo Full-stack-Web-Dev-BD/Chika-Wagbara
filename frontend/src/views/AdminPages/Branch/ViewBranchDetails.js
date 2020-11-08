@@ -6,11 +6,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Axios from 'axios'
-import uID from 'src/utils/uIDGenerator12Digite';
 
-
-export default function BranchUpdateModal({branch}) {
+export default function ViewBranchDetails({branch}) {
   const [name, setName] = useState(branch.name)
   const [location, setLocation] = useState(branch.location)
   const [address, setAddress] = useState(branch.address)
@@ -28,41 +25,22 @@ export default function BranchUpdateModal({branch}) {
     setOpen(false);
   };
 
-  const updateBranch=(event)=>{
-    event.preventDefault()
-    Axios.post(`/updatebranchapi/${branch._id}`,{
-      name:name,
-      location:location,
-      city:city,
-      address:address,
-      state:state,
-      phone1:phone1,
-      phone2:phone2,
-      email:email,
-      branchId:uID
-    })
-    .then(res=>{
-      console.log(res.data);
-    })
-    .catch(err=>{
-      console.log(err);
-    })
-  }
   return (
     <div className="d-inline ml-auto">
-      <span onClick={handleClickOpen}>Update</span>
+      <span onClick={handleClickOpen}>Details </span>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Update </DialogTitle>
+        <DialogTitle id="form-dialog-title">View Branch Details </DialogTitle>
         <DialogContent>
           <DialogContentText>
             <p style={{ visibility: 'hidden',lineHeight:'0' }}>
               Please  enter required all filed to Update a Branch Please  enter required all
             </p>
           </DialogContentText>
-          <form onSubmit={e => {updateBranch(e)}}>
+          <form >
             <div className="row">
               <div className="col-md-6">
                 <TextField
+                  disabled
                   onChange ={e=>setName(e.target.value)}
                   autoFocus
                   required
@@ -76,6 +54,7 @@ export default function BranchUpdateModal({branch}) {
               </div>
               <div className="col-md-6">
                 <TextField
+                  disabled
                   onChange ={e=>setLocation(e.target.value)}
                   required
                   margin="dense"
@@ -88,6 +67,7 @@ export default function BranchUpdateModal({branch}) {
               </div>
               <div className="col-md-6">
                 <TextField
+                  disabled
                   onChange ={e=>setAddress(e.target.value)}
                   required
                   margin="dense"
@@ -100,6 +80,7 @@ export default function BranchUpdateModal({branch}) {
               </div>
               <div className="col-md-6">
                 <TextField
+                  disabled
                   onChange ={e=>setCity(e.target.value)}
                   required
                   margin="dense"
@@ -112,6 +93,7 @@ export default function BranchUpdateModal({branch}) {
               </div>
               <div className="col-md-6">
                 <TextField
+                  disabled
                   onChange ={e=>setState(e.target.value)}
                   required
                   margin="dense"
@@ -124,6 +106,7 @@ export default function BranchUpdateModal({branch}) {
               </div>
               <div className="col-md-6">
                 <TextField
+                  disabled
                   onChange ={e=>setPhone1(e.target.value)}
                   required
                   margin="dense"
@@ -136,6 +119,7 @@ export default function BranchUpdateModal({branch}) {
               </div>
               <div className="col-md-6">
                 <TextField
+                  disabled
                   onChange ={e=>setPhone2(e.target.value)}
                   required
                   margin="dense"
@@ -148,6 +132,7 @@ export default function BranchUpdateModal({branch}) {
               </div>
               <div className="col-md-6">
                 <TextField
+                  disabled
                   onChange ={e=>setEmail(e.target.value)}
                   required
                   margin="dense"
@@ -159,11 +144,11 @@ export default function BranchUpdateModal({branch}) {
                 />
               </div>
             </div>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">Cancel </Button>
-              <Button size="small"  variant="contained"  type="submit" >Create</Button>
-            </DialogActions>
           </form>
+          
+          <DialogActions>
+              <Button onClick={handleClose} color="primary">Close </Button>
+            </DialogActions>
         </DialogContent>
       </Dialog>
     </div>

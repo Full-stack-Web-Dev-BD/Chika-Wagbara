@@ -6,3 +6,12 @@ export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';
 export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';
+
+
+
+
+
+export const CREATE_BRANCH="CREATE_BRANCH"
+export const EDIT_BRANCH="EDIT_BRANCH"
+export const DELETE_BRANCH="DELETE_BRANCH"
+export const GET_ALL_BRANCH="GET_ALL_BRANCH"
