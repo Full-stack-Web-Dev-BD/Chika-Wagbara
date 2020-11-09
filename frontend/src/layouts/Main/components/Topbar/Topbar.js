@@ -14,6 +14,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import NotificationCard from './NotificationCard';
 
 
 
@@ -52,7 +53,7 @@ const TopBar = ({
               color="primary"
               variant="dot"
             >
-              <NotificationsIcon />
+              <NotificationCard />
             </Badge>
           </IconButton>
           <IconButton color="inherit">

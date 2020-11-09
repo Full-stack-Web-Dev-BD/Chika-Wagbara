@@ -34,6 +34,13 @@ const useStyles = makeStyles(() => ({
 const Profile = ({ className, ...rest }) => {
   const classes = useStyles();
 
+
+  const logout=()=>{
+    window.localStorage.removeItem('jwtToken')
+    window.location.href="/"
+  }
+  
+  
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -70,7 +77,7 @@ const Profile = ({ className, ...rest }) => {
             {`${moment().format('hh:mm A')} ${user.timezone}`}
           </Typography>
           <div className="text-center mt-5 mb-2">
-          <Button color="secondary" size="small" variant="contained" className="btn-danger">Log out</Button>
+          <Button onClick={logout} color="secondary" size="small" variant="contained" className="btn-danger">Log out</Button>
           </div>
         </Box>
       </CardContent>
@@ -93,4 +100,4 @@ Profile.propTypes = {
   className: PropTypes.string
 };
 
-export default Profile;
+export default  Profile;

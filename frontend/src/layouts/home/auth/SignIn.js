@@ -193,6 +193,9 @@ const SignIn = (props) => {
 
   return (
     <div className={classes.root}>
+      {
+    console.log(props.errors)
+      }
       <Grid
         className={classes.grid}
         container
@@ -235,11 +238,6 @@ const SignIn = (props) => {
           xs={12}
         >
           <div className={classes.content}>
-            <div className={classes.contentHeader}>
-              <IconButton onClick={handleBack}>
-                <ArrowBackIcon />
-              </IconButton>
-            </div>
             <div className={classes.contentBody}>
               <form
                 className={classes.form}
@@ -248,35 +246,13 @@ const SignIn = (props) => {
                 <Typography
                   className={classes.title}
                   variant="h2"
-                >
-                  Sign in
-                </Typography>
-                <Typography
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  Sign in with social media
-                </Typography>
+                >Sign in</Typography>
                 <Grid
                   className={classes.socialButtons}
                   container
                   spacing={2}
                 >
-                  <Grid item>
-            
-                  </Grid>
-                  <Grid item>
-                    
-                  </Grid>
                 </Grid>
-                <Typography
-                  align="center"
-                  className={classes.sugestion}
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  or login with email address
-                </Typography>
                 <TextField
                   className={classes.textField}
                   error={hasError('email')}
@@ -291,6 +267,11 @@ const SignIn = (props) => {
                   value={formState.values.email || ''}
                   variant="outlined"
                 />
+                {
+                  props.errors.email ? 
+                  <p className="text-danger"> {props.errors.email} </p>
+                  :''
+                }
                 <TextField
                   className={classes.textField}
                   error={hasError('password')}
@@ -305,6 +286,12 @@ const SignIn = (props) => {
                   value={formState.values.password || ''}
                   variant="outlined"
                 />
+                
+                {
+                  props.errors.password ? 
+                  <p className="text-danger"> {props.errors.password} </p>
+                  :''
+                }
                 <Button
                   className={classes.signInButton}
                   color="primary"
