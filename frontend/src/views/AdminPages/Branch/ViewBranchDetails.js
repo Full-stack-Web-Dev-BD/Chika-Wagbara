@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import StreetviewIcon from '@material-ui/icons/Streetview';
 export default function ViewBranchDetails({branch}) {
   const [name, setName] = useState(branch.name)
   const [location, setLocation] = useState(branch.location)
@@ -27,7 +27,7 @@ export default function ViewBranchDetails({branch}) {
 
   return (
     <div className="d-inline ml-auto">
-      <span onClick={handleClickOpen}>Details </span>
+      <span  title="View Full Details" style={{cursor:"pointer"}} onClick={handleClickOpen}><StreetviewIcon/> </span>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">View Branch Details </DialogTitle>
         <DialogContent>

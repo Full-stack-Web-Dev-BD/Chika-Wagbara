@@ -8,9 +8,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Axios from 'axios'
 import uID from 'src/utils/uIDGenerator12Digite';
+import { AddCircle } from '@material-ui/icons';
 
 
-export default function BranchCreateModal() {
+export default function BranchCreateModal({getAllBranch}) {
   const [name, setName] = useState('')
   const [location, setLocation] = useState('')
   const [address, setAddress] = useState('')
@@ -27,23 +28,18 @@ export default function BranchCreateModal() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  // Create Branch
+  // const createBranch = (branchInfo) => {
+  //   axios
+  //     .get(`/api/branchs/newBranch`, branchInfo)
+  //     .then(res => {
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
   const createBranch=(event)=>{
     event.preventDefault()
-    console.log(
-      {
-        name:name,
-        location:location,
-        city:city,
-        address:address,
-        state:state,
-        phone1:phone1,
-        phone2:phone2,
-        email:email,
-        branchId:uID
-  
-      }
-    );
     Axios.post('/api/branchs/newBranch',{
       name:name,
       location:location,
@@ -56,7 +52,8 @@ export default function BranchCreateModal() {
       branchId:uID
     })
     .then(res=>{
-      console.log(res.data);
+      handleClose()
+      getAllBranch()
     })
     .catch(err=>{
       console.log(err);
@@ -67,7 +64,7 @@ export default function BranchCreateModal() {
   return (
     <div className="d-inline ml-auto">
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Create Branch
+       <AddCircle/> Create Branch
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create Branch</DialogTitle>
