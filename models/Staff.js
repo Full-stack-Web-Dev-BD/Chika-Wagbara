@@ -22,7 +22,13 @@ const staffSchema=new Schema({
 	otherName:{
 		type:String,
 		require:true
-    },
+	},
+	user_role:{
+		type:String
+	},
+	password:{
+		type:String
+	},
     gender:{
 		type:String
 	},
@@ -42,10 +48,10 @@ const staffSchema=new Schema({
 	mobileNumber2:{
 		type:String
 	},
-	email1:{
+	email:{
 		type:String
 	},
-	email2:{
+	email1:{
 		type:String
 	},
 	jobTitle:{

@@ -9,7 +9,30 @@ router.post('/newStaff', passport.authenticate('jwt', {session:false}), (req, re
     console.log(req.body)
     const newStaff= new Staff(req.body)
     newStaff.save()
-    .then(staff=> res.json(staff))
+    .then(staff=>{
+      const newUser= new User({
+				name    :staff.firstName + staff.lastName,
+				email   :staff.email,
+				//photo:req.file.path,
+				user_role:staff.user_role,
+				password:staff.password
+			})
+
+			bcrypt.genSalt(10, (err,salt)=>{
+				bcrypt.hash(newUser.password, salt, (err,hash)=>{
+					if(err) throw err;
+					newUser.password=hash;
+					newUser.save()
+					.then((user)=>{
+						res.json(user);
+					})
+					.catch((err)=>{
+						console.log(err);
+					})
+				})
+
+			})
+    })
     .catch(err=> res.json(err));
   }  
 })
