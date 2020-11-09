@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { connect } from 'react-redux'
 import {
     Box,
     Button,
@@ -22,6 +23,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 import { MinusSquare, PlusCircle, Trash } from 'react-feather';
 import LocationCreateModal from './LocationCreateModal';
+import { deleteCountry, getCountries } from '../../../actions/countryAction';
+import { deleteState, getStates } from '../../../actions/stateAction';
+import { deleteCity, getCities } from '../../../actions/cityAction';
 
 
 
@@ -32,77 +36,31 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const LocationTree = ({ className, customers, ...rest }) => {
+const LocationTable = (props) => {
+    const { className, rest, countries, states, cities }=props
     const classes = useStyles();
     const [allCountries, setAllCountries] = useState([])
     const [allState, setAllState] = useState([])
     const [allCity, setAllCity] = useState([])
-    const getCountry=()=>{
-        
-        Axios.get('/api/countries/allCountry')
-            .then(res => {
-                setAllCountries(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-    const getState=()=>{
-        
-        Axios.get('/api/states/allState')
-            .then(res => {
-                setAllState(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-    }
-    const getCity=()=>{
-        
-        Axios.get('/api/cities/allCity')
-            .then(res => {
-                setAllState(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
 
     useEffect(() => {
-        getCountry()
-        getState()
-        getCity()
+        props.getCountries()
+        props.getStates()
+        props.getCities()
     }, [])
-const deleteCountry=(id)=>{
-    Axios.delete(`/api/countries/delete/${id}`)
-    .then(res=>{
-        getCountry()
-    })
-    .catch(err=>{
-        console.log(err);
-    })
-}
 
-const deleteState=(id)=>{
-    Axios.delete(`/api/states/delete/${id}`)
-    .then(res=>{
-        getState()
-    })
-    .catch(err=>{
-        console.log(err);
-    })
-}
+    const deleteCountry=(id)=>{
+       props.deleteCountry(id)
+    }
 
-const deleteCity=(id)=>{
-    Axios.delete(`/api/cities/delete/${id}`)
-    .then(res=>{
-        getCity()
-    })
-    .catch(err=>{
-        console.log(err);
-    })
-}
+    const deleteState=(id)=>{
+        props.deleteState(id)
+    }
+
+    const deleteCity=(id)=>{
+        props.deleteCity(id)
+    }
+
     return (
         <div>
             <div>
@@ -127,16 +85,17 @@ const deleteCity=(id)=>{
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {allCountries.map(el => (
-                                            <TableRow hover>
+                                        {countries.map((el, index) => (
+                                            <TableRow hover key={index}>
                                                 <TableCell>{el.name}</TableCell>
                                                 <TableCell>{el.states.length}</TableCell>
-                                                <TableCell style={{cursor:'pointer'}} onClick={e=>deleteCountry(el._id)}> <Trash/> </TableCell>
+                                                <TableCell style={{cursor:'pointer'}} onClick={()=>deleteCountry(el._id)}> <Trash/> </TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
                                 </Table>
                             </div>
+                            <div class="vl"></div>
                             <div className="col-md-4">
                                 <h3 className="text-center pt-4">All State</h3>
                                 <Table>
@@ -148,8 +107,8 @@ const deleteCity=(id)=>{
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {allState.map(el => (
-                                            <TableRow hover>
+                                        {states.map((el, index) => (
+                                            <TableRow hover  key={index}>
                                                 <TableCell>{el.name}</TableCell>
                                                 <TableCell>{el.cities.length}</TableCell>
                                                 <TableCell style={{cursor:'pointer'}} onClick={e=>deleteState(el._id)}> <Trash/> </TableCell>
@@ -158,8 +117,8 @@ const deleteCity=(id)=>{
                                     </TableBody>
                                 </Table>
                             </div>
-                            
-                            <div className="col-md-4">
+                            <div class="vl"></div>
+                            <div className="col-md-3">
                                 <h3 className="text-center pt-4">All Country</h3>
                                 <Table>
                                     <TableHead>
@@ -169,8 +128,8 @@ const deleteCity=(id)=>{
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {allCity.map(el => (
-                                            <TableRow hover>
+                                        {cities.map((el, index) => (
+                                            <TableRow hover key={index}>
                                                 <TableCell>{el.name}</TableCell>
                                                 <TableCell style={{cursor:'pointer'}} onClick={e=>deleteCity(el._id)}> <Trash/> </TableCell>
                                             </TableRow>
@@ -186,11 +145,27 @@ const deleteCity=(id)=>{
     );
 };
 
-LocationTree.propTypes = {
+LocationTable.propTypes = {
+    deleteCountry: PropTypes.func.isRequired,
+    deleteState: PropTypes.func.isRequired,
+    deleteCity: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    countries: PropTypes.array.isRequired,
+    states: PropTypes.object.isRequired,
+    cities: PropTypes.object.isRequired,
     className: PropTypes.string,
     customers: PropTypes.array.isRequired
-};
+  };
+  
+  const mapStateToProps = state => ({
+    auth: state.auth,
+    countries:state.country.countries,
+    states:state.state.states,
+    cities:state.city.cities,
+    errors: state.errors
+  });
+  
 
-export default LocationTree;
+export default connect(mapStateToProps, { deleteCountry, getCountries, deleteState, getCities, deleteCity, getStates})(LocationTable);
 
 

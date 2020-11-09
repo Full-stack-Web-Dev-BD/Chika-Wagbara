@@ -11,6 +11,11 @@ import Typography from '@material-ui/core/Typography';
 import { PlusCircle } from 'react-feather';
 import { TextField } from '@material-ui/core';
 import Axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
+import { addCountry } from '../../../actions/countryAction';
+import { addState } from '../../../actions/stateAction';
+import { addCity } from '../../../actions/cityAction'
 
 const styles = (theme) => ({
   root: {
@@ -52,75 +57,38 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function LocationCreateModal() {
+const LocationCreateModal=(props)=> {
+  const { countries, states }=props
   const [open, setOpen] = React.useState(false);
   const [locationType, setLocationType] = useState('')
-  const [allCountries, setAllCountries] = useState([])
-  const [allState, setAllState] = useState([])
-
-  
-  
   const [countryName, setCountryName] = useState('')
   
   
 
   const [stateName, setStateName] = useState('')
-  const [countryOfStateName, setCountryOfStateName] = useState('')
+  const [countryId, setCountryId] = useState('')
 
   const [cityName, setCityName] = useState('')
-  const [stateOfCityName, setStateOfCityName] = useState('')
-
-  useEffect(() => {
-    Axios.get('/api/countries/allCountry')
-      .then(res => {
-        setAllCountries(res.data)
-      })
-      .catch(err => {
-        console.log(err);
-      })
-      Axios.get('/api/states/allState')
-        .then(res => {
-          setAllState(res.data)
-        })
-        .catch(err => {
-          console.log(err);
-        })
-  }, [])
+  const [stateId, setStateId] = useState('')
 
 
   const addCountry=(e)=>{
     e.preventDefault()
-    Axios.post('/api/countries/newCountry',{name:countryName})
-      .then(res => {
-        window.location.reload()
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    props.addCountry({name:countryName})
+    handleClose();
   }
-
 
   const addState=(e)=>{
     e.preventDefault()
-    Axios.post(`/api/states/newState/${countryOfStateName}`,{name:stateName})
-      .then(res => {
-        window.location.reload()
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    props.addState(countryId, {name:stateName}, props.history)
+    handleClose();
   }
 
 
   const addCity=(e)=>{
     e.preventDefault()
-    Axios.post(`/api/cities/newCity/${stateOfCityName}`,{name:cityName})
-      .then(res => {
-        window.location.reload()
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    props.addCity(stateId, {name:cityName})
+    handleClose();
   }
 
   const handleClickOpen = () => {
@@ -128,7 +96,6 @@ export default function LocationCreateModal() {
   };
   const handleClose = () => {
     setOpen(false);
-    window.location.reload()
   };
   return (
     <div>
@@ -178,7 +145,7 @@ export default function LocationCreateModal() {
             locationType === "State" ?
               <div>
                 <TextField
-                  onChange={e => { setCountryOfStateName(e.target.value) }}
+                  onChange={e => { setCountryId(e.target.value) }}
                   margin="dense"
                   id="selectLocationType"
                   label="Select The Country of This State"
@@ -191,7 +158,7 @@ export default function LocationCreateModal() {
                 >
                   <option >Select Country</option>
                   {
-                    allCountries.map(el => (
+                    countries.map(el => (
                       <option value={el._id} > {el.name} </option>
                     ))
                   }
@@ -206,7 +173,7 @@ export default function LocationCreateModal() {
                   fullWidth
                 />
                 {
-                  stateName && countryOfStateName ?
+                  stateName && countryId ?
                     <Button onClick={e => {addState(e)}} type="submit" size="small" variant="contained"> Add </Button>
                     : ''
                 }
@@ -217,7 +184,7 @@ export default function LocationCreateModal() {
             locationType === "City" ?
               <div>
                 <TextField
-                  onChange={e => { setCountryOfStateName(e.target.value) }}
+                  onChange={e => { setStateId(e.target.value) }}
                   margin="dense"
                   id="selectLocationType"
                   label="Select State of This City"
@@ -230,14 +197,14 @@ export default function LocationCreateModal() {
                 >
                   <option >Select State</option>
                   {
-                    allState.map(el => (
+                    states.map(el => (
                       <option value={el._id} > {el.name} </option>
                     ))
                   }
                 </TextField>
                 
                 <TextField
-                  onChange={e => { setStateName(e.target.value) }}
+                  onChange={e => { setCityName(e.target.value) }}
                   required
                   margin="dense"
                   id="cityename"
@@ -246,7 +213,7 @@ export default function LocationCreateModal() {
                   fullWidth
                 />
                 {
-                  stateName && countryOfStateName ?
+                  cityName && stateId ?
                     <Button onClick={e => {addCity(e)}} type="submit" size="small" variant="contained"> Add </Button>
                     : ''
                 }
@@ -257,3 +224,24 @@ export default function LocationCreateModal() {
     </div>
   );
 }
+
+LocationCreateModal.propTypes = {
+  addCountry: PropTypes.func.isRequired,
+  addState: PropTypes.func.isRequired,
+  addCity: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  countries: PropTypes.array.isRequired,
+  states: PropTypes.array.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  countries: state.country.countries,
+  states: state.state.states,
+  errors: state.errors
+});
+
+
+export default connect(mapStateToProps, { addCountry, addState, addCity })(LocationCreateModal);
+
+
