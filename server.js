@@ -11,6 +11,7 @@ const states=require('./routes/states')
 const cities=require('./routes/cities')
 const patients=require('./routes/patients')
 const guardians=require('./routes/guardians')
+const referringPersons=require('./routes/referringPersons')
 
 
 const app=express();
