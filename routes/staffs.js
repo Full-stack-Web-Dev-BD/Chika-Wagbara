@@ -1,6 +1,7 @@
 const express=require('express');
 const passport=require('passport');
 const Staff=require('../models/Staff');
+const User=require('../models/User');
 
 const router=express.Router();
 

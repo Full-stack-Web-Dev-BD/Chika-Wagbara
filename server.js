@@ -9,6 +9,7 @@ const staffs=require('./routes/staffs')
 const countries=require('./routes/countries')
 const states=require('./routes/states')
 const cities=require('./routes/cities')
+const patients=require('./routes/patients')
 
 
 const app=express();
@@ -39,6 +40,7 @@ app.use('/api/staffs', staffs);
 app.use('/api/countries', countries);
 app.use('/api/states', states);
 app.use('/api/cities', cities);
+app.use('/api/patients', patients);
 
 if(process.env.NODE_ENV==='production'){
   app.use(express.static("client/build"));
