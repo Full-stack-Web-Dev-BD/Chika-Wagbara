@@ -44,6 +44,7 @@ app.use('/api/states', states);
 app.use('/api/cities', cities);
 app.use('/api/patients', patients);
 app.use('/api/guardians', guardians);
+app.use('/api/referringPersons', referringPersons);
 
 if(process.env.NODE_ENV==='production'){
   app.use(express.static("client/build"));
