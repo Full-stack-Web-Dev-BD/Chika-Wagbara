@@ -2,8 +2,8 @@ const mongoose=require('mongoose');
 
 const Schema=mongoose.Schema;
 
-const staffSchema=new Schema({
-	staffNo:{
+const patientSchema=new Schema({
+	patientNo:{
 		type:String,
 		required:true
 	},
@@ -39,9 +39,6 @@ const staffSchema=new Schema({
 	age:{
 		type:Number
 	},
-	maritialStatus:{
-		type:String
-	},
 	mobileNumber1:{
 		type:String
 	},
@@ -52,24 +49,6 @@ const staffSchema=new Schema({
 		type:String
 	},
 	email1:{
-		type:String
-	},
-	jobTitle:{
-		type:String
-	},
-	department:{
-		type:String
-	},
-	level:{
-		type:String
-	},
-	salaryBand:{
-		type:String
-	},
-	manager:{
-		type:String
-	},
-	primaryJobLocation:{
 		type:String
 	},
 	address:{
@@ -84,46 +63,31 @@ const staffSchema=new Schema({
 	stateofOrigin:{
 		type:String
 	},
-	lga:{
-		type:String
-	},
 	religion:{
 		type:String
 	},
 	primaryInsurer:{
 		type:String
 	},
-	emergencyContactName:{
+	primaryInsurancePolicy:{
 		type:String
 	},
-	emergencyContactEmail:{
+	primaryInsuranceNumber:{
 		type:String
 	},
-	emergencyContactPhone:{
+	hearAboutUs:{
 		type:String
 	},
-	nextofKinName:{
+	creditLimit:{
 		type:String
 	},
-	nextofKinContactEmail:{
+	discountForPatient:{
 		type:String
 	},
-	nextofKinContactPhone:{
+	openingBalance:{
 		type:String
 	},
-	nextofKinContactAddress:{
-		type:String
-	},
-	dateofEmployment:{
-		type:String
-	},
-	bankName:{
-		type:String
-	},
-	bankAccountNumber:{
-		type:String
-	},
-	digitalSignature:{
+	patientsMarketer:{
 		type:String
 	},
 	date:{
@@ -132,4 +96,4 @@ const staffSchema=new Schema({
 	}
 })
 
-module.exports=Staff=mongoose.model('staffs', staffSchema);
+module.exports=Patient=mongoose.model('patients', patientSchema);
