@@ -29,7 +29,8 @@ import SignIn from './layouts/home/auth/SignIn';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 import { RouteWithLayout } from './components';
 import TaskManagement from './views/AdminPages/TaskManagement/TaskManagement';
-import TestManagement from './views/AdminPages/TestManagement';
+import TestManagement from './views/AdminPages/TestManagement/TestManagement';
+import ReportManagement from './views/AdminPages/ReportManagement/ReportManagement';
 
 const browserHistory = createBrowserHistory();
 
@@ -130,6 +131,14 @@ const App = () => {
               exact
               layout={MainLayout}
               path="/admin/Notifications"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={ReportManagement}
+              exact
+              layout={MainLayout}
+              path="/admin/reportmanagement"
             />
           </Switch>
         </Router>

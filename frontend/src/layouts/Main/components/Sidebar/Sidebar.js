@@ -14,7 +14,7 @@ import {
   UserPlus as UserPlusIcon,
   Users as UsersIcon
 } from 'react-feather';
-import { Business, DashboardOutlined, GroupWork, PermIdentity, Replay, Rowing, Store, TextsmsTwoTone } from '@material-ui/icons';
+import { Business, BusinessOutlined, DashboardOutlined, GroupWork, PermIdentity, Replay, Rowing, Store, TextsmsTwoTone } from '@material-ui/icons';
 
 
 import { SidebarNav } from './components';
@@ -79,6 +79,11 @@ const Sidebar = props => {
       title: 'Task Management'
     },
     {
+      href: '/admin/reportmanagement',
+      icon: <BusinessOutlined/>,
+      title: 'Report management'
+    },
+    {
       href: '/admin/warehouseInventorySetup',
       icon: <Store/>,
       title: 'Warehouse Inventory Setup'
@@ -93,6 +98,7 @@ const Sidebar = props => {
       icon: <Bell/>,
       title: 'Notifications'
     },
+    
     // {
     //   href: '/login',
     //   icon: LockIcon,

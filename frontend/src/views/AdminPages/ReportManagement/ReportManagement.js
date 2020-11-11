@@ -3,9 +3,11 @@ import {
   Box,
   Container,
   makeStyles,
+  Table,
   Toolbar
 } from '@material-ui/core';
 import Page from 'src/components/Page';
+import DepartmentCreateModal from './ReportCreateModal';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -15,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TestManagement = () => {
+const ReportManagement = () => {
   const classes = useStyles();
 
   return (
@@ -26,12 +28,11 @@ const TestManagement = () => {
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-            <div>
-            </div>
+          <DepartmentCreateModal/>
         </Box>
       </Container>
     </Page>
   );
 };
 
-export default TestManagement;
+export default ReportManagement;
