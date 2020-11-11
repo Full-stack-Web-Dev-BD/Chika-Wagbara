@@ -14,7 +14,7 @@ router.post('/newState/:id', passport.authenticate('jwt', {session:false}), (req
             newState.save().then(state=>{
                 country.states.push(state._id)
                 country.save().then(data=> res.json(data))
-            }).catch(err=> res.json(err));
+            }).catch(err=> res.json({response: {data: err}}));
         })
     }  
 })

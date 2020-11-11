@@ -7,12 +7,20 @@ export const GET_POST = 'GET_POST';
 export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';
 
-
-
-
-
 export const CREATE_BRANCH="CREATE_BRANCH"
 export const EDIT_BRANCH="EDIT_BRANCH"
 export const DELETE_BRANCH="DELETE_BRANCH"
 export const GET_ALL_BRANCH="GET_ALL_BRANCH"
 export const GET_SINGLE_BRANCH="GET_SINGLE_BRANCH"
+
+export const ADD_COUNTRY="ADD_COUNTRY"
+export const DELETE_COUNTRY="DELETE_COUNTRY"
+export const GET_COUNTRIES="GET_COUNTRIES"
+
+export const ADD_STATE="CREATE_STATE"
+export const DELETE_STATE="DELETE_STATE"
+export const GET_STATES="GET_STATES"
+
+export const ADD_CITY="ADD_CITY"
+export const DELETE_CITY="DELETE_CITY"
+export const GET_CITIES="GET_CITIES"

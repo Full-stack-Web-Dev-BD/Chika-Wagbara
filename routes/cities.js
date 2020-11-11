@@ -8,13 +8,15 @@ const router = express.Router();
 
 router.post('/newCity/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   if (req.user.user_role === "admin") {
+    console.log(req.body)
     State.findById(req.params.id).then(state => {
-      const newCity = new State({
+      const newCity = new City({
         name: req.body.name
       })
       newCity.save().then(city => {
         state.cities.push(city._id)
         state.save().then(data => res.json(data))
+        .catch(err=>res.json(err))
       }).catch(err => res.json(err));
     })
   }
