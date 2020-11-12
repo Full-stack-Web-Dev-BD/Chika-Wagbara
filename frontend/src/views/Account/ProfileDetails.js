@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 import {
   Box,
   Button,
@@ -12,19 +13,19 @@ import {
   TextField,
   makeStyles
 } from '@material-ui/core';
-
-const states = [
+import { setCurrentUser } from '../../actions/authActions'
+const roles = [
   {
-    value: 'alabama',
-    label: 'Alabama'
+    value: 'admin',
+    label: 'Admin'
   },
   {
-    value: 'new-york',
-    label: 'New York'
+    value: 'staff',
+    label: 'Staff'
   },
   {
-    value: 'san-francisco',
-    label: 'San Francisco'
+    value: 'branchAdmin',
+    label: 'Branch Admin'
   }
 ];
 
@@ -32,7 +33,9 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const ProfileDetails = ({ className, ...rest }) => {
+const ProfileDetails = (props) => {
+  const { className, rest }=props
+  const { user } =props.auth
   const classes = useStyles();
   const [values, setValues] = useState({
     firstName: 'Katarina',
@@ -80,22 +83,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 name="firstName"
                 onChange={handleChange}
                 required
-                value={values.firstName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Last name"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName}
+                value={user.name}
                 variant="outlined"
               />
             </Grid>
@@ -110,7 +98,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 name="email"
                 onChange={handleChange}
                 required
-                value={values.email}
+                value={user.email}
                 variant="outlined"
               />
             </Grid>
@@ -136,31 +124,16 @@ const ProfileDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
                 label="Select State"
                 name="state"
                 onChange={handleChange}
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.state}
+                value={user.user_role}
                 variant="outlined"
               >
-                {states.map((option) => (
+                {roles.map((option) => (
                   <option
                     key={option.value}
                     value={option.value}
@@ -191,7 +164,10 @@ const ProfileDetails = ({ className, ...rest }) => {
 };
 
 ProfileDetails.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  auth: PropTypes.object.isRequired,
 };
-
-export default ProfileDetails;
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { setCurrentUser })(ProfileDetails);

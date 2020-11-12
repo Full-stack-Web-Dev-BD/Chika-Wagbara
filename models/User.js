@@ -18,6 +18,9 @@ const userSchema=new Schema({
 	photo:{
 		type:String
 	},
+	phone:{
+		type:String
+	},
 	password:{
 		type:String,
 		require:true

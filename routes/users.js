@@ -35,6 +35,13 @@ const upload=multer({
 	fileFilter:fileFilter
 })
 
+router.post('/uploadPhoto/:id', upload.single('photo'), (req, res)=>{
+	User.findByIdAndUpdate({_id:req.params.id}, {photo:req.file.path}).then(data=>{
+		res.json(data)
+	}).catch(err=>{
+		res.json(err)
+	})
+})
 router.post('/register', upload.single("photo"), (req,res)=>{
 
 	const {errors, isValid}=validateRegisterInput(req.body);
@@ -93,7 +100,7 @@ router.post('/login',(req,res)=>{
 		bcrypt.compare(password, user.password)
 		.then(isMatch=>{
 			if(isMatch){
-				const payload={id:user.id, name:user.name, user_role:user.user_role};
+				const payload={id:user.id, name:user.name, photo:user.photo, user_role:user.user_role, email:user.email};
 				jwt.sign(
 					payload, 
 					keys.secretOrKey, 
