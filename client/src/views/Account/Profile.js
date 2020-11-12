@@ -63,7 +63,7 @@ const Profile = (props) => {
         >
           {
            user.photo?
-           <img src={user.photo} width="100" height="100" />:
+           <img src={`http://localhost:5000/${user.photo}`} width="100" height="100" />:
            <Avatar
             className={classes.avatar}
           />
