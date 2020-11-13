@@ -13,6 +13,7 @@ const cities=require('./routes/cities')
 const patients=require('./routes/patients')
 const guardians=require('./routes/guardians')
 const referringPersons=require('./routes/referringPersons')
+const referralCenters=require('./routes/referralCenters')
 
 
 const app=express();
@@ -47,6 +48,7 @@ app.use('/api/cities', cities);
 app.use('/api/patients', patients);
 app.use('/api/guardians', guardians);
 app.use('/api/referringPersons', referringPersons);
+app.use('/api/referralCenters', referralCenters);
 
 if(process.env.NODE_ENV==='production'){
   app.use(express.static("client/build"));
