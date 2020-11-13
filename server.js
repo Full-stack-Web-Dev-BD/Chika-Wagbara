@@ -18,6 +18,7 @@ const marketingPersons=require('./routes/marketingPersons');
 const departments=require('./routes/departments');
 const categories=require('./routes/categories');
 const samples=require('./routes/samples');
+const expenses=require('./routes/expenses');
 
 
 const app=express();
@@ -57,6 +58,7 @@ app.use('/api/marketingPersons', marketingPersons);
 app.use('/api/departments', departments);
 app.use('/api/categories', categories);
 app.use('/api/samples', samples);
+app.use('/api/expenses', expenses);
 
 if(process.env.NODE_ENV==='production'){
   app.use(express.static("client/build"));
