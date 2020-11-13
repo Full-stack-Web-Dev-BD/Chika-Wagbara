@@ -5,15 +5,19 @@ const passport=require('passport');
 const cors =require('cors');
 const path=require('path');
 const users=require('./routes/users');
-const branchs=require('./routes/branchs')
-const staffs=require('./routes/staffs')
-const countries=require('./routes/countries')
+const branchs=require('./routes/branchs');
+const staffs=require('./routes/staffs');
+const countries=require('./routes/countries');
 const states=require('./routes/states')
-const cities=require('./routes/cities')
-const patients=require('./routes/patients')
-const guardians=require('./routes/guardians')
-const referringPersons=require('./routes/referringPersons')
-const referralCenters=require('./routes/referralCenters')
+const cities=require('./routes/cities');
+const patients=require('./routes/patients');
+const guardians=require('./routes/guardians');
+const referringPersons=require('./routes/referringPersons');
+const referralCenters=require('./routes/referralCenters');
+const marketingPersons=require('./routes/marketingPersons');
+const departments=require('./routes/departments');
+const categories=require('./routes/categories');
+const samples=require('./routes/samples');
 
 
 const app=express();
@@ -49,6 +53,10 @@ app.use('/api/patients', patients);
 app.use('/api/guardians', guardians);
 app.use('/api/referringPersons', referringPersons);
 app.use('/api/referralCenters', referralCenters);
+app.use('/api/marketingPersons', marketingPersons);
+app.use('/api/departments', departments);
+app.use('/api/categories', categories);
+app.use('/api/samples', samples);
 
 if(process.env.NODE_ENV==='production'){
   app.use(express.static("client/build"));
@@ -59,6 +67,6 @@ if(process.env.NODE_ENV==='production'){
 }
 
 
-app.listen(port,()=>{
+app.listen(port, ()=>{
 	console.log('server is running on port: '+port);
 })
