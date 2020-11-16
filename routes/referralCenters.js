@@ -1,19 +1,19 @@
 const express=require('express');
 const passport=require('passport');
-const ReferringPerson=require('../models/ReferringPerson');
+const ReferralCenter=require('../models/ReferralCenter');
 
 const router=express.Router();
 
-router.post('/newReferringPerson', passport.authenticate('jwt', {session:false}), (req, res)=>{
+router.post('/newReferringCenter', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    const newReferringPerson= new ReferringPerson(req.body)
-    newReferringPerson.save()
-    .then(rperson=>{
+    const newReferringCenter= new ReferralCenter(req.body)
+    newReferringCenter.save()
+    .then(rcenter=>{
       const newUser= new User({
-				name    :rperson.firstName + rperson.lastName,
-				email   :rperson.email,
-				user_role:rperson.user_role,
-				password:rperson.password
+				name    :rcenter.nameofReferralCenter,
+				email   :rcenter.centerEmail,
+				user_role:rcenter.user_role,
+				password:rcenter.password
 			})
 
 			bcrypt.genSalt(10, (err,salt)=>{
@@ -35,9 +35,9 @@ router.post('/newReferringPerson', passport.authenticate('jwt', {session:false})
   }  
 })
 
-router.get('/allRPerson', passport.authenticate('jwt', {session:false}), (req, res)=>{
+router.get('/allRCenter', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    ReferringPerson.find()
+    ReferralCenter.find()
      .then(data=> res.json(data))
      .catch(err=> res.json(err))
   }
@@ -48,7 +48,7 @@ router.get('/allRPerson', passport.authenticate('jwt', {session:false}), (req, r
 router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   let id = req.params.id;
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    ReferringPerson.findById(id)
+    ReferralCenter.findById(id)
     .then(data=> res.json(data))
     .catch(err=> res.json(err));
   }
@@ -56,7 +56,7 @@ router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(
 
 router.post('/update/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    ReferringPerson.findByIdAndUpdate({_id:req.params.id}, req.body).then(data=>{
+    ReferralCenter.findByIdAndUpdate({_id:req.params.id}, req.body).then(data=>{
       res.json(data)
     }).catch((err)=>{
       console.log(err);
@@ -66,7 +66,7 @@ router.post('/update/:id', passport.authenticate('jwt', {session:false}), functi
 
 router.delete('/delete/:id', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    ReferringPerson.findByIdAndRemove({_id:req.params.id})
+    ReferralCenter.findByIdAndRemove({_id:req.params.id})
       .then(data=> res.json(data))
       .catch(err=> console.log(err));
   }    
