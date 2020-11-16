@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { loginUser} from '../../../actions/authActions'
-
+import HorizontalNav from '../../../components/horizontal-navs/HorizontalNav2'
 const schema = {
   email: {
     presence: { allowEmpty: false, message: 'is required' },
@@ -193,9 +193,8 @@ const SignIn = (props) => {
 
   return (
     <div className={classes.root}>
-      {
-    console.log(props.errors)
-      }
+      <HorizontalNav content={null} />
+
       <Grid
         className={classes.grid}
         container

@@ -15,7 +15,7 @@ import store from './store';
 
 //import routes from 'src/routes';
 import Branch from './views/AdminPages/Branch/Branch';
-import WarehouseInventorySetup from './views/AdminPages/WarehouseInventorySetup';
+import WarehouseInventorySetup from './views/AdminPages/WarehouseInventory/WarehouseInventorySetup';
 import ActivityLog from './views/AdminPages/ActivityLog/ActivityLog';
 import FinanceAnalytics from './views/AdminPages/FinanceAnalytics/FinanceAnalytics';
 
@@ -31,6 +31,7 @@ import { RouteWithLayout } from './components';
 import TaskManagement from './views/AdminPages/TaskManagement/TaskManagement';
 import TestManagement from './views/AdminPages/TestManagement/TestManagement';
 import ReportManagement from './views/AdminPages/ReportManagement/ReportManagement';
+import HomeIndex from './pages/HomeIndex';
 
 const browserHistory = createBrowserHistory();
 
@@ -60,7 +61,8 @@ const App = () => {
       <GlobalStyles />
       <Provider store={store}>
         <Router history={browserHistory}>
-          <Route exact path="/" component={SignIn}  />
+        <Route exact path="/" component={HomeIndex}  />
+          <Route exact path="/login" component={SignIn}  />
           <Switch>
             <RouteWithLayout
               component={FinanceAnalytics}

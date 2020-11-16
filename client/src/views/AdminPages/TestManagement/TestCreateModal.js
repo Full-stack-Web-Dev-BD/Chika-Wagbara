@@ -10,10 +10,34 @@ import Axios from 'axios'
 import { AddCircle } from '@material-ui/icons';
 
 
-export default function TestCreateModal() {
+export default function TestCreateModal({ setSelectedPdfFormate }) {
 
   const [open, setOpen] = React.useState(false);
 
+  const [testCode, setTestCode] = useState('')
+  const [testName, setTestName] = useState('')
+  const [loincCode, setLoincCode] = useState('')
+  const [testPrice, setTestPrice] = useState('')
+  const [revenuueTarget, setRevenuueTarget] = useState('')
+  const [positionPriority, setPositionPriority] = useState('')
+  const [department, setDepartment] = useState('')
+  const [category, setCategory] = useState('')
+  const [sampleType, setSampleType] = useState('')
+  const [reportType, setreportType] = useState('')
+  const allDepartment = [
+    { department: 'department 1' },
+    { department: 'department 2' },
+    { department: 'department 3' },
+    { department: 'department 4' },
+    { department: 'department 5' },
+  ]
+  const allsampleType = [
+    { sampleType: 'sampleType 1' },
+    { sampleType: 'sampleType 2' },
+    { sampleType: 'sampleType 3' },
+    { sampleType: 'sampleType 4' },
+    { sampleType: 'sampleType 5' },
+  ]
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -21,16 +45,24 @@ export default function TestCreateModal() {
     setOpen(false);
   };
 
-  const createBranch = (event) => {
-    event.preventDefault()
-    Axios.post('/api/branchs/newBranch', {
-    })
-      .then(res => {
-      })
-      .catch(err => {
-        console.log(err);
-      })
+  const createTestPDF = (e) => {
+    e.preventDefault()
+    setSelectedPdfFormate(reportType)
+    console.log(
+      testCode,
+      testName,
+      loincCode,
+      testPrice,
+      revenuueTarget,
+      positionPriority,
+      department,
+      category,
+      sampleType,
+      reportType
+    );
   }
+
+
   return (
     <div className="d-inline ml-auto">
       <Button variant="contained" color="primary" onClick={handleClickOpen}><AddCircle /> Create a new test</Button>
@@ -42,10 +74,11 @@ export default function TestCreateModal() {
               Please  enter required all filed to create a Branch Please  enter required all
             </p>
           </DialogContentText>
-          <form onSubmit={e => { createBranch(e) }}>
+          <form onSubmit={e => { createTestPDF(e) }}>
             <div className="row">
               <div className="col-md-4">
                 <TextField
+                  onChange={e => setTestCode(e.target.value)}
                   required
                   margin="dense"
                   id="testCode"
@@ -56,6 +89,7 @@ export default function TestCreateModal() {
               </div>
               <div className="col-md-8">
                 <TextField
+                  onChange={e => setTestName(e.target.value)}
                   required
                   margin="dense"
                   id="testName"
@@ -66,6 +100,7 @@ export default function TestCreateModal() {
               </div>
               <div className="col-md-4">
                 <TextField
+                  onChange={e => setLoincCode(e.target.value)}
                   required
                   margin="dense"
                   id="LOINCCode"
@@ -76,16 +111,18 @@ export default function TestCreateModal() {
               </div>
               <div className="col-md-4">
                 <TextField
+                  onChange={e => setTestPrice(e.target.value)}
                   required
                   margin="dense"
                   id="testPrice"
                   label="Test Price"
-                  type="text"
+                  type="number"
                   fullWidth
                 />
               </div>
               <div className="col-md-4">
                 <TextField
+                  onChange={e => setRevenuueTarget(e.target.value)}
                   required
                   margin="dense"
                   id="revenueTarget"
@@ -93,10 +130,11 @@ export default function TestCreateModal() {
                   type="text"
                   fullWidth
                 />
-            </div>
+              </div>
 
               <div className="col-md-4">
                 <TextField
+                  onChange={e => setPositionPriority(e.target.value)}
                   required
                   margin="dense"
                   id="positionPriority"
@@ -104,21 +142,34 @@ export default function TestCreateModal() {
                   type="text"
                   fullWidth
                 />
-            </div>
+              </div>
 
               <div className="col-md-4">
+
                 <TextField
-                  required
+                  onChange={e => setDepartment(e.target.value)}
                   margin="dense"
-                  id="depertment"
+                  id="department"
                   label="Department"
                   type="text"
                   fullWidth
-                />
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
+                >
+                  <option >Select Department</option>
+                  {
+                    allDepartment.map(el => (
+                      <option> {el.department} </option>
+                    ))
+                  }
+                </TextField>
               </div>
 
               <div className="col-md-4">
                 <TextField
+                  onChange={e => setCategory(e.target.value)}
                   required
                   margin="dense"
                   id="category"
@@ -130,29 +181,65 @@ export default function TestCreateModal() {
               </div>
 
               <div className="col-md-4">
+
                 <TextField
-                  required
+                  onChange={e => setSampleType(e.target.value)}
                   margin="dense"
-                  id="sampleType"
+                  id="sampletype"
                   label="Sample Type"
                   type="text"
                   fullWidth
-                />
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
+                >
+                  <option >Select Sample Type</option>
+                  {
+                    allsampleType.map(el => (
+                      <option> {el.sampleType} </option>
+                    ))
+                  }
+                </TextField>
               </div>
               <div className="col-md-4">
                 <TextField
-                  required
+                  onChange={e => setreportType(e.target.value)}
                   margin="dense"
-                  id="reportType"
+                  id="reporttype"
                   label="Report Type"
                   type="text"
                   fullWidth
-                />
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
+                >
+                  <option  >Report Type</option>
+                  <option value="Pathology" >Pathology</option>
+                  <option value="Radiology" >Radiology</option>
+                  <option value="FileReport" >File Report </option>
+                </TextField>
               </div>
             </div>
             <DialogActions>
+              {
+                (
+                  testCode &&
+                  testName &&
+                  loincCode &&
+                  testPrice &&
+                  revenuueTarget &&
+                  positionPriority &&
+                  department &&
+                  category &&
+                  sampleType &&
+                  reportType
+                  ) ?
+                  <Button size="small" color="secondary" variant="contained" type="submit" >Create</Button> :
+                  <Button size="small" variant="contained" type="submit" >Create</Button>
+              }
               <Button onClick={handleClose} color="primary">Cancel </Button>
-              <Button size="small" variant="contained" type="submit" >Create</Button>
             </DialogActions>
           </form>
         </DialogContent>

@@ -11,6 +11,7 @@ import TestCreateModal from './TestCreateModal';
 import Test1PdfView from './Test1PdfView';
 import Test2PdfView from './Test2PdfView';
 import Test3PdfView from './Test3PdfView';
+import TestManagementTab from './TestManagementTab';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -35,7 +36,8 @@ const TestManagement = () => {
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-            <div >
+          <TestManagementTab/>
+            {/* <div >
               <TestCreateModal/>
             </div>
             <div >
@@ -46,7 +48,7 @@ const TestManagement = () => {
             </div>
             <div >
               <Test3PdfView/>
-            </div>
+            </div> */}
         </Box>
       </Container>
     </Page>

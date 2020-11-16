@@ -106,7 +106,6 @@ const Profile = (props) => {
     </Card>
   );
 };
-
 Profile.propTypes = {
   uploadPhoto: PropTypes.func.isRequired,
   setCurrentUser: PropTypes.func.isRequired,
