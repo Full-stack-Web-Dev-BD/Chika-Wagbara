@@ -2,3 +2,13 @@
     border-left: 1px solid black;
     height: 120px;
 }
+
+.pdf-table .delete-icon{
+    position: absolute;
+    display: none;
+}
+
+.pdf-table tr:hover .delete-icon{
+    cursor: pointer;
+    display: block;
+}

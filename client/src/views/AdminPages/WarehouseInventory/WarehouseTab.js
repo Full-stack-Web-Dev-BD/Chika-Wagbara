@@ -83,7 +83,7 @@ export default function WarehouseTab() {
                     aria-label="scrollable force tabs example"
                 >
                     <Tab label="Global Store" icon={<StoreIcon />} {...a11yProps(0)} />
-                    <Tab label="Local Store" icon={<StorefrontIcon />} {...a11yProps(1)} />
+                    <Tab label="Our Store" icon={<StorefrontIcon />} {...a11yProps(1)} />
                     {/* <Tab label="Item Three" icon={<PersonPinIcon />} {...a11yProps(2)} />
           <Tab label="Item Four" icon={<HelpIcon />} {...a11yProps(3)} />
           <Tab label="Item Five" icon={<ShoppingBasket />} {...a11yProps(4)} />

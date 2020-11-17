@@ -1,5 +1,9 @@
 import { Card, Table } from '@material-ui/core'
 import React from 'react'
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+
+
+
 
 const Test1PdfView = ({ pdfContent }) => {
 
@@ -9,8 +13,6 @@ const Test1PdfView = ({ pdfContent }) => {
     return (
         <div className="row">
             <Card className="col-md-6 offset-md-3 p-4">
-                {console.log(pdfContent,'pdfContent')}
-                
                 <div className="PDF-header text-center pt-5 pb-5">
                     <h3>PDF Header</h3>
                 </div>
@@ -23,44 +25,49 @@ const Test1PdfView = ({ pdfContent }) => {
                             <th>Normal Range</th>
                             <th>Prvious Value</th>
                         </thead>
-                        <tbody className="text-center">
+                        <tbody className="text-center pdf-table">
                             {
                                 pdfContent.map(el => (
                                     <>
+                                        {el.rowType === 'whiteSpaceRow' ?
+
+                                            <tr>
+                                                <td colSpan="5">&nbsp;   </td>
+                                                <td className="delete-icon"><DeleteOutlineIcon />  </td>
+                                            </tr>
+                                            : ''
+                                        }
                                         {
-                                            true ?
+                                            el.rowType === 'testInfo' ?
+
                                                 <tr>
-                                                    <td>Suger Test</td>
-                                                    <td></td>
-                                                    <td>Pathology</td>
-                                                    <td>30-50</td>
-                                                    <td>30%</td>
+                                                    <td> {el.testName} </td>
+                                                    <td> {el.value} </td>
+                                                    <td>{el.unit}</td>
+                                                    <td>{el.normalRangeFrom > el.normalRangeTo ? `${el.normalRangeFrom}-${el.normalRangeTo}` : `${el.normalRangeTo}-${el.normalRangeFrom}`} </td>
+                                                    <td> {el.previusValue} </td>
+                                                    <td className="delete-icon"><DeleteOutlineIcon />  </td>
                                                 </tr> : ''
                                         }
+                                        {
+                                            el.rowType == 'spaceWithTitle' ?
+
+                                                <tr>
+                                                    <td colSpan="5" >{el.title}</td>
+                                                    <td className="delete-icon"><DeleteOutlineIcon />  </td>
+                                                </tr> : ''
+                                        }
+                                        {
+                                            el.rowType == 'divider' ?
+                                                <tr>
+                                                    <td colSpan="5">&nbsp; <hr /> </td>
+                                                    <td className="delete-icon"><DeleteOutlineIcon />  </td>
+                                                </tr> : ''
+                                        }
+
                                     </>
                                 ))
                             }
-                            {/* <tr>
-                                <td>Suger Test</td>
-                                <td></td>
-                                <td>Pathology</td>
-                                <td>30-50</td>
-                                <td>30%</td>
-                            </tr>
-                            <tr>
-                                <td colSpan="5">&nbsp; <hr /> </td>
-                            </tr>
-                            <tr>
-                                <td colSpan="5" >title</td>
-                            </tr>
-
-                            <tr>
-                                <td>Suger Test</td>
-                                <td></td>
-                                <td>Pathology</td>
-                                <td>30-50</td>
-                                <td>30%</td>
-                            </tr> */}
                         </tbody>
                     </Table>
                 </div>

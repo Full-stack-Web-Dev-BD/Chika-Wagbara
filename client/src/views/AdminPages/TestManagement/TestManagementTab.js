@@ -19,6 +19,9 @@ import { Trash } from 'react-feather';
 import AddElementToPdfModal from './AddElementToPdfModal';
 import PathologyTestAddModal from './PathologyTestAddModal';
 
+import SpaceBarIcon from '@material-ui/icons/SpaceBar';
+import SpellcheckIcon from '@material-ui/icons/Spellcheck';
+import DeviceHubIcon from '@material-ui/icons/DeviceHub';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -69,8 +72,7 @@ export default function TestManagementTab() {
   const [selectedPdfFormate, setSelectedPdfFormate] = useState('Pathology')
 
   const [customizeValue, setCustomizeValue] = useState(0)
-
-  const [allTest, setAllTest] = useState(['adsf','asdf'])
+  const [allTest, setAllTest] = useState([])
 
 
   const handleChange = (event, newValue) => {
@@ -80,10 +82,14 @@ export default function TestManagementTab() {
   const addTestToPDF=(test)=>{
     let existingTest=[...allTest]
     existingTest.push(test)
+    setAllTest(existingTest)
+    console.log(allTest);
   }
-  
-  
   const customizeComponent = { whiteSpaceRow: 'whiteSpaceRow', spaceWithTitle: 'spaceWithTitle', divider: 'divider' }
+
+  
+  
+  
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -122,11 +128,10 @@ export default function TestManagementTab() {
                 className={classes.customStyle}
               >
                 <BottomNavigationAction label="Add Test " icon={<PathologyTestAddModal addTestToPDF={addTestToPDF} />} />
-                <BottomNavigationAction label="Add White Space Row" icon={<AddElementToPdfModal elementName={customizeComponent.whiteSpaceRow} />} />
-                <BottomNavigationAction label="Add Title  " icon={<AddElementToPdfModal elementName={customizeComponent.spaceWithTitle} />} />
-                <BottomNavigationAction label="Add a Divider" icon={<AddElementToPdfModal elementName={customizeComponent.divider} />} />
-                <BottomNavigationAction label="Delete  a Row" icon={<Trash />} />
-                <BottomNavigationAction label="Added Row" icon={(<span>12</span>)} />
+                <BottomNavigationAction label="Add White Space Row" icon={ <Button variant="outlined" onClick={e=>addTestToPDF({ rowType: customizeComponent.whiteSpaceRow })}> <SpaceBarIcon /></Button>} />
+                <BottomNavigationAction label="Add Title  " icon={<AddElementToPdfModal elementName={customizeComponent.spaceWithTitle}  addTestToPDF={addTestToPDF}  />} />
+                <BottomNavigationAction label="Add a Divider" icon={<Button variant="outlined" onClick={el=>addTestToPDF({rowType:customizeComponent.divider})}><DeviceHubIcon   /></Button>} />
+                <BottomNavigationAction label="Added Row" icon={(<span> {allTest.length} </span>)} />
               </BottomNavigation>
               <div style={{ marginBottom: '40px' }}>
                 {
@@ -144,7 +149,7 @@ export default function TestManagementTab() {
 
               </div>
 
-              <Button variant="contained" className="mt4" size="small" color="secondary" >Submit</Button>
+              <Button variant="contained" onClick={e=>console.log(allTest)} className="mt4" size="small" color="secondary" >Submit</Button>
             </div> :
             <div className="text-center p-5 ">
               <TestCreateModal setSelectedPdfFormate={setSelectedPdfFormate} />

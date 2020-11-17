@@ -36,8 +36,10 @@ export default function PathologyTestAddModal({ addTestToPDF }) {
       previusValue:previusValue,
       normalRangeFrom:normalRangeFrom,
       normalRangeTo:normalRangeTo,
-      testType:'Pathology'
+      testType:'Pathology',
+      rowType:'testInfo'
     })
+    handleClose()
   }
 
 
