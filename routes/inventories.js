@@ -14,7 +14,7 @@ router.post('/newInventory', passport.authenticate('jwt', {session:false}), (req
 })
 
 router.get('/allInventory', passport.authenticate('jwt', {session:false}), (req, res)=>{
-  if(req.user.user_role==="admin"){
+  if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin"){
     Inventory.find()
      .then(data=> res.json(data))
      .catch(err=> res.json(err))
