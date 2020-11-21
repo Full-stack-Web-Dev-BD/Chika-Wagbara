@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TestManagementTab() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [selectedPdfFormate, setSelectedPdfFormate] = useState('Pathology')
+  const [selectedPdfFormate, setSelectedPdfFormate] = useState('')
 
   const [customizeValue, setCustomizeValue] = useState(0)
   const [allTest, setAllTest] = useState([])
@@ -78,18 +78,18 @@ export default function TestManagementTab() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const addTestToPDF=(test)=>{
-    let existingTest=[...allTest]
+  const deleteElement = (index) => {
+    let copyAllTest = [...allTest]
+    copyAllTest.splice(index, 1)
+    setAllTest(copyAllTest)
+  }
+  const addTestToPDF = (test) => {
+    let existingTest = [...allTest]
     existingTest.push(test)
     setAllTest(existingTest)
     console.log(allTest);
   }
   const customizeComponent = { whiteSpaceRow: 'whiteSpaceRow', spaceWithTitle: 'spaceWithTitle', divider: 'divider' }
-
-  
-  
-  
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -113,9 +113,7 @@ export default function TestManagementTab() {
       </AppBar>
       <TabPanel value={value} index={0}>
         {
-          // selectedPdfFormate ?
           true ?
-
             <div className="text-center">
               <h4> < SettingsIcon /> Customization Tool </h4>
               <BottomNavigation
@@ -128,28 +126,26 @@ export default function TestManagementTab() {
                 className={classes.customStyle}
               >
                 <BottomNavigationAction label="Add Test " icon={<PathologyTestAddModal addTestToPDF={addTestToPDF} />} />
-                <BottomNavigationAction label="Add White Space Row" icon={ <Button variant="outlined" onClick={e=>addTestToPDF({ rowType: customizeComponent.whiteSpaceRow })}> <SpaceBarIcon /></Button>} />
-                <BottomNavigationAction label="Add Title  " icon={<AddElementToPdfModal elementName={customizeComponent.spaceWithTitle}  addTestToPDF={addTestToPDF}  />} />
-                <BottomNavigationAction label="Add a Divider" icon={<Button variant="outlined" onClick={el=>addTestToPDF({rowType:customizeComponent.divider})}><DeviceHubIcon   /></Button>} />
+                <BottomNavigationAction label="Add White Space Row" icon={<Button variant="outlined" onClick={e => addTestToPDF({ rowType: customizeComponent.whiteSpaceRow })}> <SpaceBarIcon /></Button>} />
+                <BottomNavigationAction label="Add Title  " icon={<AddElementToPdfModal elementName={customizeComponent.spaceWithTitle} addTestToPDF={addTestToPDF} />} />
+                <BottomNavigationAction label="Add a Divider" icon={<Button variant="outlined" onClick={el => addTestToPDF({ rowType: customizeComponent.divider })}><DeviceHubIcon /></Button>} />
                 <BottomNavigationAction label="Added Row" icon={(<span> {allTest.length} </span>)} />
               </BottomNavigation>
               <div style={{ marginBottom: '40px' }}>
                 {
                   selectedPdfFormate == 'Pathology' ?
-                    <Test1PdfView pdfContent={allTest} /> : ''
+                    <Test1PdfView pdfContent={allTest} deleteElement={deleteElement} /> : ''
                 }
                 {
                   selectedPdfFormate == 'Radiology' ?
-                    <Test2PdfView /> : ''
+                    <Test2PdfView pdfContent={allTest} deleteElement={deleteElement} /> : ''
                 }
                 {
-                  selectedPdfFormate == 'File Report' ?
-                    <Test3PdfView /> : ''
+                  selectedPdfFormate == 'FileReport' ?
+                    <Test3PdfView pdfContent={allTest} deleteElement={deleteElement} /> : ''
                 }
-
               </div>
-
-              <Button variant="contained" onClick={e=>console.log(allTest)} className="mt4" size="small" color="secondary" >Submit</Button>
+              <Button variant="contained" onClick={e => console.log(allTest)} className="mt4" size="small" color="secondary" >Submit</Button>
             </div> :
             <div className="text-center p-5 ">
               <TestCreateModal setSelectedPdfFormate={setSelectedPdfFormate} />

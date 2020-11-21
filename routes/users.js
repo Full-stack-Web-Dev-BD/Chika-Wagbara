@@ -42,6 +42,8 @@ router.post('/uploadPhoto/:id', upload.single('photo'), (req, res)=>{
 		res.json(err)
 	})
 })
+
+
 router.post('/register', upload.single("photo"), (req,res)=>{
 
 	const {errors, isValid}=validateRegisterInput(req.body);
@@ -62,7 +64,6 @@ router.post('/register', upload.single("photo"), (req,res)=>{
 				user_role:req.body.user_role,
 				password:req.body.password
 			})
-
 			bcrypt.genSalt(10, (err,salt)=>{
 				bcrypt.hash(newUser.password, salt, (err,hash)=>{
 					if(err) throw err;

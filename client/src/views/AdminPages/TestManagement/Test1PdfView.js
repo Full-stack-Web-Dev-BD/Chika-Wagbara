@@ -5,11 +5,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
 
-const Test1PdfView = ({ pdfContent }) => {
-
-
-
-
+const Test1PdfView = ({ pdfContent, deleteElement }) => {
     return (
         <div className="row">
             <Card className="col-md-6 offset-md-3 p-4">
@@ -27,13 +23,12 @@ const Test1PdfView = ({ pdfContent }) => {
                         </thead>
                         <tbody className="text-center pdf-table">
                             {
-                                pdfContent.map(el => (
+                                pdfContent.map((el, i) => (
                                     <>
                                         {el.rowType === 'whiteSpaceRow' ?
-
                                             <tr>
                                                 <td colSpan="5">&nbsp;   </td>
-                                                <td className="delete-icon"><DeleteOutlineIcon />  </td>
+                                                <td className="delete-icon"> <span onClick={e => deleteElement(i)}> <DeleteOutlineIcon /></span>  </td>
                                             </tr>
                                             : ''
                                         }
@@ -46,7 +41,7 @@ const Test1PdfView = ({ pdfContent }) => {
                                                     <td>{el.unit}</td>
                                                     <td>{el.normalRangeFrom > el.normalRangeTo ? `${el.normalRangeFrom}-${el.normalRangeTo}` : `${el.normalRangeTo}-${el.normalRangeFrom}`} </td>
                                                     <td> {el.previusValue} </td>
-                                                    <td className="delete-icon"><DeleteOutlineIcon />  </td>
+                                                    <td className="delete-icon"> <span onClick={e => deleteElement(i)}> <DeleteOutlineIcon /></span>  </td>
                                                 </tr> : ''
                                         }
                                         {
@@ -54,14 +49,15 @@ const Test1PdfView = ({ pdfContent }) => {
 
                                                 <tr>
                                                     <td colSpan="5" >{el.title}</td>
-                                                    <td className="delete-icon"><DeleteOutlineIcon />  </td>
+                                                    <td className="delete-icon"> <span onClick={e => deleteElement(i)}> <DeleteOutlineIcon /></span>  </td>
+
                                                 </tr> : ''
                                         }
                                         {
                                             el.rowType == 'divider' ?
                                                 <tr>
                                                     <td colSpan="5">&nbsp; <hr /> </td>
-                                                    <td className="delete-icon"><DeleteOutlineIcon />  </td>
+                                                    <td className="delete-icon"> <span onClick={e => deleteElement(i)}> <DeleteOutlineIcon /></span>  </td>
                                                 </tr> : ''
                                         }
 

@@ -24,6 +24,8 @@ export default function AddElementToPdfModal({ pdfContent, elementName, addTestT
 
 
 
+  
+  
 
 
 
@@ -66,10 +68,9 @@ export default function AddElementToPdfModal({ pdfContent, elementName, addTestT
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{"Use Google's location service?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            <h3 className="text-center">Select The Position for this element</h3>
+            <h3 className="text-center">Enter title for this element</h3>
             {/* <TextField
               onChange={e => { setPosition(e.target.value) }}
               margin="dense"

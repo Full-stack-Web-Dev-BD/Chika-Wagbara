@@ -7,7 +7,9 @@
     position: absolute;
     display: none;
 }
-
+.pdf-table tr:hover{
+    background-color:rgba(0,0,0,.075)
+}
 .pdf-table tr:hover .delete-icon{
     cursor: pointer;
     display: block;
