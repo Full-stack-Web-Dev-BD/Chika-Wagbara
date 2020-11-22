@@ -6,7 +6,8 @@ import {
   Toolbar
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import LocationTree from './LocationTable';
+import LocationTable from './LocationTable';
+import DepartmentAndCategory from './DepartmentAndCategory';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +30,13 @@ const TaskManagement = () => {
         <Toolbar />
         <Box mt={3}>
             <div>
-              <LocationTree/>
+              <LocationTable/>
+            </div>
+        </Box>
+        
+        <Box mt={3}>
+            <div>
+              <DepartmentAndCategory/>
             </div>
         </Box>
       </Container>

@@ -15,16 +15,13 @@ import Test3PdfView from './Test3PdfView';
 import { BottomNavigation, BottomNavigationAction, Button } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-import { Trash } from 'react-feather';
 import AddElementToPdfModal from './AddElementToPdfModal';
 import PathologyTestAddModal from './PathologyTestAddModal';
 
 import SpaceBarIcon from '@material-ui/icons/SpaceBar';
-import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 import DeviceHubIcon from '@material-ui/icons/DeviceHub';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -66,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function TestManagementTab() {
+const TestManagementTab=() =>{
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [selectedPdfFormate, setSelectedPdfFormate] = useState('')
@@ -75,6 +72,11 @@ export default function TestManagementTab() {
   const [allTest, setAllTest] = useState([])
 
 
+
+  const submitTest=()=>{
+    
+  }
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -113,7 +115,7 @@ export default function TestManagementTab() {
       </AppBar>
       <TabPanel value={value} index={0}>
         {
-          true ?
+          selectedPdfFormate ?
             <div className="text-center">
               <h4> < SettingsIcon /> Customization Tool </h4>
               <BottomNavigation
@@ -134,7 +136,7 @@ export default function TestManagementTab() {
               <div style={{ marginBottom: '40px' }}>
                 {
                   selectedPdfFormate == 'Pathology' ?
-                    <Test1PdfView pdfContent={allTest} deleteElement={deleteElement} /> : ''
+                    <Test1PdfView pdfContent={allTest} data="alamin" deleteElement={deleteElement} /> : ''
                 }
                 {
                   selectedPdfFormate == 'Radiology' ?
@@ -145,12 +147,15 @@ export default function TestManagementTab() {
                     <Test3PdfView pdfContent={allTest} deleteElement={deleteElement} /> : ''
                 }
               </div>
-              <Button variant="contained" onClick={e => console.log(allTest)} className="mt4" size="small" color="secondary" >Submit</Button>
+              {
+                allTest.length>0?
+                <Button variant="contained" onClick={e => submitTest()} className="mt4" size="small" color="secondary" >Submit</Button>:
+                <Button variant="outlined"className="mt4" size="small" color="secondary" >Submit</Button>
+              }
             </div> :
             <div className="text-center p-5 ">
               <TestCreateModal setSelectedPdfFormate={setSelectedPdfFormate} />
               <h5 className="text-success mt-3">Click on the button to  Add a test !!</h5>
-              <Test1PdfView />
             </div>
         }
       </TabPanel>
@@ -175,3 +180,6 @@ export default function TestManagementTab() {
     </div>
   );
 }
+
+
+export default TestManagementTab

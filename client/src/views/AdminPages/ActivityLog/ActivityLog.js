@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  Card,
   Container,
   Grid,
-  makeStyles
+  makeStyles,
+  TextField
 } from '@material-ui/core';
 
+import { v4 as uuid } from 'uuid';
+import moment from 'moment';
 import Page from 'src/components/Page';
-import TotalProfit from './TotalProfit';
-import TopThreeBranchPerformance from './TopThreeBranchPerformance';
-import BranchActivity from './BranchActivity';
-import TopTenBranchActivity from './TopTenBranchActivity';
-
+import Activity from './Activity';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -22,6 +22,50 @@ const useStyles = makeStyles((theme) => ({
 
 const FinanceAnalytics = () => {
   const classes = useStyles();
+  const [title, setTitle] = useState('Recent Activity')
+
+
+  // filter property
+  const [branchName, setBranchName] = useState('')
+  const data = [
+    {
+      id: uuid(),
+      branchName: 'Branch A',
+      imageUrl: '/static/images/products/product_3.png',
+      status: "Added a new staff in this branch",
+      time: '12:34 Am'
+    },
+    {
+      id: uuid(),
+      branchName: 'Branch Name',
+      imageUrl: '/static/images/products/product_3.png',
+      status: "Logged out from system",
+      time: '12:34 Am'
+    },
+    {
+      id: uuid(),
+      branchName: 'Branch B',
+      imageUrl: '/static/images/products/product_3.png',
+      status: "Updated  her profile",
+      time: '12:34 Am'
+    },
+    {
+      id: uuid(),
+      branchName: 'Branch C',
+      imageUrl: '/static/images/products/product_3.png',
+      status: "Admin added a new Branch",
+      time: '12:34 Am'
+    },
+    {
+      id: uuid(),
+      branchName: 'Branch D',
+      imageUrl: '/static/images/products/product_3.png',
+      status: "Mr Sujon sent mail to  Rahman",
+      time: '12:34 Am'
+    },
+  ];
+
+
 
   return (
     <Page
@@ -29,65 +73,55 @@ const FinanceAnalytics = () => {
       title="Finance Analytics"
     >
       <Container maxWidth={false}>
-        <h3>Top 3 Branch Activity</h3>
+        <Card className="p-5">
+          <h2 className="text-center text-info">Filter Option for view log </h2>
+
+          <TextField
+            onChange={e => { setBranchName(e.target.value) }}
+            margin="dense"
+            id="Select speacfic Branch"
+            type="text"
+            select
+            SelectProps={{
+              native: true,
+            }}
+          >
+            <option >Select speacfic Branch</option>
+            <option value="Branch A">Branch A</option>
+            <option value="Branch B">Branch B</option>
+            <option value="Branch C">Branch C</option>
+          </TextField>
+          
+          <TextField
+            onChange={e => { setBranchName(e.target.value) }}
+            margin="dense"
+            id="Filter By Category"
+            type="text"
+            select
+            SelectProps={{
+              native: true,
+            }}
+          >
+            <option >Select By category</option>
+            <option value="Branch A">User log</option>
+            <option value="Branch B">Branch Log</option>
+            <option value="Branch C"></option>
+          </TextField>
+        </Card>
+        <h3> Branch Activity</h3>
         <Grid
           container
           spacing={3}
         >
           <Grid
+
             item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <TopThreeBranchPerformance branchName="Branch A" earning={"$" + 55354} persent={78.4} />
-          </Grid>
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <TopThreeBranchPerformance branchName="Branch B" earning={"$" + 46323} persent={57} />
-          </Grid>
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <TopThreeBranchPerformance branchName="Branch C" earning={"$" + 24133} persent={55} />
-          </Grid>
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <TotalProfit totalProfit={"$" + 34982} />
-          </Grid>
-          <Grid
-            
-            item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <TopTenBranchActivity />
-          </Grid>
-          <Grid
-            item
-            lg={8}
+            lg={12}
             md={12}
-            xl={9}
+            xl={12}
             xs={12}
           >
-            <BranchActivity />
+            <Activity log={data} title={title} />
           </Grid>
         </Grid>
       </Container>

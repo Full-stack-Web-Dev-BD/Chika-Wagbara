@@ -14,13 +14,6 @@ import {
     TableHead,
     TableRow,
 } from '@material-ui/core';
-import Axios from 'axios';
-
-
-import TreeView from '@material-ui/lab/TreeView';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import TreeItem from '@material-ui/lab/TreeItem';
 import { MinusSquare, PlusCircle, Trash } from 'react-feather';
 import LocationCreateModal from './LocationCreateModal';
 import { deleteCountry, getCountries } from '../../../actions/countryAction';
@@ -156,7 +149,6 @@ LocationTable.propTypes = {
     className: PropTypes.string,
     customers: PropTypes.array.isRequired
   };
-  
   const mapStateToProps = state => ({
     auth: state.auth,
     countries:state.country.countries,
@@ -164,8 +156,4 @@ LocationTable.propTypes = {
     cities:state.city.cities,
     errors: state.errors
   });
-  
-
 export default connect(mapStateToProps, { deleteCountry, getCountries, deleteState, getCities, deleteCity, getStates})(LocationTable);
-
-

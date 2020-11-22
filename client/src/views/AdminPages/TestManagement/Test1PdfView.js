@@ -5,9 +5,14 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
 
-const Test1PdfView = ({ pdfContent, deleteElement }) => {
+const Test1PdfView = ({ pdfContent,data, deleteElement }) => {
     return (
         <div className="row">
+            {
+                pdfContent.map(el=>{
+                    alert(el)
+                })
+            }
             <Card className="col-md-6 offset-md-3 p-4">
                 <div className="PDF-header text-center pt-5 pb-5">
                     <h3>PDF Header</h3>
@@ -25,6 +30,7 @@ const Test1PdfView = ({ pdfContent, deleteElement }) => {
                             {
                                 pdfContent.map((el, i) => (
                                     <>
+                                    {/* <td>done</td> */}
                                         {el.rowType === 'whiteSpaceRow' ?
                                             <tr>
                                                 <td colSpan="5">&nbsp;   </td>

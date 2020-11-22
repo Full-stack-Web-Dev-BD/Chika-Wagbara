@@ -21,6 +21,7 @@ const samples=require('./routes/samples');
 const expenses=require('./routes/expenses');
 const inventories=require('./routes/inventories');
 const branchInventories=require('./routes/branchInventories');
+const Test=require('./routes/test');
 
 
 const app=express();
@@ -40,7 +41,7 @@ const db=require('./config/keys').mongoURI;
 
 //MongoDB connect
 mongoose
-.connect(db,{ useNewUrlParser: true })
+.connect(db,{ useNewUrlParser: true , useUnifiedTopology:true})
 .then(()=>console.log('MongoDB connected'))
 .catch((err)=> console.log(err));
 
@@ -63,7 +64,7 @@ app.use('/api/samples', samples);
 app.use('/api/expenses', expenses);
 app.use('/api/inventories', inventories);
 app.use('/api/branchInventories', branchInventories);
-
+app.use('/api/test', Test);
 if(process.env.NODE_ENV==='production'){
   app.use(express.static("client/build"));
 

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { v4 as uuid } from 'uuid';
-import moment from 'moment';
 import {
   Box,
   Button,
@@ -19,39 +17,6 @@ import {
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
-const data = [
-  {
-    id: uuid(),
-    name: 'Branch Name',
-    imageUrl: '/static/images/products/product_3.png',
-    status: "A short description"
-  },
-  {
-    id: uuid(),
-    name: 'Branch Name',
-    imageUrl: '/static/images/products/product_3.png',
-    status: "A short description"
-  },
-  {
-    id: uuid(),
-    name: 'Branch Name',
-    imageUrl: '/static/images/products/product_3.png',
-    status: "A short description"
-  },
-  {
-    id: uuid(),
-    name: 'Branch Name',
-    imageUrl: '/static/images/products/product_3.png',
-    status: "A short description"
-  },
-  {
-    id: uuid(),
-    name: 'Branch Name',
-    imageUrl: '/static/images/products/product_3.png',
-    status: "A short description"
-  },
-];
-
 const useStyles = makeStyles(({
   root: {
     height: '100%'
@@ -62,9 +27,8 @@ const useStyles = makeStyles(({
   }
 }));
 
-const TopTenBranchActivity = ({ className, ...rest }) => {
+const TopTenBranchActivity = ({ log,title, className, ...rest }) => {
   const classes = useStyles();
-  const [products] = useState(data);
 
   return (
     <Card
@@ -72,33 +36,26 @@ const TopTenBranchActivity = ({ className, ...rest }) => {
       {...rest}
     >
       <CardHeader
-        subtitle={`${products.length} in total`}
-        title="Top 10 Branch  Activity"
-      />
+        subtitle={`${log.length} in total`}
+        title={title} />
       <Divider />
       <List>
-        {products.map((product, i) => (
+        {log.map((singleEvent, i) => (
           <ListItem
-            divider={i < products.length - 1}
-            key={product.id}
+            divider={i < log.length - 1}
+            key={singleEvent.id}
           >
             <ListItemAvatar>
               <img
                 alt="Product"
                 className={classes.image}
-                src={product.imageUrl}
+                src={singleEvent.imageUrl}
               />
             </ListItemAvatar>
             <ListItemText
-              primary={product.name}
-              secondary={`Updated ${product.status}`}
+              primary={`From ${singleEvent.branchName} `}
+              secondary={`Status : ${singleEvent.status}`}
             />
-            <IconButton
-              edge="end"
-              size="small"
-            >
-              <MoreVertIcon />
-            </IconButton>
           </ListItem>
         ))}
       </List>
