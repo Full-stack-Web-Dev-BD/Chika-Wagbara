@@ -6,7 +6,6 @@ import {
   
   const initialState = {
     cities: [],
-    loading: false
   };
   
   export default function(state = initialState, action) {
@@ -15,7 +14,6 @@ import {
         return {
           ...state,
           cities: action.payload,
-          loading: false
         };
       case ADD_CITY:
         return {

@@ -13,10 +13,8 @@ import { TextField } from '@material-ui/core';
 import Axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { addCountry } from '../../../actions/countryAction';
-import { addState } from '../../../actions/stateAction';
-import { addCity } from '../../../actions/cityAction'
-
+import { addDepartment } from '../../../actions/departmentAction';
+import { addCategory } from '../../../actions/categoryAction'
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -58,38 +56,30 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 const LocationCreateModal=(props)=> {
-  const { countries, states }=props
+  const { departments }=props
   const [open, setOpen] = React.useState(false);
   const [locationType, setLocationType] = useState('')
-  const [countryName, setCountryName] = useState('')
+  const [departmentName, setDepartmentName] = useState('')
+  const [departmentRevenueTarget, setDepartmentRevenueTarget] = useState('')
   
   
 
-  const [stateName, setStateName] = useState('')
-  const [countryId, setCountryId] = useState('')
+  const [categoryName, setCategoryName] = useState('')
+  const [categoryRevenueTarget, setCategoryRevenueTarget] = useState('')
+  const [departmentId, setDepartmentId] = useState('')
 
-  const [cityName, setCityName] = useState('')
-  const [stateId, setStateId] = useState('')
-
-
-  const addCountry=(e)=>{
+  const addDepartment=(e)=>{
     e.preventDefault()
-    props.addCountry({name:countryName})
+    props.addDepartment({name:departmentName, revenueTarget:departmentRevenueTarget})
     handleClose();
   }
 
-  const addState=(e)=>{
+  const addCategory=(e)=>{
     e.preventDefault()
-    props.addState(countryId, {name:stateName}, props.history)
+    props.addCategory(departmentId, {name:categoryName, revenueTarget:categoryRevenueTarget})
     handleClose();
   }
 
-
-  const addCity=(e)=>{
-    e.preventDefault()
-    props.addCity(stateId, {name:cityName})
-    handleClose();
-  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -97,9 +87,11 @@ const LocationCreateModal=(props)=> {
   const handleClose = () => {
     setOpen(false);
   };
+  console.log(departmentId)
   return (
     <div>
-      <Button variant="contained" size="small" color="secondary" onClick={handleClickOpen} > <PlusCircle /> Add a location </Button>
+      <Button variant="contained" size="small" color="secondary" onClick={handleClickOpen} > <PlusCircle /> Add Department & Category
+</Button>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Add A Location
@@ -113,7 +105,7 @@ const LocationCreateModal=(props)=> {
             onChange={e => { setLocationType(e.target.value) }}
             margin="dense"
             id="selectLocationType"
-            label="Select Location Type"
+            label="Select A Type"
             select
             SelectProps={{
               native: true,
@@ -121,19 +113,27 @@ const LocationCreateModal=(props)=> {
             fullWidth
           >
             <option >Select Type</option>
-            <option value="Country">Country</option>
-            <option value="State">State</option>
-            <option value="City">City</option>
+            <option value="department">Department</option>
+            <option value="category">Category</option>
           </TextField>
           {
-            locationType === "Country" ?
-              <form onSubmit={e=>{addCountry(e)}}>
+            locationType === "department" ?
+              <form onSubmit={e=>{addDepartment(e)}}>
                 <TextField
-                  onChange={e => { setCountryName(e.target.value) }}
+                  onChange={e => { setDepartmentName(e.target.value) }}
+                  required
+                  margin="dense"
+                  id="department"
+                  label="Department Name"
+                  type="text"
+                  fullWidth
+                />
+                <TextField
+                  onChange={e => { setDepartmentRevenueTarget(e.target.value) }}
                   required
                   margin="dense"
                   id="country"
-                  label="Country Name"
+                  label="Revenue Target"
                   type="text"
                   fullWidth
                 />
@@ -142,10 +142,10 @@ const LocationCreateModal=(props)=> {
           }
 
           {
-            locationType === "State" ?
+            locationType === "category" ?
               <div>
                 <TextField
-                  onChange={e => { setCountryId(e.target.value) }}
+                  onChange={e => { setDepartmentId(e.target.value) }}
                   margin="dense"
                   id="selectLocationType"
                   label="Select The Country of This State"
@@ -156,65 +156,34 @@ const LocationCreateModal=(props)=> {
                   fullWidth
                   required
                 >
-                  <option >Select Country</option>
+                  <option >Select Department</option>
                   {
-                    countries.map(el => (
+                    departments.map(el => (
                       <option value={el._id} > {el.name} </option>
                     ))
                   }
                 </TextField>
                 <TextField
-                  onChange={e => { setStateName(e.target.value) }}
+                  onChange={e => { setCategoryName(e.target.value) }}
                   required
                   margin="dense"
                   id="statename"
-                  label="State Name"
+                  label="Category Name"
+                  type="text"
+                  fullWidth
+                />
+                <TextField
+                  onChange={e => { setCategoryRevenueTarget(e.target.value) }}
+                  required
+                  margin="dense"
+                  id="statename"
+                  label="Revenue Target"
                   type="text"
                   fullWidth
                 />
                 {
-                  stateName && countryId ?
-                    <Button onClick={e => {addState(e)}} type="submit" size="small" variant="contained"> Add </Button>
-                    : ''
-                }
-              </div> : ''
-          }
-
-          {
-            locationType === "City" ?
-              <div>
-                <TextField
-                  onChange={e => { setStateId(e.target.value) }}
-                  margin="dense"
-                  id="selectLocationType"
-                  label="Select State of This City"
-                  select
-                  SelectProps={{
-                    native: true,
-                  }}
-                  fullWidth
-                  required
-                >
-                  <option >Select State</option>
-                  {
-                    states.map(el => (
-                      <option value={el._id} > {el.name} </option>
-                    ))
-                  }
-                </TextField>
-                
-                <TextField
-                  onChange={e => { setCityName(e.target.value) }}
-                  required
-                  margin="dense"
-                  id="cityename"
-                  label="City Name"
-                  type="text"
-                  fullWidth
-                />
-                {
-                  cityName && stateId ?
-                    <Button onClick={e => {addCity(e)}} type="submit" size="small" variant="contained"> Add </Button>
+                  categoryName && categoryRevenueTarget && departmentId ?
+                    <Button onClick={e => {addCategory(e)}} type="submit" size="small" variant="contained"> Add </Button>
                     : ''
                 }
               </div> : ''
@@ -226,22 +195,19 @@ const LocationCreateModal=(props)=> {
 }
 
 LocationCreateModal.propTypes = {
-  addCountry: PropTypes.func.isRequired,
-  addState: PropTypes.func.isRequired,
-  addCity: PropTypes.func.isRequired,
+  addDepartment: PropTypes.func.isRequired,
+  addCategory: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  countries: PropTypes.array.isRequired,
-  states: PropTypes.array.isRequired
+  departments: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  countries: state.country.countries,
-  states: state.state.states,
+  departments: state.department.departments,
   errors: state.errors
 });
 
 
-export default connect(mapStateToProps, { addCountry, addState, addCity })(LocationCreateModal);
+export default connect(mapStateToProps, { addDepartment, addCategory })(LocationCreateModal);
 
 

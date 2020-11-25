@@ -15,6 +15,8 @@ import store from './store';
 
 //import routes from 'src/routes';
 import Branch from './views/AdminPages/Branch/Branch';
+import Product from './views/AdminPages/Product/Product';
+import OrderInventory from './views/AdminPages/OrderInventory/OrderInventory';
 import WarehouseInventorySetup from './views/AdminPages/WarehouseInventory/WarehouseInventorySetup';
 import ActivityLog from './views/AdminPages/ActivityLog/ActivityLog';
 import FinanceAnalytics from './views/AdminPages/FinanceAnalytics/FinanceAnalytics';
@@ -85,6 +87,22 @@ const App = () => {
               exact
               layout={MainLayout}
               path="/admin/branch"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={Product}
+              exact
+              layout={MainLayout}
+              path="/admin/product"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={OrderInventory}
+              exact
+              layout={MainLayout}
+              path="/admin/order"
             />
           </Switch>
           <Switch>

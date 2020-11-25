@@ -64,6 +64,16 @@ const Sidebar = props => {
       title: 'Branch'
     },
     {
+      href: '/admin/product',
+      icon: <Business/>,
+      title: 'Product'
+    },
+    {
+      href: '/admin/order',
+      icon: <Business/>,
+      title: 'Order Inventory'
+    },
+    {
       href: '/admin/staffManagement',
       icon: <GroupWork/>,
       title: 'Staff Management'
@@ -86,7 +96,7 @@ const Sidebar = props => {
     {
       href: '/admin/warehouseInventorySetup',
       icon: <Store/>,
-      title: 'Warehouse Inventory Setup'
+      title: 'Warehouse Inventory'
     },
     {
       href: '/admin/account',

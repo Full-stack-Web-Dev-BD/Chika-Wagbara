@@ -21,7 +21,8 @@ const samples=require('./routes/samples');
 const expenses=require('./routes/expenses');
 const inventories=require('./routes/inventories');
 const branchInventories=require('./routes/branchInventories');
-const Test=require('./routes/test');
+const tests=require('./routes/tests');
+const products=require('./routes/products');
 
 
 const app=express();
@@ -64,7 +65,10 @@ app.use('/api/samples', samples);
 app.use('/api/expenses', expenses);
 app.use('/api/inventories', inventories);
 app.use('/api/branchInventories', branchInventories);
-app.use('/api/test', Test);
+app.use('/api/tests', tests);
+app.use('/api/products', products);
+
+
 if(process.env.NODE_ENV==='production'){
   app.use(express.static("client/build"));
 

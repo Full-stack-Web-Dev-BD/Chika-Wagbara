@@ -7,10 +7,6 @@ const categorySchema=new Schema({
 		type:String,
 		require:true
     },
-    department:{
-        type:Schema.Types.ObjectId,
-        ref:'departments'
-    },
     revenueTarget:{
         type:String
     },

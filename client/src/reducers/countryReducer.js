@@ -6,7 +6,6 @@ import {
   
   const initialState = {
     countries: [],
-    loading: false
   };
   
   export default function(state = initialState, action) {
@@ -15,7 +14,6 @@ import {
         return {
           ...state,
           countries: action.payload,
-          loading: false
         };
       case ADD_COUNTRY:
         return {

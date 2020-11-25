@@ -15,7 +15,7 @@ router.post('/newCity/:id', passport.authenticate('jwt', { session: false }), (r
       })
       newCity.save().then(city => {
         state.cities.push(city._id)
-        state.save().then(data => res.json(data))
+        state.save().then(() => res.json(city))
         .catch(err=>res.json(err))
       }).catch(err => res.json(err));
     })

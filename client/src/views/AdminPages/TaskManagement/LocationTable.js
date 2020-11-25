@@ -32,16 +32,13 @@ const useStyles = makeStyles((theme) => ({
 const LocationTable = (props) => {
     const { className, rest, countries, states, cities }=props
     const classes = useStyles();
-    const [allCountries, setAllCountries] = useState([])
-    const [allState, setAllState] = useState([])
-    const [allCity, setAllCity] = useState([])
 
     useEffect(() => {
         props.getCountries()
         props.getStates()
         props.getCities()
     }, [])
-
+    
     const deleteCountry=(id)=>{
        props.deleteCountry(id)
     }
@@ -53,7 +50,6 @@ const LocationTable = (props) => {
     const deleteCity=(id)=>{
         props.deleteCity(id)
     }
-
     return (
         <div>
             <div>
@@ -81,7 +77,7 @@ const LocationTable = (props) => {
                                         {countries.map((el, index) => (
                                             <TableRow hover key={index}>
                                                 <TableCell>{el.name}</TableCell>
-                                                <TableCell>{el.states.length}</TableCell>
+                                                <TableCell>{el.states?el.states.length:0}</TableCell>
                                                 <TableCell style={{cursor:'pointer'}} onClick={()=>deleteCountry(el._id)}> <Trash/> </TableCell>
                                             </TableRow>
                                         ))}
@@ -112,7 +108,7 @@ const LocationTable = (props) => {
                             </div>
                             <div class="vl"></div>
                             <div className="col-md-3">
-                                <h3 className="text-center pt-4">All Country</h3>
+                                <h3 className="text-center pt-4">All City</h3>
                                 <Table>
                                     <TableHead>
                                         <TableRow>
@@ -144,8 +140,8 @@ LocationTable.propTypes = {
     deleteCity: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     countries: PropTypes.array.isRequired,
-    states: PropTypes.object.isRequired,
-    cities: PropTypes.object.isRequired,
+    states: PropTypes.array.isRequired,
+    cities: PropTypes.array.isRequired,
     className: PropTypes.string,
     customers: PropTypes.array.isRequired
   };

@@ -9,7 +9,6 @@ import {
 
 // Add State
 export const addState = (countryId, postData) => dispatch => {
-  console.log(countryId)
   axios
     .post(`/api/states/newState/${countryId}`, postData)
     .then(res =>
@@ -57,7 +56,7 @@ export const deleteState = id => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: null
+        payload: err.response.data
       })
     );
 };

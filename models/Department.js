@@ -6,7 +6,11 @@ const departmentSchema=new Schema({
 	name:{
 		type:String,
 		require:true
-    },
+	},
+	categories:[{
+        type:Schema.Types.ObjectId,
+        ref:'categories'
+    }],
     revenueTarget:{
         type:String
     },

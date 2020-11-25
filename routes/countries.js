@@ -6,12 +6,16 @@ const router=express.Router();
 
 router.post('/newCountry', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin"){
+    console.log(req.body)
     const newCountry= new Country({
       name:req.body.name
     })
     newCountry.save()
     .then(country=> res.json(country))
-    .catch(err=> res.json(err));
+    .catch(err=> {
+      console.log(err)
+      res.json(err)
+    });
   }  
 })
 

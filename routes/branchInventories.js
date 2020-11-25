@@ -26,8 +26,7 @@ router.post('/newBranchInventory', passport.authenticate('jwt', {session:false})
     
                 })
             }
-        })
-        .catch(err=> res.json(err));
+        }).catch(err=> res.json(err));
     }  
 })
 
@@ -39,7 +38,7 @@ router.get('/:branchId/allInventory', passport.authenticate('jwt', {session:fals
   }
 })
 
-router.get('/:branchId/edit/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
+router.get('/:branchId/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   let id = req.params.id;
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin"){
     BranchInventory.findById(id)

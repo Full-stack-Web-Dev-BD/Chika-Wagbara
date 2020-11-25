@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 const Schema=mongoose.Schema;
 
-const inventorySchema=new Schema({
+const productSchema=new Schema({
 	name:{
 		type:String,
 		require:true
@@ -10,6 +10,10 @@ const inventorySchema=new Schema({
     department:{
         type:Schema.Types.ObjectId,
         ref:'departments'
+    },
+    user:{
+        type:Schema.Types.ObjectId,
+        ref:'users'
     },
     type:{
         type:String
@@ -32,13 +36,10 @@ const inventorySchema=new Schema({
     tax:{
         type:String
     },
-    purchase:{
-        type:Boolean
-    },
 	date:{
 		type:Date,
 		default:Date.now
 	}
 })
 
-module.exports=Inventory=mongoose.model('inventories', inventorySchema);
+module.exports=Product=mongoose.model('products', productSchema);

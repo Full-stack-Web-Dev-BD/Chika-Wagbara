@@ -25,7 +25,7 @@ import {
       case DELETE_STATE:
         return {
           ...state,
-          states: state.countries.filter(state => state._id !== action.payload)
+          states: state.states.filter(state => state._id !== action.payload)
         };
       default:
         return state;
