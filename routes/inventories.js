@@ -29,16 +29,31 @@ router.post('/newInventory', passport.authenticate('jwt', {session:false}), (req
 })
 
 router.post('/:id/purchase', passport.authenticate('jwt', {session:false}), (req, res)=>{
-  Product.findOne({purchaseCode:req.body.purchaseCode}).then(data=>{
+  Product.findOne({name:req.body.name}).then(data=>{
     var errors={}
     if(req.body.quantity>data.quantity){
       errors.quantity="Your input quantity is not available";
       res.status(400).json(errors)
     }else{
-      Inventory.updateOne({_id:req.params.id}, {$set:{purchase:true}}).then(inventory=>{
-        Product.updateOne({purchaseCode:req.body.purchaseCode}, {$set:{quantity:(data.quantity-req.body.quantity)}}).then(()=>{
-          res.json(inventory)
-        })
+      Inventory.findOne({name:req.body.name}).then(inventory=>{
+        
+        if(inventory && inventory.purchase==true){
+          Inventory.updateOne({name:req.body.name}, {$set:{quantity:(inventory.quantity+req.body.quantity)}}).then(invenData=>{
+            Inventory.findByIdAndDelete(req.params.id).then((deleteData)=>{
+              res.json(deleteData);
+            })
+          }).then(()=>{
+            Product.updateOne({name:req.body.name}, {$set:{quantity:(data.quantity-req.body.quantity)}}).then(()=>{
+              res.json(invenData)
+            })
+          })
+        }else{
+          Inventory.updateOne({_id:req.params.id}, {$set:{purchase:true}}).then(inventory=>{
+            Product.updateOne({name:req.body.name}, {$set:{quantity:(data.quantity-req.body.quantity)}}).then(()=>{
+              res.json(inventory)
+            })
+          })
+        }
       })
     }
   }).catch(err=> res.json(err));
@@ -62,7 +77,7 @@ router.get('/allInventory', passport.authenticate('jwt', {session:false}), (req,
 router.get('/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   let id = req.params.id;
   if(req.user.user_role==="admin"){
-    Inventory.findById(id)
+    Inventory.findById(id).populate('department')
     .then(data=> res.json(data))
     .catch(err=> res.json(err));
   }

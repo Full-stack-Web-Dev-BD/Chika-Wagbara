@@ -96,7 +96,8 @@ const OrderInventoryTable = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {purchaseOrders.map((data, index) => (
+                {purchaseOrders.length>0?
+                purchaseOrders.map((data, index) => (
                   <TableRow
                     hover
                     key={index}
@@ -140,12 +141,12 @@ const OrderInventoryTable = (props) => {
                     </TableCell>
                     <TableCell>
                       <div>
-                        <span onClick={e => purchaseInventory(data._id, {purchaseCode:data.purchaseCode, quantity:data.quantity})} style={{ cursor: "pointer" }}>Order</span>
+                        <span onClick={e => purchaseInventory(data._id, {name:data.name, quantity:data.quantity})} style={{ cursor: "pointer" }}>Order</span>
                         <span onClick={e => cancelOrder(data._id)} style={{ cursor: "pointer" }}>Cancel</span>
                       </div>
                     </TableCell>
                   </TableRow>
-                ))}
+                )):''}
               </TableBody>
             </Table>
           </Box>

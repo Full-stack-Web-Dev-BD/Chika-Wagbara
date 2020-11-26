@@ -11,10 +11,6 @@ const branchInventorySchema=new Schema({
         type:Schema.Types.ObjectId,
         ref:'departments'
     },
-    branchId:{
-        type:Schema.Types.ObjectId,
-        ref:'branchs'
-    },
     type:{
         type:String
     },
@@ -24,7 +20,7 @@ const branchInventorySchema=new Schema({
     purchaseCode:{
         type:String
     },
-    materialSatetyCode:{
+    materialSafetyCode:{
         type:String
     },
     quantity:{

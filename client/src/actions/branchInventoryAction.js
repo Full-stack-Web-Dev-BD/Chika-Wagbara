@@ -29,12 +29,12 @@ export const addbBranchInventory = postData => dispatch => {
 };
 
 // Get Branch Inventories
-export const getBranchInventories = (id) => dispatch => {
+export const getBranchInventories = () => dispatch => {
   axios
-    .get(`/api/branchInventories/${id}/allBranchInventory`)
+    .get(`/api/branchInventories/allBranchInventory`)
     .then(res =>
       dispatch({
-        type: GET_INVENTORIES,
+        type: GET_BRANCH_INVENTORIES,
         payload: res.data
       })
     )

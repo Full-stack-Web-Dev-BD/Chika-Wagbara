@@ -20,7 +20,9 @@ import {
   Typography
 } from '@material-ui/core';
 import { connect } from 'react-redux';
+import OrderInventory from './OrderInventory'
 import { getInventories, updateInventory } from '../../../actions/inventoryAction'
+import { getBranchInventories } from '../../../actions/branchInventoryAction'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -66,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const WarehouseTab=(props)=> {
-    const {inventories, className, ...rest }=props
+    const {inventories, branchInventories, className, ...rest }=props
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const [allTest, setAllTest] = useState(['adsf', 'asdf'])
@@ -83,8 +85,9 @@ const WarehouseTab=(props)=> {
     
     useEffect(()=>{
         props.getInventories();
+        props.getBranchInventories();
     }, [])
-
+    console.log(branchInventories)
     return (
         <div className={classes.root}>
             <AppBar position="static" color="default">
@@ -190,8 +193,7 @@ const WarehouseTab=(props)=> {
                                 </TableCell>
                                 <TableCell>
                                 <div>
-                                    {/* <span onClick={e => purchaseInventory(data._id, {purchaseCode:data.purchaseCode, quantity:data.quantity})} style={{ cursor: "pointer" }}>Order</span>
-                                    <span onClick={e => cancelOrder(data._id)} style={{ cursor: "pointer" }}>Cancel</span> */}
+                                    <OrderInventory id={data._id}/>
                                 </div>
                                 </TableCell>
                             </TableRow>
@@ -204,9 +206,102 @@ const WarehouseTab=(props)=> {
                 </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <div className="text-center">
-                    <h2><WarningIcon style={{ fontSize:"60px", color:'red'}}/></h2>
-                    <h3> No Component Founded </h3>
+            <div>
+                <Card
+                    className={clsx(classes.root, className)}
+                    {...rest}
+                >
+                    <PerfectScrollbar>
+                    <Box minWidth={1050}>
+                        <Table>
+                        <TableHead>
+                            <TableRow>
+                            <TableCell >
+                                Product Name
+                            </TableCell>
+                            <TableCell>
+                                Department
+                            </TableCell>
+                            <TableCell>
+                                Type
+                            </TableCell>
+                            <TableCell>
+                                Unit
+                            </TableCell>
+                            <TableCell>
+                                Purchase Code
+                            </TableCell>
+                            <TableCell>
+                                Matergial Safety Code
+                            </TableCell>
+                            <TableCell>
+                                Quantity
+                            </TableCell>
+                            <TableCell>
+                                Alert Level
+                            </TableCell>
+                            <TableCell>
+                                Tax
+                            </TableCell>
+                            <TableCell >
+                                Action
+                            </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {branchInventories.map((data, index) => (
+                            <TableRow
+                                hover
+                                key={index}
+                            >
+                                <TableCell>
+                                <Box
+                                    alignItems="center"
+                                    display="flex"
+                                >
+                                    <Typography
+                                    color="textPrimary"
+                                    variant="body1"
+                                    >
+                                    {data.name}
+                                    </Typography>
+                                </Box>
+                                </TableCell>
+                                <TableCell>
+                                {data.department?data.department.name:0}
+                                </TableCell>
+                                <TableCell>
+                                {data.type}
+                                </TableCell>
+                                <TableCell>
+                                {data.unit}
+                                </TableCell>
+                                <TableCell>
+                                {data.purchaseCode}
+                                </TableCell>
+                                <TableCell>
+                                {data.materialSafetyCode}
+                                </TableCell>
+                                <TableCell>
+                                {data.quantity}
+                                </TableCell>
+                                <TableCell>
+                                {data.alertLevel}
+                                </TableCell>
+                                <TableCell>
+                                {data.tax}
+                                </TableCell>
+                                <TableCell>
+                                <div>
+                                </div>
+                                </TableCell>
+                            </TableRow>
+                            ))}
+                        </TableBody>
+                        </Table>
+                    </Box>
+                    </PerfectScrollbar>
+                </Card>
                 </div>
             </TabPanel>
            
@@ -215,11 +310,14 @@ const WarehouseTab=(props)=> {
 }
 WarehouseTab.propTypes = {
     getInventories:PropTypes.func.isRequired,
+    getBranchInventories:PropTypes.func.isRequired,
     updateInventory:PropTypes.func.isRequired,
     className: PropTypes.string,
     inventories: PropTypes.array.isRequired,
+    branchInventories: PropTypes.array.isRequired,
   };
   const mapStateToProps = (state) => ({
-    inventories: state.inventory.inventories
+    inventories: state.inventory.inventories,
+    branchInventories: state.branchInventory.branchInventories
   })
-export default connect(mapStateToProps, { getInventories, updateInventory})(WarehouseTab)
+export default connect(mapStateToProps, { getInventories, getBranchInventories, updateInventory})(WarehouseTab)

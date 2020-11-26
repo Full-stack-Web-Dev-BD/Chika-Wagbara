@@ -7,30 +7,31 @@ const router=express.Router();
 
 router.post('/newBranchInventory', passport.authenticate('jwt', {session:false}), (req, res)=>{
     if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin"){
-        Inventory.findOne({purchaseCode:req.body.purchaseCode}).then(data=>{
-            var errors={}
-            if(req.body.quantity>data.quantity){
-                errors.quantity="Your input quantity is not available";
-                res.status(400).json(errors)
-            }else{
-                const newBranchInventory= new BranchInventory(req.body)
-                newBranchInventory.save()
-                .then(branchInventory=>{
-                    Inventory.updateOne({purchaseCode:req.body.purchaseCode},
-                        {$set:{
-                            quantity:(data.quantity-req.body.quantity)
-                        }}
-                    ).then(inventory=>{
-                        res.json(inventory)
-                    })
-    
-                })
-            }
-        }).catch(err=> res.json(err));
+      console.log(req.body)
+      Inventory.findOne({name:req.body.name}).then(data=>{
+          var errors={}
+          if(req.body.quantity>data.quantity){
+              errors.quantity="Your input quantity is not available";
+              res.status(400).json(errors)
+          }else{
+              const newBranchInventory= new BranchInventory(req.body)
+              newBranchInventory.save()
+              .then(branchInventory=>{
+                  Inventory.updateOne({name:req.body.name},
+                      {$set:{
+                          quantity:(data.quantity-req.body.quantity)
+                      }}
+                  ).then(inventory=>{
+                      res.json(inventory)
+                  })
+  
+              })
+          }
+      }).catch(err=> res.json(err));
     }  
 })
 
-router.get('/:branchId/allInventory', passport.authenticate('jwt', {session:false}), (req, res)=>{
+router.get('/allBranchInventory', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin"){
     BranchInventory.find({branchId:req.params.id})
      .then(data=> res.json(data))
