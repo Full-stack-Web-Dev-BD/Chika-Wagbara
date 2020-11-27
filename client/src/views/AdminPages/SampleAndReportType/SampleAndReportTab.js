@@ -92,7 +92,7 @@ const TestAndReportTab=(props)=> {
     })
 
     const deleteReportType=(id)=>{
-        props.deleteSample(id)
+        props.deleteReportType(id)
     }
 
     const deleteSample=(id)=>{
@@ -190,7 +190,7 @@ const TestAndReportTab=(props)=> {
             <TabPanel value={value} index={1}>
             <div>
                    <div className="d-flex">
-                        <h2 className="mb3">Samples</h2>
+                        <h2 className="mb3">Report Type</h2>
                         <ReportCreateModal />
                     </div>
                     <Card className={clsx(classes.root, className)} {...rest} >
