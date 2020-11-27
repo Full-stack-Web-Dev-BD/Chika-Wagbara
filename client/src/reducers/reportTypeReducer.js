@@ -7,6 +7,7 @@ import {
   
   const initialState = {
     reportTypes: [],
+    reportType:{}
   };
   
   export default function(state = initialState, action) {
@@ -24,7 +25,7 @@ import {
       case UPDATE_REPORT_TYPE:
         return {
           ...state,
-          reportTypes: [action.payload, ...state.reportTypes]
+          reportType: action.payload
         };  
       case DELETE_REPORT_TYPE:
         return {

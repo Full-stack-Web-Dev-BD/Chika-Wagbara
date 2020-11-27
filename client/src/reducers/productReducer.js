@@ -31,7 +31,7 @@ import {
         case UPDATE_PRODUCT:
             return {
             ...state,
-            products: [action.payload, ...state.products]
+            product: action.payload
             };
         case DELETE_PRODUCT:
             return {

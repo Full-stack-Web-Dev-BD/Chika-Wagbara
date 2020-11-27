@@ -13,6 +13,11 @@ import branchInventoryReducer from './branchInventoryReducer'
 import testReducer from './testReducer';
 import reportTypeReducer from './reportTypeReducer'
 import sampleReducer from './sampleReducer';
+import patientReducer from './patientReducer'
+import guardianReducer from './guardianReducer'
+import marketingPersonReducer from './marketingPersonReducer'
+import referringPersonReducer from './referringPersonReducer';
+import referringCenterReducer from './referringCenterReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -28,5 +33,10 @@ export default combineReducers({
   branchInventory:branchInventoryReducer,
   test:testReducer,
   reportType:reportTypeReducer,
-  sample:sampleReducer
+  sample:sampleReducer,
+  patient:patientReducer,
+  guardian:guardianReducer,
+  marketingPerson:marketingPersonReducer,
+  referringPerson:referringPersonReducer,
+  referringCenter:referringCenterReducer
 });

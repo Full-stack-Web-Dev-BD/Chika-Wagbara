@@ -44,7 +44,7 @@ import {
         case UPDATE_INVENTORY:
             return {
             ...state,
-            inventories: [action.payload, ...state.inventories]
+            inventory: action.payload
             };
         case DELETE_INVENTORY:
             return {

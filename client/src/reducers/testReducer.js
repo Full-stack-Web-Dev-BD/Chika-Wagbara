@@ -7,6 +7,7 @@ import {
   
   const initialState = {
     tests: [],
+    test:{}
   };
   
   export default function(state = initialState, action) {
@@ -24,7 +25,7 @@ import {
       case UPDATE_TEST:
         return {
           ...state,
-          tests: [action.payload, ...state.tests]
+          test: action.payload
         };  
       case DELETE_TEST:
         return {

@@ -31,7 +31,7 @@ import {
         case UPDATE_BRANCH_INVENTORY:
             return {
             ...state,
-            branchInventories: [action.payload, ...state.branchInventories]
+            branchInventory: action.payload
             };
         case DELETE_BRANCH_INVENTORY:
             return {

@@ -32,7 +32,7 @@ import {
       case UPDATE_SAMPLE:
         return {
           ...state,
-          samples: [action.payload, ...state.samples]
+          sample: action.payload
         };  
       case DELETE_SAMPLE:
         return {

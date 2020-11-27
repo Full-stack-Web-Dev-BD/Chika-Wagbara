@@ -14,7 +14,7 @@ router.post('/newMarketingPerson', passport.authenticate('jwt', {session:false})
   }  
 })
 
-router.get('/allMPerson', passport.authenticate('jwt', {session:false}), (req, res)=>{
+router.get('/allMarketingPerson', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
     MarketingPerson.find()
      .then(data=> res.json(data))
@@ -24,7 +24,7 @@ router.get('/allMPerson', passport.authenticate('jwt', {session:false}), (req, r
 
 
 
-router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
+router.get('/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   let id = req.params.id;
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
     MarketingPerson.findById(id)
@@ -38,7 +38,7 @@ router.post('/update/:id', passport.authenticate('jwt', {session:false}), functi
     MarketingPerson.findByIdAndUpdate({_id:req.params.id}, req.body).then(data=>{
       res.json(data)
     }).catch((err)=>{
-      console.log(err);
+      res.json(err);
     })
   }  
 });
@@ -47,7 +47,7 @@ router.delete('/delete/:id', passport.authenticate('jwt', {session:false}), (req
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
     MarketingPerson.findByIdAndRemove({_id:req.params.id})
       .then(data=> res.json(data))
-      .catch(err=> console.log(err));
+      .catch(err=> res.json(err));
   }    
 })
 

@@ -32,7 +32,7 @@ export default function(state = initialState, action) {
     case UPDATE_BRANCH:
         return {
           ...state,
-          branchs: [action.payload, ...state.branchs]
+          branch: action.payload
         };  
     case DELETE_BRANCH:
       return {

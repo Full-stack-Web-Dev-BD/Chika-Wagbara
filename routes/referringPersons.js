@@ -35,7 +35,7 @@ router.post('/newReferringPerson', passport.authenticate('jwt', {session:false})
   }  
 })
 
-router.get('/allRPerson', passport.authenticate('jwt', {session:false}), (req, res)=>{
+router.get('/allReferringPerson', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
     ReferringPerson.find()
      .then(data=> res.json(data))
@@ -45,7 +45,7 @@ router.get('/allRPerson', passport.authenticate('jwt', {session:false}), (req, r
 
 
 
-router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
+router.get('/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   let id = req.params.id;
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
     ReferringPerson.findById(id)
