@@ -113,6 +113,7 @@ const TestManagementTab=(props) =>{
   const deleteTest=(id)=>{
     props.deleteTest(id)
   }
+  console.log(tests)
   const customizeComponent = { whiteSpaceRow: 'whiteSpaceRow', spaceWithTitle: 'spaceWithTitle', divider: 'divider' }
   return (
     <div className={classes.root}>
@@ -180,9 +181,11 @@ const TestManagementTab=(props) =>{
               <h5 className="text-success mt-3">Click on the button to  Add a test !!</h5>
             </div>
         }
-        <div>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+      <div>
             <div className="d-flex">
-                <h2 className="mb3">Samples</h2>
+                <h2 className="mb3">Tests</h2>
             </div>
             <Card className={clsx(classes.root, className)} {...rest} >
                 <PerfectScrollbar>
@@ -284,9 +287,6 @@ const TestManagementTab=(props) =>{
                 </PerfectScrollbar>
             </Card>
         </div>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
       </TabPanel>
       {/* <TabPanel value={value} index={2}>
         Item Three

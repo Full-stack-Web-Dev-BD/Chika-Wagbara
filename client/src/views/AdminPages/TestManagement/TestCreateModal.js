@@ -172,10 +172,10 @@ const TestCreateModal=(props)=> {
                   }}
                 >
                   <option >Select Department</option>
-                  {
+                  {departments?
                     departments.map(el => (
                       <option value={el.name}> {el.name} </option>
-                    ))
+                    )):''
                   }
                 </TextField>
               </div>
@@ -194,10 +194,10 @@ const TestCreateModal=(props)=> {
                   }}
                 >
                   <option >Select Category</option>
-                  {
+                  { categories?
                     categories.map(el => (
                       <option value={el.name}> {el.name} </option>
-                    ))
+                    )):''
                   }
                 </TextField>
               </div>
@@ -217,10 +217,10 @@ const TestCreateModal=(props)=> {
                   }}
                 >
                   <option >Select Sample Type</option>
-                  {
+                  { samples?
                     samples.map(el => (
                       <option value={el.name}> {el.type} </option>
-                    ))
+                    )):''
                   }
                 </TextField>
               </div>
@@ -238,10 +238,10 @@ const TestCreateModal=(props)=> {
                   }}
                 >
                   <option >Select Report Type</option>
-                  {
+                  { reportTypes?
                     reportTypes.map(el => (
                       <option value={el.name}> {el.name} </option>
-                    ))
+                    )):''
                   }
                 </TextField>
               </div>
