@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,6 +14,19 @@ import Test2PdfView from './Test2PdfView';
 import Test3PdfView from './Test3PdfView';
 import { BottomNavigation, BottomNavigationAction, Button } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import clsx from 'clsx';
+import {
+  Card,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from '@material-ui/core';
+import { connect } from 'react-redux';
+import { getTests, deleteTest } from '../../../actions/testAction'
 
 import AddElementToPdfModal from './AddElementToPdfModal';
 import PathologyTestAddModal from './PathologyTestAddModal';
@@ -63,7 +76,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TestManagementTab=() =>{
+const TestManagementTab=(props) =>{
+  const { tests, className, ...rest }=props
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [selectedPdfFormate, setSelectedPdfFormate] = useState('')
@@ -76,6 +90,10 @@ const TestManagementTab=() =>{
   const submitTest=()=>{
     
   }
+
+  useEffect(()=>{
+    props.getTests();
+  }, [])
   
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -90,6 +108,10 @@ const TestManagementTab=() =>{
     existingTest.push(test)
     setAllTest(existingTest)
     console.log(allTest);
+  }
+
+  const deleteTest=(id)=>{
+    props.deleteTest(id)
   }
   const customizeComponent = { whiteSpaceRow: 'whiteSpaceRow', spaceWithTitle: 'spaceWithTitle', divider: 'divider' }
   return (
@@ -158,6 +180,110 @@ const TestManagementTab=() =>{
               <h5 className="text-success mt-3">Click on the button to  Add a test !!</h5>
             </div>
         }
+        <div>
+            <div className="d-flex">
+                <h2 className="mb3">Samples</h2>
+            </div>
+            <Card className={clsx(classes.root, className)} {...rest} >
+                <PerfectScrollbar>
+                <Box minWidth={1050}>
+                    <Table>
+                    <TableHead>
+                        <TableRow>
+                        <TableCell >
+                            Test Code
+                        </TableCell>
+                        <TableCell>
+                            Test Name
+                        </TableCell>
+                        <TableCell>
+                            LOINC Code
+                        </TableCell>
+                        <TableCell>
+                            Test Price
+                        </TableCell>
+                        <TableCell>
+                          Revenue Target
+                        </TableCell>
+                        <TableCell>
+                          Position  Priority
+                        </TableCell>
+                        <TableCell>
+                          Department
+                        </TableCell>
+                        <TableCell>
+                          Category
+                        </TableCell>
+                        <TableCell>
+                          Sample Type
+                        </TableCell>
+                        <TableCell>
+                          Report type
+                        </TableCell>
+                        <TableCell >
+                            Action
+                        </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {tests?
+                        tests.map(el => (
+                        <TableRow
+                            hover
+                        >
+                            <TableCell>
+                            <Box
+                                alignItems="center"
+                                display="flex"
+                            >
+                                <Typography
+                                color="textPrimary"
+                                variant="body1"
+                                >
+                                {el.testCode}
+                                </Typography>
+                            </Box>
+                            </TableCell>
+                            <TableCell>
+                            {el.testName}
+                            </TableCell>
+                            <TableCell>
+                            {el.loincCode}
+                            </TableCell>
+                            <TableCell>
+                            {el.testPrice}
+                            </TableCell>
+                            <TableCell>
+                            {el.revenueTarget}
+                            </TableCell>
+                            <TableCell>
+                            {el.positionPriority}
+                            </TableCell>
+                            <TableCell>
+                            {el.department}
+                            </TableCell>
+                            <TableCell>
+                            {el.category}
+                            </TableCell>
+                            <TableCell>
+                            {el.sampleType}
+                            </TableCell>
+                            <TableCell>
+                            {el.reportType}
+                            </TableCell>
+                            <TableCell>
+                            <div>
+                                <span onClick={e => deleteTest(el._id)}><DeleteOutlineIcon style={{ cursor: "pointer" }} /></span>
+                            </div>
+                            </TableCell>
+                        </TableRow>
+                        )):''}
+                    </TableBody>
+                    </Table>
+                </Box>
+                </PerfectScrollbar>
+            </Card>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
@@ -181,5 +307,15 @@ const TestManagementTab=() =>{
   );
 }
 
+TestManagementTab.propTypes={
+  getTests:PropTypes.func.isRequired,
+  deleteTest:PropTypes.func.isRequired,
+  tests:PropTypes.array.isRequired
+}
 
-export default TestManagementTab
+const mapStateToProps=(state)=>({
+  tests:state.test.tests
+})
+
+
+export default connect(mapStateToProps, { getTests, deleteTest })(TestManagementTab)

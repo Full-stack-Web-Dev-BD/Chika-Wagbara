@@ -23,6 +23,7 @@ const inventories=require('./routes/inventories');
 const branchInventories=require('./routes/branchInventories');
 const tests=require('./routes/tests');
 const products=require('./routes/products');
+const reportTypes=require('./routes/reportTypes');
 
 
 const app=express();
@@ -67,6 +68,7 @@ app.use('/api/inventories', inventories);
 app.use('/api/branchInventories', branchInventories);
 app.use('/api/tests', tests);
 app.use('/api/products', products);
+app.use('/api/reportTypes', reportTypes);
 
 
 if(process.env.NODE_ENV==='production'){

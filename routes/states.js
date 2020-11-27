@@ -21,7 +21,7 @@ router.post('/newState/:id', passport.authenticate('jwt', {session:false}), (req
 
 router.get('/allState', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin"){
-    State.find()
+    State.find().populate('cities')
      .then(data=> res.json(data))
      .catch(err=> res.json(err))
   }

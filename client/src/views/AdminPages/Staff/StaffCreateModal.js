@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,6 +9,9 @@ import { TextField } from '@material-ui/core';
 import uID from 'src/utils/uIDGenerator12Digite';
 import { getAge } from 'src/utils/AgeCalculator';
 import Axios from 'axios';
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { getDepartments } from '../../../actions/departmentAction'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -26,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StaffCreateModal({getAllStaff}) {
-
+const StaffCreateModal=(props)=> {
+  const { departments, getAllStaff }=props
   const [title, settitle] = useState('')
   const [firstName, setfirstName] = useState('')
   const [lastName, setlastName] = useState('')
@@ -127,6 +130,10 @@ export default function StaffCreateModal({getAllStaff}) {
       console.log(err);
     })
   }
+
+  useEffect(()=>{
+    props.getDepartments();
+  }, [])
 
   return (
     <React.Fragment>
@@ -317,11 +324,22 @@ export default function StaffCreateModal({getAllStaff}) {
                 <TextField
                   onChange={e => { setdepartment(e.target.value) }}
                   margin="dense"
-                  id="department"
-                  label="Department"
-                  type="text"
+                  id="selectLocationType"
+                  label="Select Department"
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
                   fullWidth
-                />
+                  required
+                >
+                  <option >Select Department</option>
+                  { departments?
+                    departments.map(el => (
+                      <option value={el.name} > {el.name} </option>
+                    )):''
+                  }
+                </TextField>
 
               </div>
 
@@ -620,3 +638,11 @@ export default function StaffCreateModal({getAllStaff}) {
     </React.Fragment>
   );
 }
+StaffCreateModal.propTypes={
+  getDepartments:PropTypes.func.isRequired,
+  departments:PropTypes.array.isRequired
+}
+const mapStateToProps=(state)=>({
+  departments:state.department.departments
+})
+export default connect(mapStateToProps, { getDepartments })(StaffCreateModal)

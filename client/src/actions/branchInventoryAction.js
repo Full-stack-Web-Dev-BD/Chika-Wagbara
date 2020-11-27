@@ -7,7 +7,6 @@ import {
   DELETE_BRANCH_INVENTORY,
   UPDATE_BRANCH_INVENTORY,
   GET_ERRORS,
-  GET_INVENTORY
 } from './types';
 
 // Add Branch Inventory

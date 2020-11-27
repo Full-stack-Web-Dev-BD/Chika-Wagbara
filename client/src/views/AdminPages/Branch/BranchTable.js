@@ -24,292 +24,13 @@ import BranchUpdateModal from './BranchUpdateModal';
 import axios from 'axios';
 import ViewBranchDetails from './ViewBranchDetails';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { connect } from 'react-redux'
 const useStyles = makeStyles((theme) => ({
   root: {},
   avatar: {
     marginRight: theme.spacing(2)
   }
 }));
-
-let branches = [
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-  {
-
-    name: "name",
-    location: "location",
-    address: "address",
-    city: "city",
-    state: "state",
-    phone1: "98120341",
-    phone2: "98120342",
-    email: "email",
-    branchId: "branchId",
-  },
-]
-
 
 const BranchTable = ({ className, customers, ...rest }) => {
 
@@ -395,6 +116,9 @@ const BranchTable = ({ className, customers, ...rest }) => {
                   <TableCell>
                     State
                 </TableCell>
+                <TableCell>
+                    City
+                </TableCell>
                   <TableCell>
                     Phone
                 </TableCell>
@@ -429,6 +153,9 @@ const BranchTable = ({ className, customers, ...rest }) => {
                     </TableCell>
                     <TableCell>
                       {el.state}
+                    </TableCell>
+                    <TableCell>
+                      {el.city}
                     </TableCell>
                     <TableCell>
                       {el.phone1}

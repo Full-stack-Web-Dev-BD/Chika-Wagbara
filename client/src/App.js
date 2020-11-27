@@ -18,6 +18,7 @@ import Branch from './views/AdminPages/Branch/Branch';
 import Product from './views/AdminPages/Product/Product';
 import OrderInventory from './views/AdminPages/OrderInventory/OrderInventory';
 import WarehouseInventorySetup from './views/AdminPages/WarehouseInventory/WarehouseInventorySetup';
+import SampleAndReport from './views/AdminPages/SampleAndReportType/SampleAndReport';
 import ActivityLog from './views/AdminPages/ActivityLog/ActivityLog';
 import FinanceAnalytics from './views/AdminPages/FinanceAnalytics/FinanceAnalytics';
 
@@ -134,7 +135,15 @@ const App = () => {
               component={WarehouseInventorySetup}
               exact
               layout={MainLayout}
-              path="/admin/warehouseInventorySetup"
+              path="/admin/warehouseInventory"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={SampleAndReport}
+              exact
+              layout={MainLayout}
+              path="/admin/sampleAndReport"
             />
           </Switch>
           <Switch>

@@ -5,17 +5,18 @@ import countryReducer from './countryReducer';
 import stateReducer from './stateReducer';
 import cityReducer from './cityReducer'
 import errorReducer from './errorReducer';
-import postReducer from './postReducer';
 import inventoryReducer from './inventoryReducer'
 import departmentReducer from './departmentReducer'
 import categoryReducer from './categoryReducer'
 import productReducer from './productReducer';
 import branchInventoryReducer from './branchInventoryReducer'
+import testReducer from './testReducer';
+import reportTypeReducer from './reportTypeReducer'
+import sampleReducer from './sampleReducer';
 
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
-  post: postReducer,
   branch:branchReducer,
   country:countryReducer,
   state:stateReducer,
@@ -24,5 +25,8 @@ export default combineReducers({
   department:departmentReducer,
   category:categoryReducer,
   product:productReducer,
-  branchInventory:branchInventoryReducer
+  branchInventory:branchInventoryReducer,
+  test:testReducer,
+  reportType:reportTypeReducer,
+  sample:sampleReducer
 });

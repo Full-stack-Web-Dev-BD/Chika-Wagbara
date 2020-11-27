@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,9 +9,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Axios from 'axios'
 import uID from 'src/utils/uIDGenerator12Digite';
 import { AddCircle } from '@material-ui/icons';
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { getStates } from '../../../actions/stateAction'
 
-
-export default function BranchCreateModal({getAllBranch}) {
+const BranchCreateModal=(props)=> {
+  const {states, getAllBranch }=props
   const [name, setName] = useState('')
   const [location, setLocation] = useState('')
   const [address, setAddress] = useState('')
@@ -20,6 +23,7 @@ export default function BranchCreateModal({getAllBranch}) {
   const [phone1, setPhone1] = useState('')
   const [phone2, setPhone2] = useState('')
   const [email, setEmail] = useState('')
+  const [cities, setCities] = useState([])
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -28,6 +32,10 @@ export default function BranchCreateModal({getAllBranch}) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(()=>{
+    props.getStates();
+  }, [])
   // Create Branch
   // const createBranch = (branchInfo) => {
   //   axios
@@ -60,7 +68,14 @@ export default function BranchCreateModal({getAllBranch}) {
     })
   }
   
-  
+  useEffect(()=>{
+    states.map(data=>{
+      if(data.name==state){
+        setCities(data.cities)
+      }
+    })
+  }, [state])
+
   return (
     <div className="d-inline ml-auto">
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -111,26 +126,46 @@ export default function BranchCreateModal({getAllBranch}) {
                 />
               </div>
               <div className="col-md-6">
-                <TextField
-                  onChange={e=>setCity(e.target.value)}
-                  required
+              <TextField
+                  onChange={e => { setState(e.target.value) }}
                   margin="dense"
-                  id="city"
-                  label="City"
-                  type="text"
+                  id="selectLocationType"
+                  label="Select State"
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
                   fullWidth
-                />
+                  required
+                >
+                  <option >Select State</option>
+                  { states?
+                    states.map(el => (
+                      <option value={el.name} > {el.name} </option>
+                    )):''
+                  }
+                </TextField>
               </div>
               <div className="col-md-6">
                 <TextField
-                  onChange={e=>setState(e.target.value)}
-                  required
+                  onChange={e => { setCity(e.target.value) }}
                   margin="dense"
-                  id="state"
-                  label="State"
-                  type="text"
+                  id="selectLocationType"
+                  label="Select City"
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
                   fullWidth
-                />
+                  required
+                >
+                  <option >Select City</option>
+                  { states?
+                    cities.map(el => (
+                      <option value={el.name} > {el.name} </option>
+                    )):''
+                  }
+                </TextField>
               </div>
               <div className="col-md-6">
                 <TextField
@@ -176,3 +211,13 @@ export default function BranchCreateModal({getAllBranch}) {
     </div>
   );
 }
+
+BranchCreateModal.propTypes = {
+  getStates:PropTypes.func.isRequired,
+  className: PropTypes.string,
+  states: PropTypes.array.isRequired,
+};
+const mapStateToProps = (state) => ({
+  states: state.state.states
+})
+export default connect(mapStateToProps, { getStates })(BranchCreateModal)

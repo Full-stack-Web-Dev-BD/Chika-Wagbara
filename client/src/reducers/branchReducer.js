@@ -1,31 +1,43 @@
-import * as Types from '../actions/types'
+import {
+  ADD_BRANCH,
+  GET_BRANCH,
+  GET_BRANCHS,
+  DELETE_BRANCH,
+  UPDATE_BRANCH,
+  GET_ERRORS,
+} from '../actions/types';
 const initialState = {
-  allBranch: [],
-  singleBranch: {}
+  branchs: [],
+  branch: {}
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
 
-    case Types.GET_ALL_BRANCH:
+    case GET_BRANCHS:
       return {
         ...state,
-        allBranch: action.payload.allBranch,
+        branchs: action.payload,
       };
-    case Types.GET_SINGLE_BRANCH:
+    case GET_BRANCH:
       return {
         ...state,
-        singleBranch: action.payload
+        branch: action.payload
       };
-    case Types.CREATE_BRANCH:
+    case ADD_BRANCH:
       return {
         ...state,
-        allBranch: [action.payload, ...state.allBranch]
+        branchs: [action.payload, ...state.branchs]
       };
-    case Types.DELETE_BRANCH:
+    case UPDATE_BRANCH:
+        return {
+          ...state,
+          branchs: [action.payload, ...state.branchs]
+        };  
+    case DELETE_BRANCH:
       return {
         ...state,
-        allBranch: state.allBranch.filter(branch => branch._id !== action.payload)
+        branchs: state.branchs.filter(branch => branch._id !== action.payload)
       };
     default:
       return state;

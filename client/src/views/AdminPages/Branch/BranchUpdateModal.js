@@ -9,7 +9,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Axios from 'axios'
 import uID from 'src/utils/uIDGenerator12Digite';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-const  BranchUpdateModal=({ branch,getAllBranch })=> {
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { getStates } from '../../../actions/stateAction'
+
+const  BranchUpdateModal=(props)=> {
+  const { states, branch, getAllBranch }=props
   const [name, setName] = useState(branch.name)
   const [location, setLocation] = useState(branch.location)
   const [address, setAddress] = useState(branch.address)
@@ -18,13 +23,23 @@ const  BranchUpdateModal=({ branch,getAllBranch })=> {
   const [phone1, setPhone1] = useState(branch.phone1)
   const [phone2, setPhone2] = useState(branch.phone2)
   const [email, setEmail] = useState(branch.email)
+  const [cities, setCities] = useState([])
+
   const [open, setOpen] = React.useState(false);
 
 
 
   useEffect(()=>{
-    console.log(branch);
-  },[])
+    props.getStates();
+  }, [])
+
+  useEffect(()=>{
+    states.map(data=>{
+      if(data.name==state){
+        setCities(data.cities)
+      }
+    })
+  }, [state])
   
   
   
@@ -111,27 +126,47 @@ const  BranchUpdateModal=({ branch,getAllBranch })=> {
               </div>
               <div className="col-md-6">
                 <TextField
-                  onChange={e => setCity(e.target.value)}
-                  required
+                  onChange={e => { setState(e.target.value) }}
                   margin="dense"
-                  id="city"
-                  label="City"
-                  type="text"
+                  id="selectLocationType"
+                  label="Select State"
+                  value={state}
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
                   fullWidth
-                  value={city}
-                />
+                  required
+                >
+                  <option >Select State</option>
+                  { states?
+                    states.map(el => (
+                      <option value={el.name} > {el.name} </option>
+                    )):''
+                  }
+                </TextField>
               </div>
               <div className="col-md-6">
                 <TextField
-                  onChange={e => setState(e.target.value)}
-                  required
+                  onChange={e => { setState(e.target.value) }}
                   margin="dense"
-                  id="state"
-                  label="State"
-                  type="text"
+                  id="selectLocationType"
+                  label="Select City"
+                  value={city}
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
                   fullWidth
-                  value={state}
-                />
+                  required
+                >
+                  <option >Select City</option>
+                  { states?
+                    cities.map(el => (
+                      <option value={el.name} > {el.name} </option>
+                    )):''
+                  }
+                </TextField>
               </div>
               <div className="col-md-6">
                 <TextField
@@ -180,4 +215,12 @@ const  BranchUpdateModal=({ branch,getAllBranch })=> {
     </div>
   );
 }
-export default BranchUpdateModal
+BranchUpdateModal.propTypes = {
+  getStates:PropTypes.func.isRequired,
+  className: PropTypes.string,
+  states: PropTypes.array.isRequired,
+};
+const mapStateToProps = (state) => ({
+  states: state.state.states
+})
+export default connect(mapStateToProps, { getStates })(BranchUpdateModal)

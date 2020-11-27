@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,44 +6,44 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Axios from 'axios'
 import { AddCircle } from '@material-ui/icons';
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { getDepartments } from '../../../actions/departmentAction'
+import { getCategories } from '../../../actions/categoryAction'
+import { getSamples } from '../../../actions/sampleAction'
+import { getReportTypes } from '../../../actions/reportTypeAction'
+import { addTest } from '../../../actions/testAction'
 
-
-export default function TestCreateModal({ setSelectedPdfFormate }) {
-
+const TestCreateModal=(props)=> {
+  
+  const { departments, categories, samples, reportTypes, setSelectedPdfFormate }=props
   const [open, setOpen] = React.useState(false);
 
   const [testCode, setTestCode] = useState('')
   const [testName, setTestName] = useState('')
   const [loincCode, setLoincCode] = useState('')
   const [testPrice, setTestPrice] = useState('')
-  const [revenuueTarget, setRevenuueTarget] = useState('')
+  const [revenueTarget, setRevenueTarget] = useState('')
   const [positionPriority, setPositionPriority] = useState('')
   const [department, setDepartment] = useState('')
   const [category, setCategory] = useState('')
   const [sampleType, setSampleType] = useState('')
   const [reportType, setreportType] = useState('')
-  const allDepartment = [
-    { department: 'department 1' },
-    { department: 'department 2' },
-    { department: 'department 3' },
-    { department: 'department 4' },
-    { department: 'department 5' },
-  ]
-  const allsampleType = [
-    { sampleType: 'sampleType 1' },
-    { sampleType: 'sampleType 2' },
-    { sampleType: 'sampleType 3' },
-    { sampleType: 'sampleType 4' },
-    { sampleType: 'sampleType 5' },
-  ]
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+  
+  useEffect(()=>{
+    props.getDepartments();
+    props.getCategories();
+    props.getSamples();
+    props.getReportTypes();
+  }, [])
 
   const createTestPDF = (e) => {
     e.preventDefault()
@@ -53,13 +53,26 @@ export default function TestCreateModal({ setSelectedPdfFormate }) {
       testName,
       loincCode,
       testPrice,
-      revenuueTarget,
+      revenueTarget,
       positionPriority,
       department,
       category,
       sampleType,
       reportType
     );
+    const newTest={
+      testCode:testCode,
+      testName:testName,
+      loincCode:loincCode,
+      testPrice:testPrice,
+      revenueTarget:revenueTarget,
+      positionPriority:positionPriority,
+      department:department,
+      category:category,
+      sampleType:sampleType,
+      reportType:reportType
+    }
+    props.addTest(newTest)
   }
 
 
@@ -122,7 +135,7 @@ export default function TestCreateModal({ setSelectedPdfFormate }) {
               </div>
               <div className="col-md-4">
                 <TextField
-                  onChange={e => setRevenuueTarget(e.target.value)}
+                  onChange={e => setRevenueTarget(e.target.value)}
                   required
                   margin="dense"
                   id="revenueTarget"
@@ -160,8 +173,8 @@ export default function TestCreateModal({ setSelectedPdfFormate }) {
                 >
                   <option >Select Department</option>
                   {
-                    allDepartment.map(el => (
-                      <option> {el.department} </option>
+                    departments.map(el => (
+                      <option value={el.name}> {el.name} </option>
                     ))
                   }
                 </TextField>
@@ -170,14 +183,23 @@ export default function TestCreateModal({ setSelectedPdfFormate }) {
               <div className="col-md-4">
                 <TextField
                   onChange={e => setCategory(e.target.value)}
-                  required
                   margin="dense"
-                  id="category"
+                  id="department"
                   label="Category"
                   type="text"
                   fullWidth
-                />
-
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
+                >
+                  <option >Select Category</option>
+                  {
+                    categories.map(el => (
+                      <option value={el.name}> {el.name} </option>
+                    ))
+                  }
+                </TextField>
               </div>
 
               <div className="col-md-4">
@@ -196,8 +218,8 @@ export default function TestCreateModal({ setSelectedPdfFormate }) {
                 >
                   <option >Select Sample Type</option>
                   {
-                    allsampleType.map(el => (
-                      <option> {el.sampleType} </option>
+                    samples.map(el => (
+                      <option value={el.name}> {el.type} </option>
                     ))
                   }
                 </TextField>
@@ -206,7 +228,7 @@ export default function TestCreateModal({ setSelectedPdfFormate }) {
                 <TextField
                   onChange={e => setreportType(e.target.value)}
                   margin="dense"
-                  id="reporttype"
+                  id="department"
                   label="Report Type"
                   type="text"
                   fullWidth
@@ -215,10 +237,12 @@ export default function TestCreateModal({ setSelectedPdfFormate }) {
                     native: true,
                   }}
                 >
-                  <option  >Report Type</option>
-                  <option value="Pathology" >Pathology</option>
-                  <option value="Radiology" >Radiology</option>
-                  <option value="FileReport" >File Report </option>
+                  <option >Select Report Type</option>
+                  {
+                    reportTypes.map(el => (
+                      <option value={el.name}> {el.name} </option>
+                    ))
+                  }
                 </TextField>
               </div>
             </div>
@@ -229,7 +253,7 @@ export default function TestCreateModal({ setSelectedPdfFormate }) {
                   testName &&
                   loincCode &&
                   testPrice &&
-                  revenuueTarget &&
+                  revenueTarget &&
                   positionPriority &&
                   department &&
                   category &&
@@ -247,3 +271,23 @@ export default function TestCreateModal({ setSelectedPdfFormate }) {
     </div>
   );
 }
+TestCreateModal.propTypes={
+  getDepartments:PropTypes.func.isRequired,
+  getCategories:PropTypes.func.isRequired,
+  getSamples:PropTypes.func.isRequired,
+  getReportTypes:PropTypes.func.isRequired,
+  addTest:PropTypes.func.isRequired,
+  departments:PropTypes.array.isRequired,
+  categories:PropTypes.array.isRequired,
+  samples:PropTypes.array.isRequired,
+  reportTypes:PropTypes.array.isRequired
+}
+
+const mapStateToProps=(state)=>({
+  departments:state.department.departments,
+  categories:state.category.categories,
+  samples:state.sample.samples,
+  reportTypes:state.reportType.reportTypes
+})
+
+export default connect(mapStateToProps, { addTest, getDepartments, getCategories, getSamples, getReportTypes})(TestCreateModal)

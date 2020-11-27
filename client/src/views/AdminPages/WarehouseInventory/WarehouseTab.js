@@ -86,7 +86,7 @@ const WarehouseTab=(props)=> {
     useEffect(()=>{
         props.getInventories();
         props.getBranchInventories();
-    }, [])
+    })
     console.log(branchInventories)
     return (
         <div className={classes.root}>
@@ -249,7 +249,8 @@ const WarehouseTab=(props)=> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {branchInventories.map((data, index) => (
+                            {branchInventories?
+                            branchInventories.map((data, index) => (
                             <TableRow
                                 hover
                                 key={index}
@@ -296,7 +297,7 @@ const WarehouseTab=(props)=> {
                                 </div>
                                 </TableCell>
                             </TableRow>
-                            ))}
+                            )):''}
                         </TableBody>
                         </Table>
                     </Box>

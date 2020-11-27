@@ -94,9 +94,14 @@ const Sidebar = props => {
       title: 'Report management'
     },
     {
-      href: '/admin/warehouseInventorySetup',
+      href: '/admin/warehouseInventory',
       icon: <Store/>,
       title: 'Warehouse Inventory'
+    },
+    {
+      href: '/admin/sampleAndReport',
+      icon: <Store/>,
+      title: 'Sample And Report'
     },
     {
       href: '/admin/account',
