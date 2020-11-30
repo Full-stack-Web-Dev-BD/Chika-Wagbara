@@ -23,12 +23,6 @@ const patientSchema=new Schema({
 		type:String,
 		require:true
 	},
-	user_role:{
-		type:String
-	},
-	password:{
-		type:String
-	},
     gender:{
 		type:String
 	},

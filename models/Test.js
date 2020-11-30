@@ -42,7 +42,10 @@ const testSchema=new Schema({
 	reportType:{
 		type:String,
 		require:true
-    },
+	},
+	testValues:{
+		type:Array
+	},
 	date:{
 		type:Date,
 		default:Date.now

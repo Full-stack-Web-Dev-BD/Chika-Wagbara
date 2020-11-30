@@ -26,7 +26,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getTests, deleteTest } from '../../../actions/testAction'
+import { getTests, deleteTest, addTest } from '../../../actions/testAction'
 
 import AddElementToPdfModal from './AddElementToPdfModal';
 import PathologyTestAddModal from './PathologyTestAddModal';
@@ -84,11 +84,13 @@ const TestManagementTab=(props) =>{
 
   const [customizeValue, setCustomizeValue] = useState(0)
   const [allTest, setAllTest] = useState([])
+  const [test, setTest] = useState({})
 
 
 
   const submitTest=()=>{
-    
+    test.testValues=allTest
+    props.addTest(test)
   }
 
   useEffect(()=>{
@@ -107,13 +109,11 @@ const TestManagementTab=(props) =>{
     let existingTest = [...allTest]
     existingTest.push(test)
     setAllTest(existingTest)
-    console.log(allTest);
   }
 
   const deleteTest=(id)=>{
     props.deleteTest(id)
   }
-  console.log(tests)
   const customizeComponent = { whiteSpaceRow: 'whiteSpaceRow', spaceWithTitle: 'spaceWithTitle', divider: 'divider' }
   return (
     <div className={classes.root}>
@@ -177,7 +177,7 @@ const TestManagementTab=(props) =>{
               }
             </div> :
             <div className="text-center p-5 ">
-              <TestCreateModal setSelectedPdfFormate={setSelectedPdfFormate} />
+              <TestCreateModal setSelectedPdfFormate={setSelectedPdfFormate} setTest={setTest} />
               <h5 className="text-success mt-3">Click on the button to  Add a test !!</h5>
             </div>
         }
@@ -216,12 +216,6 @@ const TestManagementTab=(props) =>{
                         </TableCell>
                         <TableCell>
                           Category
-                        </TableCell>
-                        <TableCell>
-                          Sample Type
-                        </TableCell>
-                        <TableCell>
-                          Report type
                         </TableCell>
                         <TableCell >
                             Action
@@ -269,12 +263,6 @@ const TestManagementTab=(props) =>{
                             {el.category}
                             </TableCell>
                             <TableCell>
-                            {el.sampleType}
-                            </TableCell>
-                            <TableCell>
-                            {el.reportType}
-                            </TableCell>
-                            <TableCell>
                             <div>
                                 <span onClick={e => deleteTest(el._id)}><DeleteOutlineIcon style={{ cursor: "pointer" }} /></span>
                             </div>
@@ -310,6 +298,7 @@ const TestManagementTab=(props) =>{
 TestManagementTab.propTypes={
   getTests:PropTypes.func.isRequired,
   deleteTest:PropTypes.func.isRequired,
+  addTest:PropTypes.func.isRequired,
   tests:PropTypes.array.isRequired
 }
 
@@ -318,4 +307,4 @@ const mapStateToProps=(state)=>({
 })
 
 
-export default connect(mapStateToProps, { getTests, deleteTest })(TestManagementTab)
+export default connect(mapStateToProps, { getTests, deleteTest, addTest })(TestManagementTab)

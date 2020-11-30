@@ -6,6 +6,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import { AddCircle } from '@material-ui/icons';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -17,7 +22,7 @@ import { addTest } from '../../../actions/testAction'
 
 const TestCreateModal=(props)=> {
   
-  const { departments, categories, samples, reportTypes, setSelectedPdfFormate }=props
+  const { departments, categories, samples, reportTypes, setSelectedPdfFormate, setTest }=props
   const [open, setOpen] = React.useState(false);
 
   const [testCode, setTestCode] = useState('')
@@ -29,7 +34,7 @@ const TestCreateModal=(props)=> {
   const [department, setDepartment] = useState('')
   const [category, setCategory] = useState('')
   const [sampleType, setSampleType] = useState('')
-  const [reportType, setreportType] = useState('')
+  const [reportType, setreportType] = useState('Pathology')
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,18 +53,6 @@ const TestCreateModal=(props)=> {
   const createTestPDF = (e) => {
     e.preventDefault()
     setSelectedPdfFormate(reportType)
-    console.log(
-      testCode,
-      testName,
-      loincCode,
-      testPrice,
-      revenueTarget,
-      positionPriority,
-      department,
-      category,
-      sampleType,
-      reportType
-    );
     const newTest={
       testCode:testCode,
       testName:testName,
@@ -72,7 +65,7 @@ const TestCreateModal=(props)=> {
       sampleType:sampleType,
       reportType:reportType
     }
-    props.addTest(newTest)
+    setTest(newTest)
   }
 
 
@@ -224,26 +217,15 @@ const TestCreateModal=(props)=> {
                   }
                 </TextField>
               </div>
-              <div className="col-md-4">
-                <TextField
-                  onChange={e => setreportType(e.target.value)}
-                  margin="dense"
-                  id="department"
-                  label="Report Type"
-                  type="text"
-                  fullWidth
-                  select
-                  SelectProps={{
-                    native: true,
-                  }}
-                >
-                  <option >Select Report Type</option>
-                  { reportTypes?
-                    reportTypes.map(el => (
-                      <option value={el.name}> {el.name} </option>
-                    )):''
-                  }
-                </TextField>
+              <div className="col-md-12">
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">Test Type</FormLabel>
+                  <RadioGroup aria-label="gender" name="reportType" value={reportType} onChange={(e)=> setreportType(e.target.value)}>
+                    <FormControlLabel value="Pathology" control={<Radio />} label="Pathology" />
+                    <FormControlLabel value="Radiology" control={<Radio />} label="Radiology" />
+                    <FormControlLabel value="FileReport" control={<Radio />} label="File Report" />
+                  </RadioGroup>
+                </FormControl>
               </div>
             </div>
             <DialogActions>

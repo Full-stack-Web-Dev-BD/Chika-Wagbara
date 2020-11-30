@@ -5,7 +5,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
 
-const Test1PdfView = ({ pdfContent,data, deleteElement }) => {
+const Test1PdfView = ({ pdfContent, data, deleteElement }) => {
     return (
         <div className="row">
             {
