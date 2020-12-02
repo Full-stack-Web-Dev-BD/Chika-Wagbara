@@ -3,21 +3,15 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
-  Avatar,
   Box,
   Card,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
-  makeStyles,
-  Menu,
-  MenuItem,
-  Button
+  makeStyles
 } from '@material-ui/core';
 import BranchCreateModal from './BranchCreateModal';
 import BranchUpdateModal from './BranchUpdateModal';

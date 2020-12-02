@@ -96,10 +96,10 @@ const ProductCreateModal=(props)=> {
                     required
                   >
                     <option >Select Department</option>
-                    {
+                    {departments?
                       departments.map(data => (
                         <option value={data._id} > {data.name} </option>
-                      ))
+                      )):''
                     }
                   </TextField>
               </div>

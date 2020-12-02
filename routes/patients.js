@@ -1,7 +1,9 @@
 const express=require('express');
 const passport=require('passport');
-const Patient=require('../models/Patient');
+const bcrypt=require('bcryptjs');
 
+const Patient=require('../models/Patient');
+const User=require('../models/User');
 const router=express.Router();
 
 router.post('/newPatient', passport.authenticate('jwt', {session:false}), (req, res)=>{
@@ -32,13 +34,31 @@ router.post('/newPatient', passport.authenticate('jwt', {session:false}), (req, 
 
 			})
     })
-    .catch(err=> res.json(err));
+    .catch(err=>{
+      console.log(err)
+    });
   }  
+})
+
+router.post('/:id/sign', passport.authenticate('jwt', {session:false}), (req, res)=>{
+  if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
+    Patient.updateOne({_id:req.params.id}, {$set:{isComplete:true}})
+     .then(data=> res.json(data))
+     .catch(err=> res.json(err))
+  }
 })
 
 router.get('/allPatient', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    Patient.find()
+    Patient.find({isComplete:false})
+     .then(data=> res.json(data))
+     .catch(err=> res.json(err))
+  }
+})
+
+router.get('/allCompletePatient', passport.authenticate('jwt', {session:false}), (req, res)=>{
+  if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
+    Patient.find({isComplete:true})
      .then(data=> res.json(data))
      .catch(err=> res.json(err))
   }

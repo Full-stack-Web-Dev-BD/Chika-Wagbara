@@ -4,10 +4,12 @@ import {
     UPDATE_PATIENT,
     DELETE_PATIENT,
     GET_PATIENT,
+    GET_COMPLETE_TEST,
   } from '../actions/types';
   
   const initialState = {
     patients: [],
+    completeTestPatients: [],
     patient:{}
   };
   
@@ -18,6 +20,11 @@ import {
             ...state,
             patients: action.payload,
             };
+        case GET_COMPLETE_TEST:
+            return {
+            ...state,
+            completeTestPatients: action.payload,
+            };    
         case GET_PATIENT:
             return {
             ...state,

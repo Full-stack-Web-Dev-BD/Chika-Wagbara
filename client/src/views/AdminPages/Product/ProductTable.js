@@ -104,7 +104,8 @@ const ProductTable = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {products.map((data, index) => (
+                {products?
+                 products.map((data, index) => (
                   <TableRow
                     hover
                     key={index}
@@ -154,7 +155,7 @@ const ProductTable = (props) => {
                       </div>
                     </TableCell>
                   </TableRow>
-                ))}
+                )):''}
               </TableBody>
             </Table>
           </Box>

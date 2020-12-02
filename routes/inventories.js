@@ -38,12 +38,12 @@ router.post('/:id/purchase', passport.authenticate('jwt', {session:false}), (req
       Inventory.findOne({name:req.body.name}).then(inventory=>{
         
         if(inventory && inventory.purchase==true){
-          Inventory.updateOne({name:req.body.name}, {$set:{quantity:(inventory.quantity+req.body.quantity)}}).then(invenData=>{
+          Inventory.updateOne({name:req.body.name}, {$set:{quantity:(inventory.quantity+req.body.quantity)}}).then(()=>{
             Inventory.findByIdAndDelete(req.params.id).then((deleteData)=>{
               res.json(deleteData);
             })
           }).then(()=>{
-            Product.updateOne({name:req.body.name}, {$set:{quantity:(data.quantity-req.body.quantity)}}).then(()=>{
+            Product.updateOne({name:req.body.name}, {$set:{quantity:(data.quantity-req.body.quantity)}}).then((invenData)=>{
               res.json(invenData)
             })
           })

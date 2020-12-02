@@ -74,13 +74,14 @@ const LocationTable = (props) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {countries.map((el, index) => (
+                                        {countries?
+                                        countries.map((el, index) => (
                                             <TableRow hover key={index}>
                                                 <TableCell>{el.name}</TableCell>
                                                 <TableCell>{el.states?el.states.length:0}</TableCell>
                                                 <TableCell style={{cursor:'pointer'}} onClick={()=>deleteCountry(el._id)}> <Trash/> </TableCell>
                                             </TableRow>
-                                        ))}
+                                        )):''}
                                     </TableBody>
                                 </Table>
                             </div>
@@ -96,13 +97,14 @@ const LocationTable = (props) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {states.map((el, index) => (
+                                        {states?
+                                        states.map((el, index) => (
                                             <TableRow hover  key={index}>
                                                 <TableCell>{el.name}</TableCell>
                                                 <TableCell>{el.cities.length}</TableCell>
                                                 <TableCell style={{cursor:'pointer'}} onClick={e=>deleteState(el._id)}> <Trash/> </TableCell>
                                             </TableRow>
-                                        ))}
+                                        )):''}
                                     </TableBody>
                                 </Table>
                             </div>
@@ -117,12 +119,13 @@ const LocationTable = (props) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {cities.map((el, index) => (
+                                        {cities?
+                                        cities.map((el, index) => (
                                             <TableRow hover key={index}>
                                                 <TableCell>{el.name}</TableCell>
                                                 <TableCell style={{cursor:'pointer'}} onClick={e=>deleteCity(el._id)}> <Trash/> </TableCell>
                                             </TableRow>
-                                        ))}
+                                        )):''}
                                     </TableBody>
                                 </Table>
                             </div>

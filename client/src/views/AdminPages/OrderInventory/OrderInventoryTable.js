@@ -96,7 +96,7 @@ const OrderInventoryTable = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {purchaseOrders.length>0?
+                {purchaseOrders?
                 purchaseOrders.map((data, index) => (
                   <TableRow
                     hover

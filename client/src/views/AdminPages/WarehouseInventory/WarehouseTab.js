@@ -86,8 +86,7 @@ const WarehouseTab=(props)=> {
     useEffect(()=>{
         props.getInventories();
         props.getBranchInventories();
-    })
-    console.log(branchInventories)
+    }, [])
     return (
         <div className={classes.root}>
             <AppBar position="static" color="default">

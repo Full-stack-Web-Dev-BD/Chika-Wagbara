@@ -59,6 +59,11 @@ const Sidebar = props => {
       title: 'Activity Log'
     },
     {
+      href: '/admin/addPatient',
+      icon: <Business/>,
+      title: 'Patient'
+    },
+    {
       href: '/admin/branch',
       icon: <Business/>,
       title: 'Branch'

@@ -15,7 +15,7 @@ router.post('/newBranchInventory', passport.authenticate('jwt', {session:false})
           }else{
             BranchInventory.findOne({name:req.body.name}).then(branchInventory=>{
               if(branchInventory){
-                BranchInventory.updateOne({name:req.body.name}, {$set:{quantity:(branchInventory.quantity+quantity)}}).then(()=>{
+                BranchInventory.updateOne({name:req.body.name}, {$set:{quantity:(branchInventory.quantity+parseInt(req.body.quantity))}}).then(()=>{
                   Inventory.updateOne({name:req.body.name},
                       {$set:{
                           quantity:(data.quantity-req.body.quantity)

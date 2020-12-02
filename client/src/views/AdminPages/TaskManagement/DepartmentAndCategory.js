@@ -67,14 +67,15 @@ const DepartmentAndCategory = (props) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {departments.map((el, index) => (
+                                        {departments?
+                                        departments.map((el, index) => (
                                             <TableRow hover key={index}>
                                                 <TableCell>{el.name}</TableCell>
                                                 <TableCell>{el.revenueTarget}</TableCell>
                                                 <TableCell>{el.categories.length}</TableCell>
                                                 <TableCell style={{cursor:'pointer'}} onClick={()=>deleteDepartment(el._id)}> <Trash/> </TableCell>
                                             </TableRow>
-                                        ))}
+                                        )):''}
                                     </TableBody>
                                 </Table>
                             </div>
@@ -90,13 +91,14 @@ const DepartmentAndCategory = (props) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {categories.map((el, index) => (
+                                        {categories?
+                                        categories.map((el, index) => (
                                             <TableRow hover  key={index}>
                                                 <TableCell>{el.name}</TableCell>
                                                 <TableCell>{el.revenueTarget}</TableCell>
                                                 <TableCell style={{cursor:'pointer'}} onClick={e=>deleteCategory(el._id)}> <Trash/> </TableCell>
                                             </TableRow>
-                                        ))}
+                                        )):''}
                                     </TableBody>
                                 </Table>
                             </div>

@@ -21,6 +21,7 @@ import WarehouseInventorySetup from './views/AdminPages/WarehouseInventory/Wareh
 import SampleAndReport from './views/AdminPages/SampleAndReportType/SampleAndReport';
 import ActivityLog from './views/AdminPages/ActivityLog/ActivityLog';
 import FinanceAnalytics from './views/AdminPages/FinanceAnalytics/FinanceAnalytics';
+import PatientTab from './views/AdminPages/Patient/PatientTab'
 
 // Common Component 
 import LandingPage from './views/auth/LandingPage';
@@ -80,6 +81,14 @@ const App = () => {
               exact
               layout={MainLayout}
               path="/admin/activityLog"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={PatientTab}
+              exact
+              layout={MainLayout}
+              path="/admin/addPatient"
             />
           </Switch>
           <Switch>
