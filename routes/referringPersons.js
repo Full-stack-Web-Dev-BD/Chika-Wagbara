@@ -6,6 +6,7 @@ const router=express.Router();
 
 router.post('/newReferringPerson', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
+    console.log(req.body)
     const newReferringPerson= new ReferringPerson(req.body)
     newReferringPerson.save()
     .then(rperson=>{
@@ -45,10 +46,9 @@ router.get('/allReferringPerson', passport.authenticate('jwt', {session:false}),
 
 
 
-router.get('/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
-  let id = req.params.id;
+router.get('/:email', passport.authenticate('jwt', {session:false}), function(req, res) {
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    ReferringPerson.findById(id)
+    ReferringPerson.findOne({email:req.params.email})
     .then(data=> res.json(data))
     .catch(err=> res.json(err));
   }

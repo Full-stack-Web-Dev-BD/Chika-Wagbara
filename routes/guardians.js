@@ -6,6 +6,7 @@ const router=express.Router();
 
 router.post('/newGuardian', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
+    console.log(req.body)
     const newGuardian= new Guadian(req.body)
     newGuardian.save()
     .then(guardian=>{
@@ -23,10 +24,10 @@ router.get('/allGuardian', passport.authenticate('jwt', {session:false}), (req, 
   }
 })
 
-router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
-  let id = req.params.id;
+router.get('/:email', passport.authenticate('jwt', {session:false}), function(req, res) {
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    Guadian.findById(id)
+    console.log(req.params.email)
+    Guadian.findOne({email:req.params.email})
     .then(data=> res.json(data))
     .catch(err=> res.json(err));
   }

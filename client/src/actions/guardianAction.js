@@ -47,7 +47,7 @@ export const getGuardian = (id) => dispatch => {
 // Create Branch
 export const addGuardian = postData => dispatch => {
   axios
-    .get(`/api/guardians/newGuardian`, postData)
+    .post(`/api/guardians/newGuardian`, postData)
     .then(res =>
       dispatch({
         type: ADD_GUARDIAN,

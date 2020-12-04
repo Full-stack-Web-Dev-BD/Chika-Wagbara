@@ -46,7 +46,7 @@ export const getReferringPerson = (id) => dispatch => {
 // Create Branch
 export const addReferringPerson = postData => dispatch => {
   axios
-    .get(`/api/referringPersons/newReferringPerson`, postData)
+    .post(`/api/referringPersons/newReferringPerson`, postData)
     .then(res =>
       dispatch({
         type: ADD_REFERRING_PERSON,

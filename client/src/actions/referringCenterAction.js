@@ -10,7 +10,7 @@ import {
 // Get Patients
 export const getReferringCenters = () => dispatch => {
   axios
-    .get('/api/referringCenters/allReferringCenter')
+    .get('/api/referralCenters/allReferringCenter')
     .then(res =>
       dispatch({
         type: GET_REFERRING_CENTERS,
@@ -28,7 +28,7 @@ export const getReferringCenters = () => dispatch => {
 // Get single Patient
 export const getReferringCenter = (id) => dispatch => {
   axios
-    .get(`/api/referringCenters/${id}`)
+    .get(`/api/referralCenters/${id}`)
     .then(res =>
       dispatch({
         type: GET_REFERRING_CENTER,
@@ -46,7 +46,7 @@ export const getReferringCenter = (id) => dispatch => {
 // Create Branch
 export const addReferringCenter = postData => dispatch => {
   axios
-    .get(`/api/referringCenters/newReferringPerson`, postData)
+    .post(`/api/referralCenters/newReferringCenter`, postData)
     .then(res =>
       dispatch({
         type: ADD_REFERRING_CENTER,
@@ -63,7 +63,7 @@ export const addReferringCenter = postData => dispatch => {
 // Edit Branch
 export const updateReferringCenter = (id, postData) => dispatch => {
   axios
-    .get(`/api/referringCenters/update/${id}`, postData)
+    .get(`/api/referralCenters/update/${id}`, postData)
     .then(res =>{
       dispatch({
         type: UPDATE_REFERRING_CENTER,
@@ -81,7 +81,7 @@ export const updateReferringCenter = (id, postData) => dispatch => {
 // Delete Branch
 export const deleteReferringCenter = id => dispatch => {
   axios
-    .delete(`/api/referringCenters/delete/${id}`)
+    .delete(`/api/referralCenters/delete/${id}`)
     .then(res =>
       dispatch({
         type: DELETE_REFERRING_CENTER,

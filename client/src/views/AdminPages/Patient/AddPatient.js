@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -25,7 +24,14 @@ import {
 } from '@material-ui/core';
 import { connect } from 'react-redux'
 import { addPatient, getPatients } from '../../../actions/patientAction'
-import { set } from 'lodash';
+import { getGuardian, getGuardians } from '../../../actions/guardianAction'
+import { getReferringPerson, getReferringPersons } from '../../../actions/referringPersonAction'
+import { getReferringCenter, getReferringCenters } from '../../../actions/referringCenterAction'
+import { getAge } from '../../../utils/AgeCalculator'
+import GuardianCreateModal from './GuardianCreateModal';
+import ReferringPersonCreateModal from './ReferringPersonCreateModal'
+import ReferringCenterCreateModal from './ReferringCenterCreateModal'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -35,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const AddPatient=(props)=> {
   const classes = useStyles();
-  const { patients, className, ...rest }=props
+  const { patients, guardians, guardian, referringPersons, referringPerson, referringCenters, referringCenter, className, ...rest }=props
   const [patientNo, setPatientNo] = useState('')
   const [title, setTitle] = useState('')
   const [firstName, setFirstName] = useState('')
@@ -43,7 +49,6 @@ const AddPatient=(props)=> {
   const [otherName, setOtherName] = useState('')
   const [gender, setGender] = useState('')
   const [dateOfBirth, setDateofBirth] = useState('')
-  const [age, setAge] = useState('')
   const [mobileNumber1, setMobileNumber1] = useState('')
   const [mobileNumber2, setMobileNumber2] = useState('')
   const [email, setEmail] = useState('')
@@ -61,8 +66,9 @@ const AddPatient=(props)=> {
   const [discountForPatient, setDiscountForPatient] = useState('')
   const [openingBalance, setOpeningBalance] = useState('')
   const [patientsMarketer, setPatientsMarketer] = useState('')
-  const [referringPerson, setReferringPerson] = useState('')
-  const [referringCenter, setReferringCenter] = useState('')
+  const [guardianName, setGuardianName] = useState('')
+  const [referringPersonName, setReferringPersonName] = useState('')
+  const [referringCenterName, setReferringCenterName] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   const [searchTermData, setSearchTermData] = useState([])
   const [open, setOpen] = useState(false);
@@ -72,6 +78,9 @@ const AddPatient=(props)=> {
   const [price, setPrice] = useState('')
   const [discount, setDiscount] = useState('')
   const [testData, setTestData] = useState([])
+  const [guardianEmail, setGuardianEmail] = useState('')
+  const [referralPersonEmail, setReferralPersonEmail] = useState('')
+  const [referralCenterEmail, setReferralCenterEmail] = useState('')
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -89,12 +98,29 @@ const AddPatient=(props)=> {
     let patientSearch = () => patients.filter(data => Object.values(data).filter(v => v.toString().toLowerCase().indexOf(searchTerm.toString().toLowerCase()) !== -1).length > 0);
     setSearchTermData(patientSearch())
   }, [searchTerm])
-
+  console.log(searchTermData)
   useEffect(()=>{
     props.getPatients();
   }, [])
+  
+  useEffect(()=>{
+    props.getGuardian(guardianEmail);
+    props.getGuardians();
+  }, [guardianEmail])
+
+  useEffect(()=>{
+    props.getReferringPerson(referralPersonEmail);
+    props.getReferringPersons();
+  }, [referralPersonEmail])
+  
+  useEffect(()=>{
+    props.getReferringCenter(referralCenterEmail);
+    props.getReferringCenters();
+  }, [referralCenterEmail])
+  
   const addPatient=(e)=>{
     e.preventDefault()
+    const age=getAge(dateOfBirth);
     const newPatient={
       patientNo:patientNo,
       title:title,
@@ -120,11 +146,13 @@ const AddPatient=(props)=> {
       creditLimit:creditLimit,
       discountForPatient:discountForPatient,
       openingBalance:openingBalance,
-      patientsMarketer:patientsMarketer
+      patientsMarketer:patientsMarketer,
+      guardian:guardian._id
     }
     setPatientData(newPatient)
     setTestForm(!testForm)
   }
+
   const addTest=(e)=>{
     e.preventDefault();
     const newTest={
@@ -137,10 +165,12 @@ const AddPatient=(props)=> {
     setPrice('');
     setDiscount('');
   }
+
   const handleSubmit=()=>{
     patientData.tests=testData
     props.addPatient(patientData)
   }
+
   return (
     <div className="d-inline ml-auto">
       <div style={{margin:'20px', width:'500px'}}>
@@ -270,17 +300,6 @@ const AddPatient=(props)=> {
                 id="phone1"
                 label="Date of Birth"
                 type="date"
-                fullWidth
-              />
-            </div>
-            <div className="col-md-3">
-              <TextField
-                onChange={e=>setAge(e.target.value)}
-                required
-                margin="dense"
-                id="phone2"
-                label="Age"
-                type="number"
                 fullWidth
               />
             </div>
@@ -456,6 +475,42 @@ const AddPatient=(props)=> {
                 fullWidth
               />
             </div>
+            <div className="col-md-3">
+            <TextField
+                onChange={e=>setGuardianName(e.target.value)}
+                margin="dense"
+                id="email"
+                label="Guardian"
+                type="text"
+                value={guardian? (guardian.firstName +" " +guardian.lastName):''}
+                fullWidth
+              />
+              <GuardianCreateModal setGuardianEmail={setGuardianEmail} />
+          </div>
+          <div className="col-md-3">
+            <TextField
+                onChange={e=>setReferringPersonName(e.target.value)}
+                margin="dense"
+                id="email"
+                label="Referring Person"
+                type="text"
+                value={referringPerson?(referringPerson.firstName +" " +referringPerson.lastName):''}
+                fullWidth
+              />
+              <ReferringPersonCreateModal setReferralPersonEmail={setReferralPersonEmail}/>
+          </div>
+          <div className="col-md-3">
+            <TextField
+                onChange={e=>setReferringCenterName(e.target.value)}
+                margin="dense"
+                id="email"
+                label="Referring Center"
+                type="text"
+                value={referringCenter?referringCenter.nameofReferralCenter:''}
+                fullWidth
+              />
+              <ReferringCenterCreateModal  setReferralCenterEmail={setReferralCenterEmail}/>
+          </div>
           </div>
           <DialogActions>
             <Button size="small"  variant="contained" type="submit" >Create</Button>
@@ -580,14 +635,30 @@ const AddPatient=(props)=> {
     </div>
   );
 }
-
 AddPatient.propTypes = {
   addPatient:PropTypes.func.isRequired,
   getPatients:PropTypes.func.isRequired,
+  getGuardian:PropTypes.func.isRequired,
+  getGuardians:PropTypes.func.isRequired,
+  getReferringPersons:PropTypes.func.isRequired,
+  getReferringPerson:PropTypes.func.isRequired,
+  getReferringCenter:PropTypes.func.isRequired,
+  getReferringCenters:PropTypes.func.isRequired,
   className:PropTypes.string,
-  patients:PropTypes.array.isRequired
+  patients:PropTypes.array.isRequired,
+  guardian:PropTypes.object.isRequired,
+  guardians:PropTypes.array.isRequired,
+  referringPerson:PropTypes.object.isRequired,
+  referringPersons:PropTypes.array.isRequired,
+  referringCenter:PropTypes.object.isRequired,
+  referringCenters:PropTypes.array.isRequired
 };
 const mapStateToProps = (state) => ({
-  patients:state.patient.patients
+  patients:state.patient.patients,
+  guardian:state.guardian.guardian,
+  guardians:state.guardian.guardians,
+  referringPerson:state.referringPerson.referringPerson,
+  referringPersons:state.referringPerson.referringPersons,
+  referringCenter:state.referringCenter.referringCenter
 })
-export default connect(mapStateToProps, { addPatient, getPatients })(AddPatient)
+export default connect(mapStateToProps, { addPatient, getPatients, getGuardian, getGuardians, getReferringPerson, getReferringPersons, getReferringCenter, getReferringCenters })(AddPatient)
