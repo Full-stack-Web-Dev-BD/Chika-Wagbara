@@ -61,17 +61,32 @@ const Sidebar = props => {
     {
       href: '/admin/addPatient',
       icon: <Business/>,
-      title: 'Patient'
+      title: 'Patient Management'
+    },
+    {
+      href: '/admin/guardian',
+      icon: <Business/>,
+      title: 'Guardian'
+    },
+    {
+      href: '/admin/referringPerson',
+      icon: <Business/>,
+      title: 'Referring Person'
+    },
+    {
+      href: '/admin/referringCenter',
+      icon: <Business/>,
+      title: 'Referring Center'
     },
     {
       href: '/admin/branch',
       icon: <Business/>,
-      title: 'Branch'
+      title: 'Branch Management'
     },
     {
       href: '/admin/product',
       icon: <Business/>,
-      title: 'Product'
+      title: 'Product Management'
     },
     {
       href: '/admin/order',

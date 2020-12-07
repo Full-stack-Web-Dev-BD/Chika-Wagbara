@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import { addReferringCenter } from '../../../actions/referringCenterAction'
 
 const ReferringCenterCreateModal=(props)=> {
-  const { setReferralCenterEmail }=props
+
   const [nameofReferralCenter, setNameofReferralCenter] = useState('')
   const [categoryofReferralCenter, setCategoryofReferralCenter] = useState('')
   const [primarySpecilityofCenter, setPrimarySpecilityofCenter] = useState('')
@@ -64,7 +64,6 @@ const ReferringCenterCreateModal=(props)=> {
       referringCenterMarketer:referringCenterMarketer
     }
     props.addReferringCenter(newReferringCenter)
-    setReferralCenterEmail(centerEmail);
     handleClose();
   }
   const handleClickOpen = () => {
@@ -78,7 +77,7 @@ const ReferringCenterCreateModal=(props)=> {
   return (
     <div className="d-inline ml-auto">
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-       <AddCircle/>
+       <AddCircle/>Add Referral Center
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create Referral Center</DialogTitle>

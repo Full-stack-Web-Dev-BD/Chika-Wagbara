@@ -27,6 +27,7 @@ export const getReferringPersons = () => dispatch => {
 
 // Get single Patient
 export const getReferringPerson = (id) => dispatch => {
+  console.log(id)
   axios
     .get(`/api/referringPersons/${id}`)
     .then(res =>
@@ -63,7 +64,7 @@ export const addReferringPerson = postData => dispatch => {
 // Edit Branch
 export const updateReferringPerson = (id, postData) => dispatch => {
   axios
-    .get(`/api/referringPersons/update/${id}`, postData)
+    .post(`/api/referringPersons/update/${id}`, postData)
     .then(res =>{
       dispatch({
         type: UPDATE_REFERRING_PERSON,

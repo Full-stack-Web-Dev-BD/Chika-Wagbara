@@ -12,7 +12,6 @@ import { connect } from 'react-redux'
 import { addReferringPerson } from '../../../actions/referringPersonAction'
 
 const ReferringPersonCreateModal=(props)=> {
-  const { setReferralPersonEmail }=props
   const [title, setTitle] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -48,7 +47,6 @@ const ReferringPersonCreateModal=(props)=> {
       password:password
     }
     props.addReferringPerson(newReferringPerson)
-    setReferralPersonEmail(email)
     handleClose()
   }
   const handleClickOpen = () => {
@@ -62,7 +60,7 @@ const ReferringPersonCreateModal=(props)=> {
   return (
     <div className="d-inline ml-auto">
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-       <AddCircle/>
+       <AddCircle/>Add Referring Person
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create Referral Person</DialogTitle>
@@ -72,7 +70,7 @@ const ReferringPersonCreateModal=(props)=> {
               Please  enter required all filed to create a Branch Please  enter required all
             </p>
           </DialogContentText>
-          <form>
+          <form onSubmit={e=> createReferrgingPerson(e)}>
             <div className="row">
             <div className="col-md-6">
                 <TextField
@@ -222,7 +220,7 @@ const ReferringPersonCreateModal=(props)=> {
             </div>
             <DialogActions>
               <Button onClick={handleClose} color="primary">Cancel </Button>
-              <Button size="small"  variant="contained" onClick={(e)=> createReferrgingPerson(e)} >Create</Button>
+              <Button size="small"  variant="contained" type="submit" >Create</Button>
             </DialogActions>
           </form>
         </DialogContent>

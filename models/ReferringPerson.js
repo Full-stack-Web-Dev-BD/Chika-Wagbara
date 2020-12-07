@@ -43,6 +43,9 @@ const referringPersonSchema=new Schema({
     referringPersonMarketer:{
         type:String
     },
+    password:{
+        type:String
+    },
 	date:{
 		type:Date,
 		default:Date.now

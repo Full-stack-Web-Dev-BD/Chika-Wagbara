@@ -63,7 +63,7 @@ export const addReferringCenter = postData => dispatch => {
 // Edit Branch
 export const updateReferringCenter = (id, postData) => dispatch => {
   axios
-    .get(`/api/referralCenters/update/${id}`, postData)
+    .post(`/api/referralCenters/update/${id}`, postData)
     .then(res =>{
       dispatch({
         type: UPDATE_REFERRING_CENTER,

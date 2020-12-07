@@ -46,9 +46,9 @@ router.get('/allReferringCenter', passport.authenticate('jwt', {session:false}),
 
 
 
-router.get('/:email', passport.authenticate('jwt', {session:false}), function(req, res) {
+router.get('/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    ReferralCenter.findOne({centerEmail:req.params.email})
+    ReferralCenter.findById(req.params.id)
     .then(data=> res.json(data))
     .catch(err=> res.json(err));
   }

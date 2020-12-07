@@ -64,7 +64,7 @@ export const addGuardian = postData => dispatch => {
 // Edit Branch
 export const updateGuardian = (id, postData) => dispatch => {
   axios
-    .get(`/api/guardians/update/${id}`, postData)
+    .post(`/api/guardians/update/${id}`, postData)
     .then(res =>{
       dispatch({
         type: UPDATE_GUARDIAN,

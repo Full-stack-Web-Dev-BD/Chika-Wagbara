@@ -22,6 +22,9 @@ import SampleAndReport from './views/AdminPages/SampleAndReportType/SampleAndRep
 import ActivityLog from './views/AdminPages/ActivityLog/ActivityLog';
 import FinanceAnalytics from './views/AdminPages/FinanceAnalytics/FinanceAnalytics';
 import PatientTab from './views/AdminPages/Patient/PatientTab'
+import Guardian from './views/AdminPages/Guardian/Guardian';
+import ReferringPerson from './views/AdminPages/ReferringPerson/ReferringPerson'
+import ReferringCenter from './views/AdminPages/ReferringCenter/ReferringCenter'
 
 // Common Component 
 import LandingPage from './views/auth/LandingPage';
@@ -89,6 +92,30 @@ const App = () => {
               exact
               layout={MainLayout}
               path="/admin/addPatient"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={Guardian}
+              exact
+              layout={MainLayout}
+              path="/admin/guardian"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={ReferringPerson}
+              exact
+              layout={MainLayout}
+              path="/admin/referringPerson"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={ReferringCenter}
+              exact
+              layout={MainLayout}
+              path="/admin/referringCenter"
             />
           </Switch>
           <Switch>

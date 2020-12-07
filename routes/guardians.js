@@ -24,10 +24,9 @@ router.get('/allGuardian', passport.authenticate('jwt', {session:false}), (req, 
   }
 })
 
-router.get('/:email', passport.authenticate('jwt', {session:false}), function(req, res) {
+router.get('/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    console.log(req.params.email)
-    Guadian.findOne({email:req.params.email})
+    Guadian.findById(req.params.id)
     .then(data=> res.json(data))
     .catch(err=> res.json(err));
   }
@@ -35,6 +34,7 @@ router.get('/:email', passport.authenticate('jwt', {session:false}), function(re
 
 router.post('/update/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
+    console.log(req.body)
     Guadian.findByIdAndUpdate({_id:req.params.id}, req.body).then(data=>{
       res.json(data)
     }).catch((err)=>{

@@ -12,7 +12,6 @@ import { connect } from 'react-redux'
 import { addGuardian } from '../../../actions/guardianAction'
 
 const GuardianCreateModal=(props)=> {
-  const { setGuardianEmail }=props
   const [title, setTitle] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -39,16 +38,14 @@ const GuardianCreateModal=(props)=> {
       email:email,
       relationshipToPatient:relationshipToPatient
     }
-    setGuardianEmail(email)
     props.addGuardian(newGuardian)
-    setGuardianEmail(email)
     handleClose();
   }
 
   return (
     <div className="d-inline ml-auto">
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-       <AddCircle/>
+       <AddCircle/> Add Guardian
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create Guardian</DialogTitle>
@@ -58,7 +55,7 @@ const GuardianCreateModal=(props)=> {
               Please  enter required all filed to create a Branch Please  enter required all
             </p>
           </DialogContentText>
-          <form>
+          <form onSubmit={(e)=>createGuardian(e)}>
             <div className="row">
               <div className="col-md-6">
                 <TextField
@@ -130,7 +127,7 @@ const GuardianCreateModal=(props)=> {
             </div>
             <DialogActions>
               <Button onClick={handleClose} color="primary">Cancel </Button>
-              <Button size="small"  variant="contained"  onClick={(e=> createGuardian(e))} >Create</Button>
+              <Button size="small"  variant="contained" type="submit">Create</Button>
             </DialogActions>
           </form>
         </DialogContent>
@@ -142,7 +139,6 @@ const GuardianCreateModal=(props)=> {
 GuardianCreateModal.propTypes = {
   addGuardian:PropTypes.func.isRequired,
   className: PropTypes.string,
-  states: PropTypes.array.isRequired,
 };
 const mapStateToProps = (state) => ({
   

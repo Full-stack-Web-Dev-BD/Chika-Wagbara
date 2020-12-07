@@ -28,9 +28,6 @@ import { getGuardian, getGuardians } from '../../../actions/guardianAction'
 import { getReferringPerson, getReferringPersons } from '../../../actions/referringPersonAction'
 import { getReferringCenter, getReferringCenters } from '../../../actions/referringCenterAction'
 import { getAge } from '../../../utils/AgeCalculator'
-import GuardianCreateModal from './GuardianCreateModal';
-import ReferringPersonCreateModal from './ReferringPersonCreateModal'
-import ReferringCenterCreateModal from './ReferringCenterCreateModal'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -98,7 +95,7 @@ const AddPatient=(props)=> {
     let patientSearch = () => patients.filter(data => Object.values(data).filter(v => v.toString().toLowerCase().indexOf(searchTerm.toString().toLowerCase()) !== -1).length > 0);
     setSearchTermData(patientSearch())
   }, [searchTerm])
-  console.log(searchTermData)
+  
   useEffect(()=>{
     props.getPatients();
   }, [])
@@ -485,7 +482,6 @@ const AddPatient=(props)=> {
                 value={guardian? (guardian.firstName +" " +guardian.lastName):''}
                 fullWidth
               />
-              <GuardianCreateModal setGuardianEmail={setGuardianEmail} />
           </div>
           <div className="col-md-3">
             <TextField
@@ -497,7 +493,6 @@ const AddPatient=(props)=> {
                 value={referringPerson?(referringPerson.firstName +" " +referringPerson.lastName):''}
                 fullWidth
               />
-              <ReferringPersonCreateModal setReferralPersonEmail={setReferralPersonEmail}/>
           </div>
           <div className="col-md-3">
             <TextField
@@ -509,7 +504,6 @@ const AddPatient=(props)=> {
                 value={referringCenter?referringCenter.nameofReferralCenter:''}
                 fullWidth
               />
-              <ReferringCenterCreateModal  setReferralCenterEmail={setReferralCenterEmail}/>
           </div>
           </div>
           <DialogActions>
