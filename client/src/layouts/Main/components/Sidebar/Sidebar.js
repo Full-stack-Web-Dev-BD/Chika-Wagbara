@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Drawer } from '@material-ui/core';
+import ContactsIcon from '@material-ui/icons/Contacts';
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
@@ -59,24 +60,30 @@ const Sidebar = props => {
       title: 'Activity Log'
     },
     {
-      href: '/admin/addPatient',
-      icon: <Business/>,
-      title: 'Patient Management'
-    },
-    {
-      href: '/admin/guardian',
-      icon: <Business/>,
-      title: 'Guardian'
-    },
-    {
-      href: '/admin/referringPerson',
-      icon: <Business/>,
-      title: 'Referring Person'
-    },
-    {
-      href: '/admin/referringCenter',
-      icon: <Business/>,
-      title: 'Referring Center'
+      title:'Contact Manage',
+      icon:<ContactsIcon />,
+      datas:[
+        {
+          href: '/admin/addPatient',
+          icon: <Business/>,
+          title: 'Patient'
+        },
+        {
+          href: '/admin/guardian',
+          icon: <Business/>,
+          title: 'Guardian'
+        },
+        {
+          href: '/admin/referringPerson',
+          icon: <Business/>,
+          title: 'Referring Person'
+        },
+        {
+          href: '/admin/referringCenter',
+          icon: <Business/>,
+          title: 'Referring Center'
+        }
+      ]
     },
     {
       href: '/admin/branch',

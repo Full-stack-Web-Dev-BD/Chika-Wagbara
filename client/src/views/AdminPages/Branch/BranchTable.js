@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
@@ -19,6 +20,7 @@ import axios from 'axios';
 import ViewBranchDetails from './ViewBranchDetails';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { connect } from 'react-redux'
+import { search } from '../../../utils/Search'
 const useStyles = makeStyles((theme) => ({
   root: {},
   avatar: {
@@ -30,14 +32,16 @@ const BranchTable = ({ className, customers, ...rest }) => {
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [allBranch, setAllBranch] = useState([])
+  const [branchs, setBranchs] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [ allBranch, setAllBranch ]= useState([])
 
   const getAllBranch = () => {
     axios
       .get('/api/branchs/allBranch')
       .then(res => {
 
-        setAllBranch(res.data)
+        setBranchs(res.data)
         console.log(res.data);
       }
       )
@@ -78,6 +82,14 @@ const BranchTable = ({ className, customers, ...rest }) => {
     getAllBranch()
   }, [])
 
+  useEffect(()=>{
+    setAllBranch(branchs)
+  }, [branchs])
+
+  useEffect(()=>{
+    setAllBranch(search(branchs, searchTerm))
+  }, [searchTerm])
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -91,6 +103,16 @@ const BranchTable = ({ className, customers, ...rest }) => {
       <div className="d-flex">
         <h2 className="mb3">Branches</h2>
         <BranchCreateModal getAllBranch={getAllBranch} />
+      </div>
+      <div style={{marginBottom:'10px'}}>
+        <TextField
+          onChange={e=>setSearchTerm(e.target.value)}
+          margin="dense"
+          placeholder="Search by any field"
+          type="text"
+          value={searchTerm}
+          fullWidth
+        />
       </div>
       <Card
         className={clsx(classes.root, className)}

@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { TextField } from '@material-ui/core';
+import { AddCircle } from '@material-ui/icons';
 import uID from 'src/utils/uIDGenerator12Digite';
 import { getAge } from 'src/utils/AgeCalculator';
 import Axios from 'axios';
@@ -136,8 +137,11 @@ const StaffCreateModal=(props)=> {
   }, [])
 
   return (
-    <React.Fragment>
-      <Button variant="contained" className="mr4" size="small" color="primary" onClick={handleClickOpen}>Add Staff</Button>
+    <div className="d-inline ml-auto">
+
+      <Button variant="contained" className="mr4" size="small" color="primary" onClick={handleClickOpen}>
+        <AddCircle/>Add Staff
+      </Button>
       <Dialog
         fullWidth={true}
         maxWidth='lg'
@@ -635,7 +639,7 @@ const StaffCreateModal=(props)=> {
           </form>
         </DialogContent>
       </Dialog>
-    </React.Fragment>
+    </div>
   );
 }
 StaffCreateModal.propTypes={

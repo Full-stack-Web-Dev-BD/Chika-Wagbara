@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
   Card,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
   makeStyles,
-  Menu,
-  MenuItem,
-  Button
 } from '@material-ui/core';
 import ViewProductDetails from './ViewProductDetails';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { connect } from 'react-redux'
+import { search } from '../../../utils/Search'
 import ProductCreateModal from './ProductCreateModal';
 import ProductUpdateModal from './ProductUpdateModal';
 import PurchaseProduct from './PurchaseProduct'
@@ -37,12 +34,21 @@ const ProductTable = (props) => {
   const { products, className, ...rest }=props
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [allBranch, setAllBranch] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [allProduct, setAllProduct] = useState([])
   
   
-   useEffect(()=>{
-     props.getProducts();
-   })
+  useEffect(()=>{
+    props.getProducts();
+  }, [])
+
+  useEffect(()=>{
+    setAllProduct(products)
+  }, [products])
+
+  useEffect(()=>{
+    setAllProduct(search(products, searchTerm))
+  }, [searchTerm])
 
   // Delete Branch
   const deleteProduct = id => {
@@ -61,6 +67,16 @@ const ProductTable = (props) => {
       <div className="d-flex">
         <h2 className="mb3">Products</h2>
         <ProductCreateModal />
+      </div>
+      <div style={{marginBottom:'10px'}}>
+        <TextField
+          onChange={e=>setSearchTerm(e.target.value)}
+          margin="dense"
+          placeholder="Search by any field"
+          type="text"
+          value={searchTerm}
+          fullWidth
+        />
       </div>
       <Card
         className={clsx(classes.root, className)}
@@ -104,8 +120,8 @@ const ProductTable = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {products?
-                 products.map((data, index) => (
+                {allProduct?
+                 allProduct.map((data, index) => (
                   <TableRow
                     hover
                     key={index}

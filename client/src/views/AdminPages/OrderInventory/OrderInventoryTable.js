@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField'
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
   Card,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
   makeStyles,
-  Menu,
-  MenuItem,
-  Button
 } from '@material-ui/core';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { connect } from 'react-redux'
+import { search } from '../../../utils/Search'
 import { orderInventories, purchaseInventory, deleteInventory } from '../../../actions/inventoryAction';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,12 +29,21 @@ const OrderInventoryTable = (props) => {
   const { purchaseOrders, className, ...rest }=props
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [allBranch, setAllBranch] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [allPurchaseOrder, setAllPurchaseOrder] = useState([])
   
   
-   useEffect(()=>{
-     props.orderInventories();
-   })
+  useEffect(()=>{
+    props.orderInventories();
+  }, [])
+
+  useEffect(()=>{
+    setAllPurchaseOrder(purchaseOrders)
+  }, [purchaseOrders])
+
+  useEffect(()=>{
+    setAllPurchaseOrder(search(purchaseOrders, searchTerm))
+  }, [searchTerm])
 
   // Delete Branch
   const cancelOrder = id => {
@@ -53,6 +58,16 @@ const OrderInventoryTable = (props) => {
     <div>
       <div className="d-flex">
         <h2 className="mb3">Order Inventories</h2>
+      </div>
+      <div style={{marginBottom:'10px'}}>
+        <TextField
+          onChange={e=>setSearchTerm(e.target.value)}
+          margin="dense"
+          placeholder="Search by any field"
+          type="text"
+          value={searchTerm}
+          fullWidth
+        />
       </div>
       <Card
         className={clsx(classes.root, className)}
@@ -96,8 +111,8 @@ const OrderInventoryTable = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {purchaseOrders?
-                purchaseOrders.map((data, index) => (
+                {allPurchaseOrder?
+                allPurchaseOrder.map((data, index) => (
                   <TableRow
                     hover
                     key={index}

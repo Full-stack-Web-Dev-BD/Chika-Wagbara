@@ -6,7 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import StoreIcon from '@material-ui/icons/Store';
 import StorefrontIcon from '@material-ui/icons/Storefront';
-import WarningIcon from '@material-ui/icons/Warning';
+import TextField from '@material-ui/core/TextField'
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import clsx from 'clsx';
 import {
@@ -20,6 +20,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { search } from '../../../utils/Search'
 import OrderInventory from './OrderInventory'
 import { getInventories, updateInventory } from '../../../actions/inventoryAction'
 import { getBranchInventories } from '../../../actions/branchInventoryAction'
@@ -72,6 +73,10 @@ const WarehouseTab=(props)=> {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const [allTest, setAllTest] = useState(['adsf', 'asdf'])
+    const [searchTerm, setSearchTerm]=useState('')
+    const [globalSearchTerm, setGlobalSearchTerm]=useState('')
+    const [allInventory, setAllInventory]=useState([])
+    const [allBranchInventory, setAllBranchInventory]=useState([])
 
 
     const handleChange = (event, newValue) => {
@@ -87,6 +92,23 @@ const WarehouseTab=(props)=> {
         props.getInventories();
         props.getBranchInventories();
     }, [])
+
+    useEffect(()=>{
+        setAllInventory(inventories)
+    }, [inventories])
+
+    useEffect(()=>{
+        setAllInventory(search(inventories, globalSearchTerm))
+    }, [globalSearchTerm])
+
+    useEffect(()=>{
+        setAllBranchInventory(branchInventories)
+    }, [branchInventories])
+
+    useEffect(()=>{
+        setAllBranchInventory(search(branchInventories, searchTerm))
+    }, [searchTerm])
+
     return (
         <div className={classes.root}>
             <AppBar position="static" color="default">
@@ -106,6 +128,16 @@ const WarehouseTab=(props)=> {
             </AppBar>
             <TabPanel value={value} index={0}>
             <div>
+                <div style={{marginBottom:'10px'}}>
+                    <TextField
+                    onChange={e=>setGlobalSearchTerm(e.target.value)}
+                    margin="dense"
+                    placeholder="Search by any field"
+                    type="text"
+                    value={globalSearchTerm}
+                    fullWidth
+                    />
+                </div>
                 <Card
                     className={clsx(classes.root, className)}
                     {...rest}
@@ -148,7 +180,8 @@ const WarehouseTab=(props)=> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {inventories.map((data, index) => (
+                            {allInventory?
+                            allInventory.map((data, index) => (
                             <TableRow
                                 hover
                                 key={index}
@@ -196,7 +229,7 @@ const WarehouseTab=(props)=> {
                                 </div>
                                 </TableCell>
                             </TableRow>
-                            ))}
+                            )):''}
                         </TableBody>
                         </Table>
                     </Box>
@@ -206,6 +239,16 @@ const WarehouseTab=(props)=> {
             </TabPanel>
             <TabPanel value={value} index={1}>
             <div>
+               <div style={{marginBottom:'10px'}}>
+                    <TextField
+                    onChange={e=>setSearchTerm(e.target.value)}
+                    margin="dense"
+                    placeholder="Search by any field"
+                    type="text"
+                    value={searchTerm}
+                    fullWidth
+                    />
+                </div>
                 <Card
                     className={clsx(classes.root, className)}
                     {...rest}
@@ -248,8 +291,8 @@ const WarehouseTab=(props)=> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {branchInventories?
-                            branchInventories.map((data, index) => (
+                            {allBranchInventory?
+                            allBranchInventory.map((data, index) => (
                             <TableRow
                                 hover
                                 key={index}

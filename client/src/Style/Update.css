@@ -17,3 +17,5 @@
 .patient-title{
     font-size: 30px !important;
 }
+
+#contact-button:focus { outline: none; }

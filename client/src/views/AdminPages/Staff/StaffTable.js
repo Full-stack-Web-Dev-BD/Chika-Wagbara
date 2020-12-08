@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import TextField from '@material-ui/core/TextField'
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
-  Avatar,
   Box,
   Card,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
-  Typography,
   makeStyles,
-  Menu,
-  MenuItem,
-  Button
 } from '@material-ui/core';
 import axios from 'axios';
+import { search } from '../../../utils/Search'
 import StaffCreateModal from './StaffCreateModal';
 import { DeleteOutline } from '@material-ui/icons';
 import ViewStaffDetails from './ViewStaffDetails';
@@ -36,12 +30,15 @@ const useStyles = makeStyles((theme) => ({
 
 const StaffTable = ({ className, customers, ...rest }) => {
   const [allStaff, setAllStaff] = useState([])
+  const [staffs, setStaffs] = useState([])
+  const [searchTerm, setSearchTerm]=useState('')
+
   const classes = useStyles();
   const getAllStaff = () => {
     axios
       .get('/api/staffs/allStaff')
       .then(res => {
-        setAllStaff(res.data)
+        setStaffs(res.data)
       })
       .catch(err => {
         console.log(err);
@@ -67,6 +64,14 @@ const StaffTable = ({ className, customers, ...rest }) => {
     getAllStaff()
   }, [])
 
+  useEffect(()=>{
+    setAllStaff(staffs)
+  }, [staffs])
+
+  useEffect(()=>{
+    setAllStaff(search(staffs, searchTerm))
+  }, [searchTerm])
+
 
   const deleteStaff = (id) => {
     axios.delete(`/api/staffs/delete/${id}`)
@@ -79,9 +84,20 @@ const StaffTable = ({ className, customers, ...rest }) => {
   }
   return (
     <div>
-      <h2 >All Staff</h2>
-      <div className="p2"></div>
-      <StaffCreateModal getAllStaff={getAllStaff} />
+      <div className="d-flex">
+        <h2 className="mb3">All Staff</h2>
+        <StaffCreateModal getAllStaff={getAllStaff} />
+      </div>
+      <div style={{marginBottom:'10px'}}>
+        <TextField
+          onChange={e=>setSearchTerm(e.target.value)}
+          margin="dense"
+          placeholder="Search by any field"
+          type="text"
+          value={searchTerm}
+          fullWidth
+        />
+      </div>
       <Card
         className={clsx(classes.root, className)}
         {...rest}

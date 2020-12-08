@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
@@ -15,10 +16,10 @@ import {
 } from '@material-ui/core';
 import ReferringPersonCreateModal from './ReferringPersonCreateModal';
 import ReferringPersonUpdateModal from './ReferringPersonUpdateModal';
-import axios from 'axios';
 import ViewReferringPersonDetails from './ViewReferringPersonDetails';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { connect } from 'react-redux'
+import { search } from '../../../utils/Search'
 import { getReferringPersons, deleteReferringPerson } from '../../../actions/referringPersonAction'
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -31,11 +32,23 @@ const ReferringPersonTable = (props) => {
   const { referringPersons, className, ...rest }=props
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('')
+  const [allReferringPerson, setAllReferringPerson] = useState([])
 
   
   useEffect(()=>{
     props.getReferringPersons()
   }, [])
+
+  useEffect(()=>{
+    setAllReferringPerson(referringPersons)
+  }, [referringPersons])
+  
+
+  useEffect(()=>{
+    setAllReferringPerson(search(referringPersons, searchTerm))
+  }, [searchTerm])
+  
   
   // Delete Branch
   const deleteReferringPerson = id => {
@@ -54,6 +67,16 @@ const ReferringPersonTable = (props) => {
       <div className="d-flex">
         <h2 className="mb3">Referring Persons</h2>
         <ReferringPersonCreateModal />
+      </div>
+      <div style={{marginBottom:'10px'}}>
+        <TextField
+          onChange={e=>setSearchTerm(e.target.value)}
+          margin="dense"
+          placeholder="Search by any field"
+          type="text"
+          value={searchTerm}
+          fullWidth
+        />
       </div>
       <Card
         className={clsx(classes.root, className)}
@@ -79,16 +102,14 @@ const ReferringPersonTable = (props) => {
                   <TableCell>
                     Speciality
                 </TableCell>
-                  <TableCell>
-                    Primary Place of Practice
-                </TableCell>
                   <TableCell >
                     Action
                 </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {referringPersons.map(el => (
+                {allReferringPerson?
+                allReferringPerson.map(el => (
                   <TableRow
                     hover
                   >
@@ -118,9 +139,6 @@ const ReferringPersonTable = (props) => {
                       {el.speciality}
                     </TableCell>
                     <TableCell>
-                      {el.primaryPlaceofPractice}
-                    </TableCell>
-                    <TableCell>
                       <div>
                         <ReferringPersonUpdateModal id={el._id} />
                         <span onClick={e => deleteReferringPerson(el._id)}><DeleteOutlineIcon style={{ cursor: "pointer" }} /></span>
@@ -128,7 +146,7 @@ const ReferringPersonTable = (props) => {
                       </div>
                     </TableCell>
                   </TableRow>
-                ))}
+                )):''}
               </TableBody>
             </Table>
           </Box>

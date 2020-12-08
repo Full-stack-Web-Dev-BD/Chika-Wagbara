@@ -1,9 +1,6 @@
 import axios from 'axios';
 
 import {
-  ADD_DEPARTMENT,
-  GET_DEPARTMENTS,
-  DELETE_DEPARTMENT,
   GET_ERRORS,
   ADD_CATEGORY,
   GET_CATEGORIES,
