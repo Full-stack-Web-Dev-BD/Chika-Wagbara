@@ -24,6 +24,11 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     fontWeight: theme.typography.fontWeightMedium,
   },
+  nested: {
+    paddingLeft: theme.spacing(2),
+    paddingTop: 0,
+    paddingBottom: 0
+  },
   icon: {
     color: theme.palette.icon,
     width: 24,
@@ -58,9 +63,8 @@ const SidebarNav = props => {
   const handleClick = () => {
     setOpen(!open);
   };
-
   const classes = useStyles();
-
+  
   return (
     <List
       {...rest}
@@ -70,11 +74,12 @@ const SidebarNav = props => {
       {pages.map(page => (
         page.datas?
         <div>
-          <ListItem className={classes.item} onClick={handleClick} disableGutters  >
+          <ListItem className={classes.item} disableGutters  >
             <Button
               activeClassName={classes.active}
               className={classes.button}
               id="contact-button"
+              onClick={handleClick}
             >
             <div className={classes.icon}>{page.icon}</div>
               {page.title}
@@ -82,11 +87,12 @@ const SidebarNav = props => {
             </Button>
           </ListItem>
           <Collapse in={open} timeout="auto" unmountOnExit>
-              <List  {...rest}  className={clsx(classes.root, className)}>
+              <List component="div" disablePadding>
                 {
                   page.datas.map(data=>(
                     <ListItem
-                      className={classes.item}
+                      button 
+                      className={classes.nested}
                       disableGutters
                       key={data.title}
                     >
