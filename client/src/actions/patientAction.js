@@ -82,7 +82,7 @@ export const addPatient = postData => dispatch => {
 // Edit Branch
 export const updatePatient = (id, postData) => dispatch => {
   axios
-    .get(`/api/patients/update/${id}`, postData)
+    .post(`/api/patients/update/${id}`, postData)
     .then(res =>{
       dispatch({
         type: UPDATE_PATIENT,

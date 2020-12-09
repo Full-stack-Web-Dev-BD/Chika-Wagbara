@@ -66,7 +66,7 @@ router.get('/allCompletePatient', passport.authenticate('jwt', {session:false}),
 
 
 
-router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
+router.get('/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   let id = req.params.id;
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
     Patient.findById(id)
@@ -77,6 +77,7 @@ router.get('/edit/:id', passport.authenticate('jwt', {session:false}), function(
 
 router.post('/update/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
+    console.log(req.body)
     Patient.findByIdAndUpdate({_id:req.params.id}, req.body).then(data=>{
       res.json(data)
     }).catch((err)=>{

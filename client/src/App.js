@@ -21,7 +21,8 @@ import WarehouseInventorySetup from './views/AdminPages/WarehouseInventory/Wareh
 import SampleAndReport from './views/AdminPages/SampleAndReportType/SampleAndReport';
 import ActivityLog from './views/AdminPages/ActivityLog/ActivityLog';
 import FinanceAnalytics from './views/AdminPages/FinanceAnalytics/FinanceAnalytics';
-import PatientTab from './views/AdminPages/Patient/PatientTab'
+import Patient from './views/AdminPages/Patient/Patient'
+import AddPatient from './views/AdminPages/Patient/AddPatient'
 import Guardian from './views/AdminPages/Guardian/Guardian';
 import ReferringPerson from './views/AdminPages/ReferringPerson/ReferringPerson'
 import ReferringCenter from './views/AdminPages/ReferringCenter/ReferringCenter'
@@ -88,7 +89,15 @@ const App = () => {
           </Switch>
           <Switch>
             <RouteWithLayout
-              component={PatientTab}
+              component={Patient}
+              exact
+              layout={MainLayout}
+              path="/admin/patient"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={AddPatient}
               exact
               layout={MainLayout}
               path="/admin/addPatient"
