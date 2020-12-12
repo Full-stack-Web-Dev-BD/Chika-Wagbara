@@ -22,10 +22,10 @@ import SampleAndReport from './views/AdminPages/SampleAndReportType/SampleAndRep
 import ActivityLog from './views/AdminPages/ActivityLog/ActivityLog';
 import FinanceAnalytics from './views/AdminPages/FinanceAnalytics/FinanceAnalytics';
 import Patient from './views/AdminPages/Patient/Patient'
-import AddPatient from './views/AdminPages/Patient/AddPatient'
 import Guardian from './views/AdminPages/Guardian/Guardian';
 import ReferringPerson from './views/AdminPages/ReferringPerson/ReferringPerson'
 import ReferringCenter from './views/AdminPages/ReferringCenter/ReferringCenter'
+import AddPatientTest from './views/AdminPages/PatientTest/AddPatientTest'
 
 // Common Component 
 import LandingPage from './views/auth/LandingPage';
@@ -97,10 +97,10 @@ const App = () => {
           </Switch>
           <Switch>
             <RouteWithLayout
-              component={AddPatient}
+              component={AddPatientTest}
               exact
               layout={MainLayout}
-              path="/admin/addPatient"
+              path="/admin/patientTest"
             />
           </Switch>
           <Switch>

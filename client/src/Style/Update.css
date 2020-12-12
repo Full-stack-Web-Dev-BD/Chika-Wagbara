@@ -19,3 +19,22 @@
 }
 
 #contact-button:focus { outline: none; }
+
+.iconButton, .discount-button{
+    padding: 0px !important;
+}
+.iconButton:focus{
+    outline: none;
+}
+.discount-button:focus{
+    outline: none;
+}
+.search-field{
+    margin-top: 0 !important;
+}
+.search-button{
+    height: 40px;
+}
+.search-button:focus{
+    outline: none;
+}

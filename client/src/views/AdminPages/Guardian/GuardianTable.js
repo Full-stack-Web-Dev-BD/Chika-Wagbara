@@ -123,7 +123,7 @@ const GuardianTable = (props) => {
                       </Box>
                     </TableCell>
                     <TableCell>
-                      {el.firstname} {el.lastName}
+                      {el.firstName} {el.lastName}
                     </TableCell>
                     <TableCell>
                       {el.mobileNumber}
