@@ -14,7 +14,7 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
+  Grid,
   TableRow,
   Typography,
   makeStyles
@@ -37,6 +37,8 @@ import ReferringPersonUpdateModal from '../ReferringPerson/ReferringPersonUpdate
 import ReferringCenterUpdateModal from '../ReferringCenter/ReferringCenterUpdateModal'
 import GuardianUpdateModal from '../Guardian/GuardianUpdateModal'
 import AddDiscount from './AddDiscount'
+import AddAdditionalBill from './AddAdditionalBill'
+import AddPayment from './AddPayment'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -71,6 +73,10 @@ const AddPatientTest=(props)=> {
   const [searchData, setSearchData] = useState([])
   const [testIndex, setTestIndex] = useState('')
   const [totalBill, setTotalBill] = useState(null)
+  const [paidAmount, setPaidAmount] = useState(null)
+  const [remainingAmount, setRemainingAmount] = useState(null)
+  const [testName, setTestName] = useState('')
+  const [price, setPrice] = useState('')
 
   const addTest=(data)=>{
     const newTest={
@@ -80,8 +86,23 @@ const AddPatientTest=(props)=> {
     }
     setTestData([...testData, newTest]);
     setSearchTerm('');
-  }
+}
+
+  useEffect(()=>{
+    if(price){
+      const newTest={
+        testName:testName,
+        testPrice:parseInt(price),
+        finalPrice:parseInt(price)
+      }
+      setTestData([...testData, newTest]);
+    }
+  }, [price])
   
+  useEffect(()=>{
+    let remaining=totalBill-paidAmount
+    setRemainingAmount(remaining)
+  }, [paidAmount])
 
   useEffect(()=>{
     props.getPatients();
@@ -138,14 +159,24 @@ const AddPatientTest=(props)=> {
     setTotalBill(totalTestBill)
   }, [testData])
 
-
+  const paymentMethod=[
+    {name:'Payment Mode (Default: Cash)'},
+    {name:'Cheque'},
+    {name:'Swipe Machine (New)'},
+    {name:'Credit'},
+    {name:'Credit Card'},
+    {name:'Debit Card'},
+    {name:'Free'},
+    {name:'Online Payment'},
+    {name:'Others'},
+  ]
   return (
       <Card
         className={clsx(classes.root, className)}
         {...rest}
       >
         <PerfectScrollbar>
-          <Box minWidth={1050}>
+          <Box minWidth={1050} style={{marginBottom:100}}>
             <div className="row" style={{margin:'25px'}}>
               <div className="col-md-3" style={{marginTop:'10px'}}>
                 <TextField
@@ -354,7 +385,7 @@ const AddPatientTest=(props)=> {
                   :''}
               </TableBody>
             </Table>
-            <Table style={{marginBottom:'200px', marginTop:'40px'}}>
+            <Table style={{marginTop:'40px'}} size="small">
             <TableBody style={{borderTop:"1px solid lightgray"}}>
                 <TableRow>
                   <TableCell>
@@ -362,6 +393,9 @@ const AddPatientTest=(props)=> {
                   </TableCell>
                   <TableCell>
                   
+                  </TableCell>
+                  <TableCell>
+                    
                   </TableCell>
                   <TableCell>
                     
@@ -391,49 +425,11 @@ const AddPatientTest=(props)=> {
                       
                   </TableCell>
                 </TableRow>
-              </TableBody>
-              <TableBody>
                 <TableRow hover>
-                  <TableCell>
-                    
-                  </TableCell>
-                  <TableCell>
-                    
-                  </TableCell>
-                  <TableCell>
-                    
-                  </TableCell>
-                  <TableCell>
-                    
-                  </TableCell>
-                  <TableCell>
-                    
-                  </TableCell>
-                  <TableCell>
-                    
-                  </TableCell>
-                  <TableCell>
-                    
-                  </TableCell>
-                  <TableCell>
-                    Price
-                  </TableCell>
-                  <TableCell>
-                    Discount Option
-                  </TableCell>
-                  <TableCell>
-                    Final Price
-                  </TableCell>
-                  <TableCell>
-                      
-                  </TableCell>
-                  </TableRow>
-                  <TableRow hover>
-                    <TableCell colSpan={7}>
+                    <TableCell colSpan={8}>
                       <TextField
                         onChange={e=>setSearchTerm(e.target.value)}
                         variant="outlined"
-                        className="search-field"
                         margin="dense"
                         id="title"
                         label="Select test by test name or test code"
@@ -443,20 +439,20 @@ const AddPatientTest=(props)=> {
                       />
                     </TableCell>
                     <TableCell>
-
+                      Price
                     </TableCell>
                     <TableCell>
                       Discount Option
                     </TableCell>
                     <TableCell>
-
+                      Final Price
                     </TableCell>
                     <TableCell>
                       
                   </TableCell>
                   </TableRow>
-                </TableBody>  
-                  <List style={{zIndex:'2', position:'absolute', marginTop:'-20px', marginLeft:'17px', backgroundColor:'lightGray'}}>
+                </TableBody>
+                  <List style={{zIndex:'2', position:'absolute', marginTop:'-10px', marginLeft:'17px', backgroundColor:'lightGray'}}>
                     {searchData.length>0?
                     searchData.map(data=>(
                       <ListItem style={{cursor:'pointer'}} onClick={()=> addTest(data)} >
@@ -476,7 +472,7 @@ const AddPatientTest=(props)=> {
                       testData.length>0?
                       testData.map((data, index)=>(
                         <TableRow>
-                          <TableCell colSpan={7}>
+                          <TableCell colSpan={8}>
                             <Typography>
                               {data.testName}
                             </Typography>
@@ -500,33 +496,135 @@ const AddPatientTest=(props)=> {
                           </TableCell>
                       </TableRow>
                       )):''}
-                      {
-                        testData.length>0?
-                        <TableRow>
-                          <TableCell colSpan={7}>
-                            <Typography>
-                              
-                            </Typography>
-                          </TableCell>
-                          <TableCell colSpan={2}>
-                            <Typography variant="h3">
-                            Total Amount to Pay:
-                            </Typography>
-                          </TableCell>
-                          <TableCell>
-                            <Typography variant="h3">
-                              {totalBill}
-                            </Typography>
-                          </TableCell>
-                          <TableCell>
-                            <Typography variant="h3">
-                    
-                            </Typography>
-                          </TableCell>
-                      </TableRow>:''
+                      {testData.length>0?
+                      <TableRow hover>
+                        <TableCell colSpan={8}>
+                          <TextField
+                            variant="outlined"
+                            margin="dense"
+                            id="title"
+                            label="Select reason for additional bill"
+                            type="text"
+                            fullWidth
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <AddAdditionalBill setTestName={setTestName} setPrice={setPrice}/>
+                        </TableCell>
+                        <TableCell>
+                        
+                        </TableCell>
+                        <TableCell>
+                        
+                        </TableCell>
+                        <TableCell>
+                          
+                        </TableCell>
+                      </TableRow>: ''
                       }
               </TableBody>
             </Table> 
+            {
+            testData.length>0?
+            <Grid container spacing={3} className="gridContainer">
+              <Grid item md={5}>
+                
+              </Grid>
+              <Grid item md={2} className="totalAmount">
+                <Typography variant="h5">
+                Total amount to Pay
+                </Typography>
+              </Grid>
+              <Grid item md={1}>
+                <Typography>
+                  {totalBill}
+                </Typography>
+              </Grid>
+              <Grid item md={3}>
+                <Typography>
+                 
+                </Typography>
+              </Grid>
+              <Grid item md={5}>
+                
+              </Grid>
+              <Grid item md={2} className="totalAmount">
+                <Typography variant="h5">
+                Enter paid amount:
+                </Typography>
+              </Grid>
+              <Grid item md={1}>
+                <Typography>
+                  {paidAmount?paidAmount:0}
+                </Typography>
+              </Grid>
+              <Grid item md={3}>
+                <Typography>
+                 
+                </Typography>
+              </Grid>
+              <Grid item md={5}>
+                
+              </Grid>
+              <Grid item md={2} className="totalAmount">
+                <Typography variant="h5">
+                Remaining Balance
+                </Typography>
+              </Grid>
+              <Grid item md={1}>
+                <Typography>
+                  {paidAmount?remainingAmount:totalBill}
+                </Typography>
+              </Grid>
+              <Grid item md={3}>
+                <Typography>
+                 
+                </Typography>
+              </Grid>
+              <Grid item md={5}>
+                
+              </Grid>
+              <Grid item md={3} className="totalAmount">
+              <TextField
+                onChange={e=>setSearchTerm(e.target.value)}
+                variant="outlined"
+                margin="dense"
+                id="totalAmount"
+                type="text"
+                value={searchTerm}
+                fullWidth
+                select
+                SelectProps={{
+                    native: true,
+                }}
+              >
+                {
+                  paymentMethod.map(data=>(
+                    <option value={data.name}>{data.name}</option>
+                  ))
+                }
+              </TextField>
+              <AddPayment setPaidAmount={setPaidAmount}/>
+              </Grid>
+              <Grid item md={3}>
+                <Typography>
+                 
+                </Typography>
+              </Grid>
+              <Grid item md={5}>
+                
+              </Grid>
+              <Grid item md={3} className="totalAmount">
+              <Button variant="outlined" color="primary" style={{width:'250px'}}>Confirm Payment</Button>
+              </Grid>
+              <Grid item md={3}>
+                <Typography>
+                 
+                </Typography>
+              </Grid>
+            </Grid>
+            :''
+          }
           </Box>
         </PerfectScrollbar>
       </Card>

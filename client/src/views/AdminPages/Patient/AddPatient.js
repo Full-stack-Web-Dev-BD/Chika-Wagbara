@@ -7,10 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import { AddCircle, Search } from '@material-ui/icons';
-import PageviewIcon from '@material-ui/icons/Pageview';
 import PropTypes from 'prop-types'
-import clsx from 'clsx';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
   Card,

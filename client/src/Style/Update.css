@@ -38,3 +38,19 @@
 .search-button:focus{
     outline: none;
 }
+
+.gridContainer{
+    margin-top: 0px !important;
+}
+.totalAmount{
+    margin-left: 45px !important;
+}
+
+.addButton{
+    float: left;
+    min-width: 0px !important;
+    width: 5px;
+}
+.addButton:focus{
+    outline: none;
+}
