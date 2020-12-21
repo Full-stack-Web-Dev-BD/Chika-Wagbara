@@ -44,17 +44,12 @@ const GuardianCreateModal=(props)=> {
 
   return (
     <div className="d-inline ml-auto">
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button variant="outlined" color="primary" className="search-button" onClick={handleClickOpen}>
        <AddCircle/> Add Guardian
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create Guardian</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            <p style={{ visibility: 'hidden',lineHeight:'0' }}>
-              Please  enter required all filed to create a Branch Please  enter required all
-            </p>
-          </DialogContentText>
           <form onSubmit={(e)=>createGuardian(e)}>
             <div className="row">
               <div className="col-md-6">

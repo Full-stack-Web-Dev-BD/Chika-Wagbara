@@ -6,7 +6,6 @@ const router=express.Router();
 
 router.post('/newReferringCenter', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    console.log(req.body)
     const newReferringCenter= new ReferralCenter(req.body)
     newReferringCenter.save()
     .then(rcenter=>{
@@ -23,10 +22,10 @@ router.post('/newReferringCenter', passport.authenticate('jwt', {session:false})
 					newUser.password=hash;
 					newUser.save()
 					.then((user)=>{
-						res.json(user);
+						res.json(rcenter);
 					})
 					.catch((err)=>{
-						console.log(err);
+						res.json(err);
 					})
 				})
 

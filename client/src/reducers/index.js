@@ -18,6 +18,7 @@ import guardianReducer from './guardianReducer'
 import marketingPersonReducer from './marketingPersonReducer'
 import referringPersonReducer from './referringPersonReducer';
 import referringCenterReducer from './referringCenterReducer';
+import patientTestReducer from './patientTestReducer'
 
 export default combineReducers({
   auth: authReducer,
@@ -38,5 +39,6 @@ export default combineReducers({
   guardian:guardianReducer,
   marketingPerson:marketingPersonReducer,
   referringPerson:referringPersonReducer,
-  referringCenter:referringCenterReducer
+  referringCenter:referringCenterReducer,
+  patientTest:patientTestReducer
 });

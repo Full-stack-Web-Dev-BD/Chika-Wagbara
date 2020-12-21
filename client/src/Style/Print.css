@@ -1,0 +1,26 @@
+
+@media print {
+    @page {
+        size: 8in 8.5in;
+    }
+    /* @page :left {
+        margin-left: 1cm;
+    }
+    
+    @page :right {
+        margin-left: 2cm;
+    } */
+    .main{
+        width: 800px;
+        display: table;
+    }
+    /* .left{
+        width: 250px;
+    }
+    .right{
+        background-color: red;
+        width: 200px;
+        margin-right: 0px;
+    }     */
+}
+

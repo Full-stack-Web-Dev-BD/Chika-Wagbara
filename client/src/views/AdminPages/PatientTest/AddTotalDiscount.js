@@ -5,12 +5,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { AddCircle } from '@material-ui/icons';
 
-const AddDiscount=(props)=> {
-    const { setDiscount, setTestIndex, index, testPrice }=props
+const AddTotalDiscount=(props)=> {
+    const { setTotalDiscount, totalBill }=props
     const [discountType, setDiscountType] = useState('')
-    const [patientDiscount, setPatientDiscount] = useState('')
+    const [patientTotalDiscount, setPatientTotalDiscount] = useState('')
     
     const [open, setOpen] = React.useState(false);
 
@@ -21,26 +20,25 @@ const AddDiscount=(props)=> {
         setOpen(false);
     };
 
-    const addDiscount=(event)=>{
+    const addTotalDiscount=(event)=>{
         event.preventDefault()
         if(discountType=="Concession (in NGN)"){
-            setDiscount(patientDiscount)
+            setTotalDiscount(patientTotalDiscount)
         }else{
-            setDiscount((Number(patientDiscount)*Number(testPrice))/100)
+            setTotalDiscount((Number(patientTotalDiscount)*Number(totalBill))/100)
         }
-        setTestIndex(index)
         handleClose();
     }
-    
+
     return (
         <div className="d-inline ml-auto">
-        <Button className="discount-button" onClick={handleClickOpen}>
-        <AddCircle/>
+        <Button variant="outlined" color="primary" className="search-button" onClick={handleClickOpen}>
+            Enter Total Discount
         </Button>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Add Discount</DialogTitle>
+            <DialogTitle id="form-dialog-title">Add Total Discount</DialogTitle>
             <DialogContent>
-            <form onSubmit={(e)=>addDiscount(e)} style={{width:'400px'}}>
+            <form onSubmit={(e)=>addTotalDiscount(e)} style={{width:'400px'}}>
                 <div className="row">
                 <div className="col-md-12">
                     <TextField
@@ -63,10 +61,10 @@ const AddDiscount=(props)=> {
                 </div>
                 <div className="col-md-12">
                     <TextField
-                        onChange={e=>setPatientDiscount(e.target.value)}
+                        onChange={e=>setPatientTotalDiscount(e.target.value)}
                         margin="dense"
                         id="title"
-                        label="Discount"
+                        label="Total Discount"
                         type="number"
                         fullWidth
                     />
@@ -74,7 +72,7 @@ const AddDiscount=(props)=> {
                 </div>
                 <DialogActions>
                 <Button onClick={handleClose} color="primary">Cancel </Button>
-                <Button size="small"  variant="contained" type="submit">Add Discount</Button>
+                <Button size="small"  variant="contained" type="submit">Add Total Discount</Button>
                 </DialogActions>
             </form>
             </DialogContent>
@@ -83,4 +81,4 @@ const AddDiscount=(props)=> {
     );
 }
 
-export default AddDiscount;
+export default AddTotalDiscount;

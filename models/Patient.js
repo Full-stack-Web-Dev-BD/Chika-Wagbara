@@ -90,25 +90,6 @@ const patientSchema=new Schema({
 	password:{
 		type:String
 	},
-	guardian:{
-		type:Schema.Types.ObjectId,
-		ref:'guardians'
-	},
-	referringPerson:{
-		type:Schema.Types.ObjectId,
-		ref:'referringPersons'
-	},
-	referringCenter:{
-		type:Schema.Types.ObjectId,
-		ref:'referringCenters'
-	},
-	tests:{
-		type:Array
-	},
-	isComplete:{
-		type:Boolean,
-		default:false
-	},
 	date:{
 		type:Date,
 		default:Date.now

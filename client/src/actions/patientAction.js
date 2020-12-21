@@ -2,7 +2,6 @@ import axios from 'axios';
 import {
   ADD_PATIENT,
   GET_PATIENT,
-  GET_COMPLETE_TEST,
   GET_PATIENTS,
   DELETE_PATIENT,
   UPDATE_PATIENT,
@@ -21,23 +20,6 @@ export const getPatients = () => dispatch => {
     .catch(err =>{
       dispatch({
         type: GET_PATIENTS,
-        payload: null
-      })
-    });
-};
-
-export const getCompleteTestPatients = () => dispatch => {
-  axios
-    .get('/api/patients/allCompletePatient')
-    .then(res =>
-      dispatch({
-        type: GET_COMPLETE_TEST,
-        payload: res.data
-      })
-    )
-    .catch(err =>{
-      dispatch({
-        type: GET_COMPLETE_TEST,
         payload: null
       })
     });

@@ -12,12 +12,25 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { addGuardian } from '../../../actions/guardianAction'
 
+const method=[
+    'Payment Mode (Default: Cash)',
+    'Cheque',
+    'Swipe Machine (New)',
+    'Credit',
+    'Credit Card',
+    'Debit Card',
+    'Free',
+    'Online Payment',
+    'Others'
+]
 const GuardianCreateModal=(props)=> {
-    const { setPaidAmount }=props
-    const [email, setEmail] = useState('')
+    const { setPaidAmount, setPaymentMode }=props
+    const [methodType, setMetodType] = useState('')
     const [amount, setAmount] = useState('')
     const [totalPaidAmount, setTotalPaidAmount] = useState('')
     const [formField, setFormField] = useState([])
+    const [paymentMethod, setPaymentMethod] = useState(method)
+    const [methodData, setMethodData] = useState([])
     
     const [open, setOpen] = React.useState(false);
 
@@ -28,13 +41,17 @@ const GuardianCreateModal=(props)=> {
         setOpen(false);
     };
 
+    // useEffect(()=>{
+    //     setPaymentMethod(method)
+    // }, [])
+
     useEffect(()=>{
         let fieldData=[]
         let fields=(
             <>
                 <div className="col-md-6">
                     <TextField
-                        onChange={e=>setEmail(e.target.value)}
+                        onChange={e=>setMetodType(e.target.value)}
                         margin="dense"
                         variant="outlined"
                         id="title"
@@ -45,9 +62,10 @@ const GuardianCreateModal=(props)=> {
                             native: true,
                         }}
                     >
+                       <option value="" selected="selected" selected disabled hidden>Select Payment Method</option>
                     {
                         paymentMethod.map(data=>(
-                            <option value={data.name}>{data.name}</option>
+                            <option value={data}>{data}</option>
                         ))
                     }
                     </TextField>
@@ -68,6 +86,12 @@ const GuardianCreateModal=(props)=> {
             setFormField([...formField, fieldData])
     }, [])
 
+    const addMethod=(data)=>{
+        var payMethod=[...methodData]
+        payMethod.push(data);
+        setMethodData(payMethod)
+    }
+    
     const AddField=()=>{
         let paid=Number(totalPaidAmount);
         paid=paid+Number(amount)
@@ -77,7 +101,7 @@ const GuardianCreateModal=(props)=> {
             <>
                 <div className="col-md-6">
                     <TextField
-                        onChange={e=>setEmail(e.target.value)}
+                        onChange={e=>setMetodType(e.target.value)}
                         margin="dense"
                         variant="outlined"
                         id="title"
@@ -90,7 +114,7 @@ const GuardianCreateModal=(props)=> {
                     >
                     {
                         paymentMethod.map(data=>(
-                            <option value={data.name}>{data.name}</option>
+                            <option value={data}>{data}</option>
                         ))
                     }
                     </TextField>
@@ -107,8 +131,11 @@ const GuardianCreateModal=(props)=> {
                     />
                 </div>
             </>)
-        fieldData.push(fields)
-        setFormField([...formField, fieldData])
+        if(methodData.indexOf(methodType)==-1){
+            addMethod(methodType)
+            fieldData.push(fields)
+            setFormField([...formField, fieldData])
+        }    
     }
 
     const addPayment=(event)=>{
@@ -124,19 +151,12 @@ const GuardianCreateModal=(props)=> {
         let allFormField = [...formField]
         allFormField.splice(index, 1)
         setFormField(allFormField)
-    }
-    const paymentMethod=[
-        {name:'Payment Mode (Default: Cash)'},
-        {name:'Cheque'},
-        {name:'Swipe Machine (New)'},
-        {name:'Credit'},
-        {name:'Credit Card'},
-        {name:'Debit Card'},
-        {name:'Free'},
-        {name:'Online Payment'},
-        {name:'Others'},
-    ]
 
+        let datas=[...methodData]
+        datas.splice(index, 1)
+        setMethodData(datas)
+    }
+    
     return (
         <div className="d-inline ml-auto">
         <Button className="search-button" onClick={handleClickOpen} style={{float:'right', height:'16px', fontSize:'12px'}}>

@@ -11,6 +11,7 @@ const countries=require('./routes/countries');
 const states=require('./routes/states')
 const cities=require('./routes/cities');
 const patients=require('./routes/patients');
+const patientTests=require('./routes/patientTests');
 const guardians=require('./routes/guardians');
 const referringPersons=require('./routes/referringPersons');
 const referralCenters=require('./routes/referralCenters');
@@ -56,6 +57,7 @@ app.use('/api/countries', countries);
 app.use('/api/states', states);
 app.use('/api/cities', cities);
 app.use('/api/patients', patients);
+app.use('/api/patientTests', patientTests);
 app.use('/api/guardians', guardians);
 app.use('/api/referringPersons', referringPersons);
 app.use('/api/referralCenters', referralCenters);

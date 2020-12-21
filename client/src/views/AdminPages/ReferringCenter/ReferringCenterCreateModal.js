@@ -76,7 +76,7 @@ const ReferringCenterCreateModal=(props)=> {
   
   return (
     <div className="d-inline ml-auto">
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button variant="outlined" color="primary" className="search-button" onClick={handleClickOpen}>
        <AddCircle/>Add Referral Center
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

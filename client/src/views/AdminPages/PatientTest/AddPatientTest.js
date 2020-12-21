@@ -28,17 +28,20 @@ import { getReferringPersons } from '../../../actions/referringPersonAction'
 import { getReferringCenters } from '../../../actions/referringCenterAction'
 import { getTests } from '../../../actions/testAction'
 import { search } from '../../../utils/Search'
-import AddPatient from './AddPatient'
-import AddGuardian from './AddGuardian'
-import AddReferringPerson from './AddReferringPerson'
-import AddReferringCenter from './AddReferringCenter'
+import AddPatient from '../Patient/AddPatient'
+import AddGuardian from '../Guardian/GuardianCreateModal'
+import AddReferringPerson from '../ReferringPerson/ReferringPersonCreateModal'
+import AddReferringCenter from '../ReferringCenter/ReferringCenterCreateModal'
 import UpdatePatient from '../Patient/UpdatePatient'
 import ReferringPersonUpdateModal from '../ReferringPerson/ReferringPersonUpdateModal'
 import ReferringCenterUpdateModal from '../ReferringCenter/ReferringCenterUpdateModal'
 import GuardianUpdateModal from '../Guardian/GuardianUpdateModal'
 import AddDiscount from './AddDiscount'
+import AddTotalDiscount from './AddTotalDiscount'
 import AddAdditionalBill from './AddAdditionalBill'
 import AddPayment from './AddPayment'
+import Receipt from './Receipt'
+import PrintandPdf from './PrintandPdf'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,16 +62,17 @@ const useStyles = makeStyles((theme) => ({
 const AddPatientTest=(props)=> {
   const { patients, guardians, referringPersons, referringCenters, tests, className, ...rest }=props
   const classes = useStyles();
-  const [patient, setPatient] = useState({})
+  const [patient, setPatient] = useState('')
   const [guardian, setGuardian] = useState('')
   const [referringPerson, setReferringPerson] = useState('')
   const [referringCenter, setReferringCenter] = useState('')
-  const [patientEmail, setPatientEmail] = useState('')
-  const [guardianEmail, setGuardianEmail] = useState('')
-  const [referringPersonEmail, setReferringPersonEmail] = useState('')
-  const [referringCenterName, setReferringCenterName] = useState('')
+  const [patientSearchTerm, setPatientSearchTerm] = useState('')
+  const [guardianSearchTerm, setGuardianSearchTerm] = useState('')
+  const [referringPersonSearchTerm, setReferringPersonSearchTerm] = useState('')
+  const [referringCenterSearchTerm, setReferringCenterSearchTerm] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   const [discount, setDiscount] = useState(null)
+  const [totalDiscount, setTotalDiscount] = useState(null)
   const [testData, setTestData] = useState([])
   const [searchData, setSearchData] = useState([])
   const [testIndex, setTestIndex] = useState('')
@@ -77,6 +81,72 @@ const AddPatientTest=(props)=> {
   const [remainingAmount, setRemainingAmount] = useState(null)
   const [testName, setTestName] = useState('')
   const [price, setPrice] = useState('')
+  const [displayTest, setDisplayTest] = useState(true)
+  const [patientSearchData, setPatientSearchData]=useState([])
+  const [guardianSearchData, setGuadianSearchData]=useState([])
+  const [referringPersonSeachData, setReferringPersonSearchData]=useState([])
+  const [referringCenterSearchData, SetReferringCenterSearchData]=useState([])
+  const [totalPrice, setTotalPrice]=useState('')  
+  const [totalFinalPrice, setTotalFinalPrice]=useState(null)  
+  const [testDiscount, setTestDiscount]=useState(null)  
+  const [paymentMode, setPaymentMode]=useState('')
+   
+  useEffect(() => {
+    if(patientSearchTerm){
+      setPatientSearchData(search(patients, patientSearchTerm))
+    }else{
+      setPatientSearchData([])
+    }
+  }, [patientSearchTerm])
+
+  useEffect(() => {
+    if(guardianSearchTerm){
+      setGuadianSearchData(search(guardians, guardianSearchTerm))
+    }else{
+      setGuadianSearchData([])
+    }
+  }, [guardianSearchTerm])
+
+  useEffect(() => {
+    if(referringPersonSearchTerm){
+      setReferringPersonSearchData(search(referringPersons, referringPersonSearchTerm))
+    }else{
+      setReferringPersonSearchData([])
+    }
+  }, [referringPersonSearchTerm])
+
+  useEffect(() => {
+    if(referringCenterSearchTerm){
+      SetReferringCenterSearchData(search(referringCenters, referringCenterSearchTerm))
+    }else{
+      SetReferringCenterSearchData([])
+    }
+  }, [referringCenterSearchTerm])
+
+  const addPatient=(data)=>{
+    setPatient(data)
+    setPatientSearchTerm('')
+  }
+  
+  const addGuardian=(data)=>{
+    setGuardian(data)
+    setGuardianSearchTerm('')
+  }
+
+  const addReferringPerson=(data)=>{
+    setReferringPerson(data)
+    setReferringPersonSearchTerm('')
+  }
+
+  const addReferringCenter=(data)=>{
+    setReferringCenter(data)
+    setReferringCenterSearchTerm('')
+  }
+
+  const addPatientTest=()=>{
+    setDisplayTest(false)
+  }
+
 
   const addTest=(data)=>{
     const newTest={
@@ -86,7 +156,7 @@ const AddPatientTest=(props)=> {
     }
     setTestData([...testData, newTest]);
     setSearchTerm('');
-}
+  }
 
   useEffect(()=>{
     if(price){
@@ -98,6 +168,7 @@ const AddPatientTest=(props)=> {
       setTestData([...testData, newTest]);
     }
   }, [price])
+
   
   useEffect(()=>{
     let remaining=totalBill-paidAmount
@@ -117,21 +188,6 @@ const AddPatientTest=(props)=> {
     allTest.splice(index, 1)
     setTestData(allTest)
   }
-  useEffect(()=>{
-    setPatient(search(patients, patientEmail))
-  }, [patientEmail])
-
-  useEffect(()=>{
-    setGuardian(search(guardians, guardianEmail))
-  }, [guardianEmail])
-
-  useEffect(()=>{
-    setReferringPerson(search(referringPersons, referringPersonEmail))
-  }, [referringPersonEmail])
-
-  useEffect(()=>{
-    setReferringCenter(search(referringCenters, referringCenterName))
-  }, [referringCenterName])
   
   useEffect(()=>{
     if(searchTerm){
@@ -143,7 +199,6 @@ const AddPatientTest=(props)=> {
 
   useEffect(()=>{
     if(discount){
-      let totalTestBill=0
       let allTest=[...testData]
       allTest[testIndex].discount=Number(discount)
       allTest[testIndex].finalPrice=(allTest[testIndex].testPrice-Number(discount))
@@ -152,12 +207,26 @@ const AddPatientTest=(props)=> {
   }, [discount])
 
   useEffect(()=>{
+    let price=0
+    let finalPrice=0
     let totalTestBill=0
+    let discount=0
     for(var i=0; i<testData.length; i++){
       totalTestBill=totalTestBill+testData[i].finalPrice
+      price=price+testData[i].testPrice
+      finalPrice=finalPrice+testData[i].finalPrice
+      discount=discount+(testData[i].discount?testData[i].discount:0)
     }
     setTotalBill(totalTestBill)
+    setTotalPrice(price)
+    setTotalFinalPrice(finalPrice)
+    setTestDiscount(discount)
   }, [testData])
+
+  useEffect(()=>{
+    let result=totalBill-totalDiscount
+    setTotalBill(result)
+  }, [totalDiscount])
 
   const paymentMethod=[
     {name:'Payment Mode (Default: Cash)'},
@@ -170,78 +239,146 @@ const AddPatientTest=(props)=> {
     {name:'Online Payment'},
     {name:'Others'},
   ]
+  console.log(totalPrice)
+
   return (
+    <>
+    {displayTest?
       <Card
         className={clsx(classes.root, className)}
         {...rest}
       >
         <PerfectScrollbar>
           <Box minWidth={1050} style={{marginBottom:100}}>
-            <div className="row" style={{margin:'25px'}}>
+            <div className="row" style={{margin:'25px', zIndex:'1'}}>
               <div className="col-md-3" style={{marginTop:'10px'}}>
                 <TextField
-                  onChange={e=>setPatient(e.target.value)}
+                  onChange={e=>setPatientSearchTerm(e.target.value)}
                   variant="outlined"
                   className="search-field"
                   margin="dense"
                   id="title"
                   label="Select Patient"
                   type="text"
+                  value={patientSearchTerm}
                   fullWidth
                 />
+                <List style={{zIndex:'2', position:'absolute', marginTop:'-3px', backgroundColor:'lightGray'}}>
+                  {patientSearchData.length>0?
+                  patientSearchData.map(data=>(
+                    <ListItem style={{cursor:'pointer'}} onClick={()=> addPatient(data)} >
+                      <ListItemText>
+                        <Typography variant="h6">
+                          Name: {data.firstName} {data.lastName}
+                        </Typography>
+                        <Typography variant="h6">
+                          Email: {data.email}
+                        </Typography>
+                      </ListItemText>
+                    </ListItem>
+                  )):''}
+                </List>
               </div>
               <div className="col-md-3"  style={{marginTop:'10px'}}>
-                <AddPatient setPatientEmail={setPatientEmail}/>
+                <AddPatient />
               </div>
               <div className="col-md-3"  style={{marginTop:'10px'}}>
                 <TextField
-                  onChange={e=>setGuardian(e.target.value)}
+                  onChange={e=>setGuardianSearchTerm(e.target.value)}
                   variant="outlined"
                   className="search-field"
                   margin="dense"
                   id="guardian"
                   label="Select Guardian"
                   type="text"
+                  value={guardianSearchTerm}
                   fullWidth
                 />
+                <List style={{zIndex:'2', position:'absolute', marginTop:'-3px', backgroundColor:'lightGray'}}>
+                  {guardianSearchData.length>0?
+                  guardianSearchData.map(data=>(
+                    <ListItem style={{cursor:'pointer'}} onClick={()=> addGuardian(data)} >
+                      <ListItemText>
+                        <Typography variant="h6">
+                          Name: {data.firstName} {data.lastName}
+                        </Typography>
+                        <Typography variant="h6">
+                          Email: {data.email}
+                        </Typography>
+                      </ListItemText>
+                    </ListItem>
+                  )):''}
+                </List>
               </div>
               <div className="col-md-3"  style={{marginTop:'10px'}}>
-                <AddGuardian setGuardianEmail={setGuardianEmail}/>
+                <AddGuardian />
               </div>
               <div className="col-md-3"  style={{marginTop:'10px'}}>
                 <TextField
-                  onChange={e=>setReferringPerson(e.target.value)}
+                  onChange={e=>setReferringPersonSearchTerm(e.target.value)}
                   variant="outlined"
                   className="search-field"
                   margin="dense"
                   id="referringPerson"
                   label="Select Referring Person"
                   type="text"
+                  value={referringPersonSearchTerm}
                   fullWidth
                 />
+                <List style={{zIndex:'2', position:'absolute', marginTop:'-3px', backgroundColor:'lightGray'}}>
+                  {referringPersonSeachData.length>0?
+                  referringPersonSeachData.map(data=>(
+                    <ListItem style={{cursor:'pointer'}} onClick={()=> addReferringPerson(data)} >
+                      <ListItemText>
+                        <Typography variant="h6">
+                          Name: {data.firstName} {data.lastName}
+                        </Typography>
+                        <Typography variant="h6">
+                          Email: {data.email}
+                        </Typography>
+                      </ListItemText>
+                    </ListItem>
+                  )):''}
+                </List>
               </div>
               <div className="col-md-3"  style={{marginTop:'10px'}}>
-                <AddReferringPerson setReferringPersonEmail={setReferringPersonEmail}/>
+                <AddReferringPerson />
               </div>              
               <div className="col-md-3"  style={{marginTop:'10px'}}>
                 <TextField
-                  onChange={e=>setReferringCenter(e.target.value)}
+                  onChange={e=>setReferringCenterSearchTerm(e.target.value)}
                   variant="outlined"
                   className="search-field"
                   margin="dense"
                   id="referringCenter"
                   label="Select Referring Center"
                   type="text"
+                  value={referringCenterSearchTerm}
                   fullWidth
                 />
+                <List style={{zIndex:'2', position:'absolute', marginTop:'-3px', backgroundColor:'lightGray'}}>
+                  {referringCenterSearchData.length>0?
+                  referringCenterSearchData.map(data=>(
+                    <ListItem style={{cursor:'pointer'}} onClick={()=> addReferringCenter(data)} >
+                      <ListItemText>
+                        <Typography variant="h6">
+                          Name: {data.nameofReferralCenter}
+                        </Typography>
+                        <Typography variant="h6">
+                          Email: {data.centerEmail}
+                        </Typography>
+                      </ListItemText>
+                    </ListItem>
+                  )):''}
+                </List>
               </div>
               <div className="col-md-3"  style={{marginTop:'10px'}}>
-                <AddReferringCenter setReferringCenterName={setReferringCenterName} />
+                <AddReferringCenter />
               </div>
             </div>
-            <Table>
+            <Table style={{zIndex:1}}>
               <TableBody>
-                {patient.length>0?
+                {patient?
                   <TableRow
                     hover
                   >
@@ -254,30 +391,30 @@ const AddPatientTest=(props)=> {
                           color="textPrimary"
                           variant="body1"
                         >
-                         patient- {patient[0].patientNo}
+                         patient- {patient.patientNo}
                         </Typography>
                       </Box>
                     </TableCell>
                     <TableCell>
-                      {patient[0].firstName} {patient[0].lastName}
+                      {patient.firstName} {patient.lastName}
                     </TableCell>
                     <TableCell>
-                      {patient[0].mobileNumber1}
+                      {patient.mobileNumber1}
                     </TableCell>
                     <TableCell>
-                      {patient[0].email}
+                      {patient.email}
                     </TableCell>
                     <TableCell>
-                    {patient[0].gender} {patient[0].age} {"Years"}
+                    {patient.gender} {patient.age} {"Years"}
                     </TableCell>
                     <TableCell>
                       <div>
-                        <UpdatePatient id={patient[0]._id}/>
+                        <UpdatePatient id={patient._id}/>
                       </div>
                     </TableCell>
                   </TableRow>
                   :''}
-                  {referringPerson.length>0?
+                  {referringPerson?
                   <TableRow
                     hover
                   >
@@ -295,25 +432,25 @@ const AddPatientTest=(props)=> {
                       </Box>
                     </TableCell>
                     <TableCell>
-                      {referringPerson[0].firstName} {referringPerson[0].lastName}
+                      {referringPerson.firstName} {referringPerson.lastName}
                     </TableCell>
                     <TableCell>
-                      {referringPerson[0].mobileNumber}
+                      {referringPerson.mobileNumber}
                     </TableCell>
                     <TableCell>
-                      {referringPerson[0].email}
+                      {referringPerson.email}
                     </TableCell>
                     <TableCell>
-                      {referringPerson[0].speciality}
+                      {referringPerson.speciality}
                     </TableCell>
                     <TableCell>
                       <div>
-                        <ReferringPersonUpdateModal id={referringPerson[0]._id}/>
+                        <ReferringPersonUpdateModal id={referringPerson._id}/>
                       </div>
                     </TableCell>
                   </TableRow>
                   :''}
-                  {referringCenter.length>0?
+                  {referringCenter?
                   <TableRow
                     hover
                   >
@@ -331,25 +468,25 @@ const AddPatientTest=(props)=> {
                       </Box>
                     </TableCell>
                     <TableCell>
-                      {referringCenter[0].nameofReferralCenter}
+                      {referringCenter.nameofReferralCenter}
                     </TableCell>
                     <TableCell>
-                      {referringCenter[0].phone1}
+                      {referringCenter.phone1}
                     </TableCell>
                     <TableCell>
-                      {referringCenter[0].centerEmail}
+                      {referringCenter.centerEmail}
                     </TableCell>
                     <TableCell>
-                      {referringCenter[0].centerLocation}
+                      {referringCenter.centerLocation}
                     </TableCell>
                     <TableCell>
                       <div>
-                        <ReferringCenterUpdateModal id={referringCenter[0]._id}/>
+                        <ReferringCenterUpdateModal id={referringCenter._id}/>
                       </div>
                     </TableCell>
                   </TableRow>
                   :''}
-                  {guardian.length>0?
+                  {guardian?
                   <TableRow
                     hover
                   >
@@ -367,18 +504,18 @@ const AddPatientTest=(props)=> {
                       </Box>
                     </TableCell>
                     <TableCell>
-                      {guardian[0].firstName} {guardian[0].lastName}
+                      {guardian.firstName} {guardian.lastName}
                     </TableCell>
                     <TableCell>
                     </TableCell>
                     <TableCell>
                     </TableCell>
                     <TableCell>
-                      {guardian[0].relationshipToPatient}
+                      {guardian.relationshipToPatient}
                     </TableCell>
                     <TableCell>
                       <div>
-                        <GuardianUpdateModal id={guardian[0]._id}/>
+                        <GuardianUpdateModal id={guardian._id}/>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -413,7 +550,7 @@ const AddPatientTest=(props)=> {
                     
                   </TableCell>
                   <TableCell>
-                    Date: {moment(Date.now()).format('DD/MM/YYYY')}
+                    Date: {moment(Date.now()).format('DD/MM/YYYY   hh:mm A')}
                   </TableCell>
                   <TableCell>
                       
@@ -483,7 +620,7 @@ const AddPatientTest=(props)=> {
                           <TableCell>
                             {data.discount?
                               data.discount:
-                              <AddDiscount setDiscount={setDiscount} setTestIndex={setTestIndex} index={index}/>
+                              <AddDiscount setDiscount={setDiscount} setTestIndex={setTestIndex} index={index} testPrice={data.testPrice}/>
                             }
                           </TableCell>
                           <TableCell>
@@ -497,9 +634,11 @@ const AddPatientTest=(props)=> {
                       </TableRow>
                       )):''}
                       {testData.length>0?
+                      <>
                       <TableRow hover>
                         <TableCell colSpan={8}>
                           <TextField
+                            disabled
                             variant="outlined"
                             margin="dense"
                             id="title"
@@ -520,7 +659,33 @@ const AddPatientTest=(props)=> {
                         <TableCell>
                           
                         </TableCell>
-                      </TableRow>: ''
+                      </TableRow>
+                      <TableRow hover>
+                        <TableCell colSpan={8}>
+                          <TextField
+                            disabled
+                            variant="outlined"
+                            margin="dense"
+                            id="title"
+                            label="Select Total Discount Option"
+                            type="text"
+                            fullWidth
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <AddTotalDiscount setTotalDiscount={setTotalDiscount} totalBill={totalBill}/>
+                        </TableCell>
+                        <TableCell>
+                        {totalDiscount?totalDiscount:0}
+                        </TableCell>
+                        <TableCell>
+                        
+                        </TableCell>
+                        <TableCell>
+                          
+                        </TableCell>
+                      </TableRow>
+                      </>: ''
                       }
               </TableBody>
             </Table> 
@@ -604,7 +769,7 @@ const AddPatientTest=(props)=> {
                   ))
                 }
               </TextField>
-              <AddPayment setPaidAmount={setPaidAmount}/>
+              <AddPayment setPaidAmount={setPaidAmount} setPaymentMode={setPaymentMode}/>
               </Grid>
               <Grid item md={3}>
                 <Typography>
@@ -615,7 +780,7 @@ const AddPatientTest=(props)=> {
                 
               </Grid>
               <Grid item md={3} className="totalAmount">
-              <Button variant="outlined" color="primary" style={{width:'250px'}}>Confirm Payment</Button>
+              <Button variant="outlined" color="primary" style={{width:'250px'}} onClick={()=> addPatientTest()}>Confirm Payment</Button>
               </Grid>
               <Grid item md={3}>
                 <Typography>
@@ -627,7 +792,10 @@ const AddPatientTest=(props)=> {
           }
           </Box>
         </PerfectScrollbar>
-      </Card>
+      </Card>:
+      <PrintandPdf testData={testData} totalDiscount={totalDiscount} totalPrice={totalPrice} totalFinalPrice={totalFinalPrice} testDiscount={testDiscount} patientNo={patient?patient.patientNo:0}/>
+    }
+  </>
   );
 }
 

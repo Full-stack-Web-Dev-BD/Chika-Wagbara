@@ -22,10 +22,10 @@ router.post('/newReferringPerson', passport.authenticate('jwt', {session:false})
 					newUser.password=hash;
 					newUser.save()
 					.then((user)=>{
-						res.json(user);
+						res.json(rperson);
 					})
 					.catch((err)=>{
-						console.log(err);
+						res.json(err);
 					})
 				})
 
