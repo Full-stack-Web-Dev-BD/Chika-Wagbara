@@ -31,6 +31,7 @@ const GuardianCreateModal=(props)=> {
     const [formField, setFormField] = useState([])
     const [paymentMethod, setPaymentMethod] = useState(method)
     const [methodData, setMethodData] = useState([])
+    const [paymentModeData, setPaymentModeData] = useState([])
     
     const [open, setOpen] = React.useState(false);
 
@@ -91,6 +92,12 @@ const GuardianCreateModal=(props)=> {
         payMethod.push(data);
         setMethodData(payMethod)
     }
+
+    const addPaymentMode=(data)=>{
+        var paymentMode=[...methodData]
+        paymentMode.push(data);
+        setPaymentModeData(paymentMode)
+    }
     
     const AddField=()=>{
         let paid=Number(totalPaidAmount);
@@ -133,6 +140,7 @@ const GuardianCreateModal=(props)=> {
             </>)
         if(methodData.indexOf(methodType)==-1){
             addMethod(methodType)
+            addPaymentMode({type:methodType, amount:amount})
             fieldData.push(fields)
             setFormField([...formField, fieldData])
         }    
@@ -144,6 +152,9 @@ const GuardianCreateModal=(props)=> {
         paid=paid+Number(amount)
         setTotalPaidAmount(paid)
         setPaidAmount(paid)
+        let paymentData=[...paymentModeData]
+        paymentData.push({type:methodType, amount:amount})
+        setPaymentMode(paymentData)
         handleClose();
     }
 

@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 const PrintandPdf=(props)=> {
   const classes = useStyles();
   const componentRef = useRef();
-  const { testData, totalDiscount, totalPrice, totalFinalPrice, testDiscount, patientNo }=props
+  const { testData, totalDiscount, totalPrice, totalFinalPrice, testDiscount, patientNo, paidAmount, remainingAmount, paymentMode, billBy, billTo }=props
 
 
   const handlePrint = useReactToPrint({
@@ -118,9 +118,41 @@ const PrintandPdf=(props)=> {
                   <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{totalFinalPrice}</TableCell>
                 </TableRow>
               </TableBody>
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan={5} style={{fontSize:11, padding:'6px 6px 6px 8px'}}>{""}</TableCell>
+                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>Paid</TableCell>
+                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{paidAmount}</TableCell>
+                </TableRow>
+              </TableBody>
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan={5} style={{fontSize:11, padding:'6px 6px 6px 8px'}}>{""}</TableCell>
+                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>Balance</TableCell>
+                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{remainingAmount}</TableCell>
+                </TableRow>
+              </TableBody>
             </Table>
           </TableContainer>
           </Grid>
+          <Grid item md={12} sm container style={{borderLeft:'1px solid', borderBottom:'1px solid', borderRight:'1px solid', margin:'-15px 7px 10px 7px'}}>
+            <Grid item xs container direction="column" spacing={2} style={{margin:2}}>
+              <Typography variant="p" style={{fontSize:10}}><strong>Mode of Payment:</strong>
+              {paymentMode?
+                paymentMode.map(data=>(
+                  <span style={{margin:3}}>{data.type}:{data.amount}</span>
+                )):''
+              }
+              </Typography>
+              <Typography variant="p" style={{fontSize:10}}><strong>Bill By:</strong>
+                <span style={{margin:3}}>{billBy}</span>
+              </Typography>
+              <Typography variant="p" style={{fontSize:10}}><strong>Bill To:</strong>
+                <span style={{margin:3}}>{billTo.name}</span>
+              </Typography>
+            </Grid>
+          </Grid>
+          <hr style={{backgroundColor:'black'}}/>
         </Grid>
       </Paper>
     </div>

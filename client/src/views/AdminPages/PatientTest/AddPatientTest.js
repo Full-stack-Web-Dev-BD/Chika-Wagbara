@@ -61,6 +61,8 @@ const useStyles = makeStyles((theme) => ({
 
 const AddPatientTest=(props)=> {
   const { patients, guardians, referringPersons, referringCenters, tests, className, ...rest }=props
+  const { user } = props.auth;
+
   const classes = useStyles();
   const [patient, setPatient] = useState('')
   const [guardian, setGuardian] = useState('')
@@ -239,7 +241,7 @@ const AddPatientTest=(props)=> {
     {name:'Online Payment'},
     {name:'Others'},
   ]
-  console.log(totalPrice)
+  console.log(props)
 
   return (
     <>
@@ -793,7 +795,7 @@ const AddPatientTest=(props)=> {
           </Box>
         </PerfectScrollbar>
       </Card>:
-      <PrintandPdf testData={testData} totalDiscount={totalDiscount} totalPrice={totalPrice} totalFinalPrice={totalFinalPrice} testDiscount={testDiscount} patientNo={patient?patient.patientNo:0}/>
+      <PrintandPdf testData={testData} totalDiscount={totalDiscount} totalPrice={totalPrice} totalFinalPrice={totalFinalPrice} testDiscount={testDiscount} patientNo={patient?patient.patientNo:0} paidAmount={paidAmount?paidAmount:0} remainingAmount={paidAmount?remainingAmount:totalBill} paymentMode={paymentMode} billBy={patient.firstName +" " +patient.lastName} billTo={user}/>
     }
   </>
   );
@@ -811,13 +813,14 @@ AddPatientTest.propTypes = {
   referringPersons: PropTypes.array.isRequired,
   referringCenters: PropTypes.array.isRequired,
   tests: PropTypes.array.isRequired,
-
+  auth: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
   patients: state.patient.patients,
   guardians:state.guardian.guardians,
   referringPersons:state.referringPerson.referringPersons,
   referringCenters:state.referringCenter.referringCenters,
-  tests:state.test.tests
+  tests:state.test.tests,
+  auth:state.auth
 })
 export default connect(mapStateToProps, { getPatients, getGuardians, getReferringPersons, getTests, getReferringCenters  })(AddPatientTest)
