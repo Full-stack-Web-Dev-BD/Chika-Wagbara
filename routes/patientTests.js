@@ -7,6 +7,7 @@ const router=express.Router();
 
 router.post('/newPatientTest', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
+    console.log(req.body)
     const newPatientTest= new PatientTest(req.body)
     newPatientTest.save()
     .then(patientTest=> res.json(patientTest))
@@ -26,7 +27,7 @@ router.post('/:id/sign', passport.authenticate('jwt', {session:false}), (req, re
 
 router.get('/allPatientTest', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    PatientTest.find({isComplete:false})
+    PatientTest.find({isComplete:false}).populate('patient')
      .then(data=> res.json(data))
      .catch(err=> res.json(err))
   }

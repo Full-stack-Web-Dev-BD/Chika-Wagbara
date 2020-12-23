@@ -42,6 +42,7 @@ import AddAdditionalBill from './AddAdditionalBill'
 import AddPayment from './AddPayment'
 import Receipt from './Receipt'
 import PrintandPdf from './PrintandPdf'
+import { addPatientTest } from '../../../actions/patientTestAction'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -91,7 +92,7 @@ const AddPatientTest=(props)=> {
   const [totalPrice, setTotalPrice]=useState('')  
   const [totalFinalPrice, setTotalFinalPrice]=useState(null)  
   const [testDiscount, setTestDiscount]=useState(null)  
-  const [paymentMode, setPaymentMode]=useState('')
+  const [paymentMode, setPaymentMode]=useState([])
    
   useEffect(() => {
     if(patientSearchTerm){
@@ -146,6 +147,19 @@ const AddPatientTest=(props)=> {
   }
 
   const addPatientTest=()=>{
+    const newPatientTest={
+      patient:patient?patient._id:null,
+      guardian:guardian?guardian._id:null,
+      referringPerson:referringPerson?referringPerson._id:null,
+      referringCenter:referringCenter?referringCenter._id:null,
+      tests:testData,
+      totalAmountToPay:totalBill,
+      paidAmount:paidAmount?paidAmount:0,
+      remainingBalance:paidAmount?remainingAmount:totalBill,
+      paymentMode:paymentMode
+    }
+    props.addPatientTest(newPatientTest)
+
     setDisplayTest(false)
   }
 
@@ -241,7 +255,6 @@ const AddPatientTest=(props)=> {
     {name:'Online Payment'},
     {name:'Others'},
   ]
-  console.log(props)
 
   return (
     <>
@@ -807,6 +820,7 @@ AddPatientTest.propTypes = {
   getReferringPersons:PropTypes.func.isRequired,
   getReferringCenters:PropTypes.func.isRequired,
   getTests:PropTypes.func.isRequired,
+  addPatientTest:PropTypes.func.isRequired,
   className: PropTypes.string,
   patients: PropTypes.array.isRequired,
   guardians: PropTypes.array.isRequired,
@@ -823,4 +837,4 @@ const mapStateToProps = (state) => ({
   tests:state.test.tests,
   auth:state.auth
 })
-export default connect(mapStateToProps, { getPatients, getGuardians, getReferringPersons, getTests, getReferringCenters  })(AddPatientTest)
+export default connect(mapStateToProps, { getPatients, getGuardians, getReferringPersons, getTests, getReferringCenters, addPatientTest })(AddPatientTest)

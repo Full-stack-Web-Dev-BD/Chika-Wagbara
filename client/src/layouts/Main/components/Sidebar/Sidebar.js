@@ -64,7 +64,7 @@ const Sidebar = props => {
       icon:<ContactsIcon />,
       datas:[
         {
-          href: '/admin/patientTest',
+          href: '/admin/addPatientTest',
           icon: <Business/>,
           title: 'Add Patient Test'
         },

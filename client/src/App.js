@@ -25,7 +25,7 @@ import Patient from './views/AdminPages/Patient/Patient'
 import Guardian from './views/AdminPages/Guardian/Guardian';
 import ReferringPerson from './views/AdminPages/ReferringPerson/ReferringPerson'
 import ReferringCenter from './views/AdminPages/ReferringCenter/ReferringCenter'
-import AddPatientTest from './views/AdminPages/PatientTest/AddPatientTest'
+import AddPatientTest from './views/AdminPages/AddPatientTest/AddPatientTest'
 
 // Common Component 
 import LandingPage from './views/auth/LandingPage';
@@ -100,7 +100,7 @@ const App = () => {
               component={AddPatientTest}
               exact
               layout={MainLayout}
-              path="/admin/patientTest"
+              path="/admin/addPatientTest"
             />
           </Switch>
           <Switch>

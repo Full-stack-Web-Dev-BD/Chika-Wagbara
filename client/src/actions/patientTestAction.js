@@ -7,7 +7,6 @@ import {
   DELETE_PATIENT_TEST,
   UPDATE_PATIENT_TEST,
   GET_ERRORS,
-  GET_PATIENT_TEST,
 } from './types';
 // Get Patients
 export const getPatientTests = () => dispatch => {
