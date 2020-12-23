@@ -20,12 +20,12 @@ const logo='/static/images/assets/logo.png'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop:20
+    marginTop:20,
   },
   paper: {
     padding: theme.spacing(2),
     margin: 'auto',
-    maxWidth: 400,
+    maxWidth: 302.36,
   },
   image: {
     width: 128,
@@ -44,7 +44,6 @@ const PrintandPdf=(props)=> {
   const componentRef = useRef();
   const { testData, totalDiscount, totalPrice, totalFinalPrice, testDiscount, patientNo, paidAmount, remainingAmount, paymentMode, billBy, billTo }=props
 
-
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
@@ -57,19 +56,19 @@ const PrintandPdf=(props)=> {
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1" style={{fontSize:12}}>
+                <Typography gutterBottom variant="subtitle1" style={{fontSize:11}}>
                   Bill Date: {moment(Date.now()).format('DD/MM/YYYY')}
                 </Typography>
-                <Typography variant="subtitle1" gutterBottom style={{fontSize:12}}>
+                <Typography variant="subtitle1" gutterBottom style={{fontSize:11}}>
                   Bill ID: 063547
                 </Typography>
-                <Typography variant="subtitle1" gutterBottom style={{fontSize:12}}>
+                <Typography variant="subtitle1" gutterBottom style={{fontSize:11}}>
                   Patient ID: {patientNo}
                 </Typography>
               </Grid>
             </Grid>
             <Grid item>
-              <img style={{width:'150px'}} src={logo} />
+              <img style={{width:'130px'}} src={logo} />
             </Grid>
           </Grid>
         </Grid>
@@ -84,50 +83,49 @@ const PrintandPdf=(props)=> {
             <Table className={classes.table} size="small" aria-label="a dense table">
               <TableHead style={{borderBottom:'1px solid'}}>
                 <TableRow>
-                  <TableCell style={{fontSize:11, padding:'6px 6px 6px 8px'}}>Items</TableCell>
-                  <TableCell align="right" style={{fontSize:11,}}></TableCell>
-                  <TableCell align="right" style={{fontSize:11}}></TableCell>
-                  <TableCell align="right" style={{fontSize:11}}></TableCell>
-                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>Price</TableCell>
-                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>Discount</TableCell>
-                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>Final Price</TableCell>
+                  <TableCell style={{fontSize:11, padding:'2px 2px 2px 2px'}}>Items</TableCell>
+                  <TableCell align="right" style={{fontSize:9,}}></TableCell>
+                  <TableCell align="right" style={{fontSize:9}}></TableCell>
+                  <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>Price</TableCell>
+                  <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>Discount</TableCell>
+                  <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>Final Price</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {testData.map((data, index) => (
                   <TableRow key={index}>
-                    <TableCell colSpan={4} style={{fontSize:11, padding:'6px 6px 6px 8px'}}>{data.testName}</TableCell>
-                    <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{data.testPrice}</TableCell>
-                    <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{data.discount?data.discount:0}</TableCell>
-                    <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{data.finalPrice}</TableCell>
+                    <TableCell colSpan={3} style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{data.testName}</TableCell>
+                    <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{data.testPrice}</TableCell>
+                    <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{data.discount?data.discount:0}</TableCell>
+                    <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{data.finalPrice}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
               <TableBody>
                 <TableRow>
-                  <TableCell colSpan={5} style={{fontSize:11, padding:'6px 6px 6px 8px'}}>Additional Discount</TableCell>
-                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{totalDiscount?totalDiscount:0}</TableCell>
-                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>-{totalDiscount?totalDiscount:0}</TableCell>
+                  <TableCell colSpan={4} style={{fontSize:9, padding:'2px 2px 2px 2px'}}>Additional Discount</TableCell>
+                  <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{totalDiscount?totalDiscount:0}</TableCell>
+                  <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>-{totalDiscount?totalDiscount:0}</TableCell>
                 </TableRow>
               </TableBody>
               <TableBody>
                 <TableRow>
-                  <TableCell colSpan={4} style={{fontSize:11, padding:'6px 6px 6px 8px'}}>{'Total'}</TableCell>
-                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{totalPrice}</TableCell>
-                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{testDiscount+(totalDiscount?totalDiscount:0)}</TableCell>
-                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{totalFinalPrice}</TableCell>
+                  <TableCell colSpan={3} style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{'Total'}</TableCell>
+                  <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{totalPrice}</TableCell>
+                  <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{testDiscount+(totalDiscount?totalDiscount:0)}</TableCell>
+                  <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{totalFinalPrice}</TableCell>
                 </TableRow>
               </TableBody>
               <TableBody>
                 <TableRow>
-                  <TableCell colSpan={5} style={{fontSize:11, padding:'6px 6px 6px 8px'}}>{""}</TableCell>
-                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>Paid</TableCell>
-                  <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{paidAmount}</TableCell>
+                  <TableCell colSpan={4} style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{""}</TableCell>
+                  <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>Paid</TableCell>
+                  <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{paidAmount}</TableCell>
                 </TableRow>
               </TableBody>
               <TableBody>
                 <TableRow>
-                  <TableCell colSpan={5} style={{fontSize:11, padding:'6px 6px 6px 8px'}}>{""}</TableCell>
+                  <TableCell colSpan={4} style={{fontSize:11, padding:'6px 6px 6px 8px'}}>{""}</TableCell>
                   <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>Balance</TableCell>
                   <TableCell align="right" style={{fontSize:11, padding:'6px 6px 6px 6px'}}>{remainingAmount}</TableCell>
                 </TableRow>
