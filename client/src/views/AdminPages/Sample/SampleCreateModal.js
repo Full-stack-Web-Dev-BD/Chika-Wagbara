@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { AddCircle } from '@material-ui/icons';
 
@@ -19,8 +18,10 @@ const SampleCreateModal=(props)=> {
   
   const [type, setType] = useState('')
   const [container, setContainer] = useState('')
-  const [containerCapColor, setContainerCapColor] = useState('')
+  const [containerCapColor, setContainerCapColor] = useState('abc')
   const [storageTemperature, setStorageTemperature] = useState('')
+  const [storageDuration, setStorageDuration] = useState('')
+  const [importantInfo, setImportantInfo] = useState('')
   const [open, setOpen] = React.useState(false);
   
   const handleClickOpen = () => {
@@ -36,10 +37,14 @@ const SampleCreateModal=(props)=> {
       container:container,
       containerCapColor:containerCapColor,
       storageTemperature:storageTemperature,
+      storageDuration:storageDuration,
+      importantInfo:importantInfo
     }
     props.addSample(newSample);
     handleClose()
   };
+
+  console.log(containerCapColor)
 
   return (
     <div className="d-inline ml-auto">
@@ -49,11 +54,6 @@ const SampleCreateModal=(props)=> {
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create Sample </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            <p style={{ visibility: 'hidden', lineHeight: '0' }}>
-              Please  enter required all filed to Update a Branch Please  enter required all
-            </p>
-          </DialogContentText>
           <form onSubmit={e => { addSample(e) }}>
           <div className="row">
             <div className="col-md-6">
@@ -82,11 +82,12 @@ const SampleCreateModal=(props)=> {
             <div className="col-md-6">
               <TextField
                 onChange={e => setContainerCapColor(e.target.value)}
-                required
+                className="capColor"
                 margin="dense"
                 id="address"
                 label="Container Cap Color"
-                type="text"
+                type="color"
+                value={containerCapColor}
                 fullWidth
               />
             </div>
@@ -96,7 +97,30 @@ const SampleCreateModal=(props)=> {
                 required
                 margin="dense"
                 id="city"
-                label="Storage Temperature"
+                label="Storage Temperature (°C)"
+                type="text"
+                fullWidth
+              />
+            </div>
+            <div className="col-md-6">
+              <TextField
+                onChange={e => setImportantInfo(e.target.value)}
+                multiline
+                rows={3}
+                margin="dense"
+                id="city"
+                label="Important Information"
+                type="text"
+                fullWidth
+              />
+            </div>
+            <div className="col-md-6">
+              <TextField
+                onChange={e => setStorageDuration(e.target.value)}
+                required
+                margin="dense"
+                id="city"
+                label="Storage Duration (days)"
                 type="text"
                 fullWidth
               />

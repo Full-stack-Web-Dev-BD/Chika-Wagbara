@@ -10,7 +10,9 @@ router.post('/newSample', passport.authenticate('jwt', {session:false}), (req, r
       type:req.body.type,
       container:req.body.container,
       containerCapColor:req.body.containerCapColor,
-      storageTemperature:req.body.storageTemperature
+      storageTemperature:req.body.storageTemperature,
+      storageDuration:req.body.storageDuration,
+      importantInfo:req.body.inportantInfo
     })
     newSample.save()
     .then(sample=> res.json(sample))

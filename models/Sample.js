@@ -16,6 +16,12 @@ const sampleSchema=new Schema({
     storageTemperature:{
         type:String
     },
+    storageDuration:{
+        type:String
+    },
+    importantInfo:{
+        type:String
+    },
 	date:{
 		type:Date,
 		default:Date.now

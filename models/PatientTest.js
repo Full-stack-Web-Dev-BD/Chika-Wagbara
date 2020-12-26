@@ -5,7 +5,7 @@ const Schema=mongoose.Schema;
 const patientTestSchema=new Schema({
 	patient:{
 		type:Schema.Types.ObjectId,
-		ref:'guardians'
+		ref:'patients'
 	},
 	guardian:{
 		type:Schema.Types.ObjectId,
@@ -17,7 +17,7 @@ const patientTestSchema=new Schema({
 	},
 	referringCenter:{
 		type:Schema.Types.ObjectId,
-		ref:'referringCenters'
+		ref:'referralCenter'
 	},
 	tests:{
 		type:Array

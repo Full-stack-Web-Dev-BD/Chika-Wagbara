@@ -143,6 +143,8 @@ const GuardianCreateModal=(props)=> {
             addPaymentMode({type:methodType, amount:amount})
             fieldData.push(fields)
             setFormField([...formField, fieldData])
+            setMetodType('')
+            setAmount('')
         }    
     }
 
@@ -155,6 +157,8 @@ const GuardianCreateModal=(props)=> {
         let paymentData=[...paymentModeData]
         paymentData.push({type:methodType, amount:amount})
         setPaymentMode(paymentData)
+        setMetodType('')
+        setAmount('')
         handleClose();
     }
 

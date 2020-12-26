@@ -18,7 +18,7 @@ import Branch from './views/AdminPages/Branch/Branch';
 import Product from './views/AdminPages/Product/Product';
 import OrderInventory from './views/AdminPages/OrderInventory/OrderInventory';
 import WarehouseInventorySetup from './views/AdminPages/WarehouseInventory/WarehouseInventorySetup';
-import SampleAndReport from './views/AdminPages/SampleAndReportType/SampleAndReport';
+import Sample from './views/AdminPages/Sample/Sample';
 import ActivityLog from './views/AdminPages/ActivityLog/ActivityLog';
 import FinanceAnalytics from './views/AdminPages/FinanceAnalytics/FinanceAnalytics';
 import Patient from './views/AdminPages/Patient/Patient'
@@ -26,6 +26,7 @@ import Guardian from './views/AdminPages/Guardian/Guardian';
 import ReferringPerson from './views/AdminPages/ReferringPerson/ReferringPerson'
 import ReferringCenter from './views/AdminPages/ReferringCenter/ReferringCenter'
 import AddPatientTest from './views/AdminPages/AddPatientTest/AddPatientTest'
+import PatientTest from './views/AdminPages/PatientTest/PatientTest'
 
 // Common Component 
 import LandingPage from './views/auth/LandingPage';
@@ -101,6 +102,14 @@ const App = () => {
               exact
               layout={MainLayout}
               path="/admin/addPatientTest"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={PatientTest}
+              exact
+              layout={MainLayout}
+              path="/admin/patientTest"
             />
           </Switch>
           <Switch>
@@ -185,10 +194,10 @@ const App = () => {
           </Switch>
           <Switch>
             <RouteWithLayout
-              component={SampleAndReport}
+              component={Sample}
               exact
               layout={MainLayout}
-              path="/admin/sampleAndReport"
+              path="/admin/sample"
             />
           </Switch>
           <Switch>

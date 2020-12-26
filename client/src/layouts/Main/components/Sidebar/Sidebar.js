@@ -69,6 +69,11 @@ const Sidebar = props => {
           title: 'Add Patient Test'
         },
         {
+          href: '/admin/patientTest',
+          icon: <Business/>,
+          title: 'Patient Test'
+        },
+        {
           href: '/admin/patient',
           icon: <Business/>,
           title: 'Patient'
@@ -131,9 +136,9 @@ const Sidebar = props => {
       title: 'Warehouse Inventory'
     },
     {
-      href: '/admin/sampleAndReport',
+      href: '/admin/sample',
       icon: <Store/>,
-      title: 'Sample And Report'
+      title: 'Sample management'
     },
     {
       href: '/admin/account',

@@ -17,7 +17,7 @@ import {
 } from '@material-ui/core';
 import { connect } from 'react-redux'
 import { search } from '../../../utils/Search'
-import { getPatients, deletePatient } from '../../../actions/patientAction'
+import { getPatientTests, deletePatientTest } from '../../../actions/patientTestAction'
 import AddPatient from './AddPatient';
 import UpdatePatient from './UpdatePatient'
 import ViewPatientDetails from './ViewPatientDetails'
@@ -32,23 +32,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ReportManagement = (props) => {
-  const { patients, className, ...rest }=props
+  const { patientTests, className, ...rest }=props
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchTerm, setSearchTerm] = useState('')
-  const [allPatient, setAllPatient] = useState('')
+  const [allPatientTest, setAllPatientTest] = useState('')
 
   useEffect(() => {
-    props.getPatients();
+    props.getPatientTests();
   }, [])
 
   useEffect(() => {
-    setAllPatient(patients)
-  }, [patients])
+    setAllPatientTest(patientTests)
+  }, [patientTests])
 
   useEffect(() => {
-    setAllPatient(search(patients, searchTerm))
+    setAllPatientTest(patientTests.filter(data => Object.values(data.patient).filter(v => v.toString().toLowerCase().indexOf(searchTerm.toString().toLowerCase()) !== -1).length > 0))
   }, [searchTerm])
 
 
@@ -59,15 +59,14 @@ const ReportManagement = (props) => {
     setAnchorEl(null);
   };
 
-  const deletePatient=(id)=>{
-    props.deletePatient(id)
+  const deletePatientTest=(id)=>{
+    props.deletePatientTest(id)
   }
-
+  
   return (
     <div>
       <div className="d-flex" style={{margin:'20px'}}>
         <h2 className="mb3">Patients</h2>
-        <AddPatient />
       </div>
       <div style={{marginBottom:'10px', marginLeft:'20px', marginRight:'20px'}}>
         <TextField
@@ -85,7 +84,7 @@ const ReportManagement = (props) => {
       >
         <PerfectScrollbar>
           <Box minWidth={1050}>
-            <Table size="small">
+            <Table>
               <TableHead>
                 <TableRow>
                   <TableCell >
@@ -115,14 +114,14 @@ const ReportManagement = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allPatient?
-                allPatient.map(el => (
+                {allPatientTest?
+                allPatientTest.map(el => (
                   <TableRow
                     hover
                     style={{cursor:'pointer'}}
                   >  
                      <TableCell>
-                      {el.patientNo}
+                      {el.patient.patientNo}
                     </TableCell>
                     <TableCell>
                       <Box
@@ -133,29 +132,29 @@ const ReportManagement = (props) => {
                           color="textPrimary"
                           variant="body1"
                         >
-                          {el.firstName} {el.lastName}
+                          {el.patient.firstName} {el.patient.lastName}
                         </Typography>
                       </Box>
                     </TableCell>
                     <TableCell>
-                      {el.title}
+                      {el.patient.title}
                     </TableCell>
                     <TableCell>
-                      {el.email}
+                      {el.patient.email}
                     </TableCell>
                     <TableCell>
-                      {el.mobileNumber1}
+                      {el.patient.mobileNumber1}
                     </TableCell>
                     <TableCell>
-                      {el.age}
+                      {el.patient.age}
                     </TableCell>
                     <TableCell>
-                      {el.address}
+                      {el.patient.address}
                     </TableCell>
                     <TableCell style={{width:'120px'}}>
                       <div>
                         <UpdatePatient id={el._id} />
-                        <span onClick={e => deletePatient(el._id)}><DeleteOutlineIcon style={{ cursor: "pointer" }} /></span>
+                        <span onClick={e => deletePatientTest(el._id)}><DeleteOutlineIcon style={{ cursor: "pointer" }} /></span>
                         <ViewPatientDetails id={el._id} />
                       </div>
                     </TableCell>
@@ -171,12 +170,12 @@ const ReportManagement = (props) => {
 };
 
 ReportManagement.propTypes = {
-    getPatients:PropTypes.func.isRequired,
-    deletePatient:PropTypes.func.isRequired,
-    patients:PropTypes.array.isRequired,
+    getPatientTests:PropTypes.func.isRequired,
+    deletePatientTest:PropTypes.func.isRequired,
+    patientTests:PropTypes.array.isRequired,
     className: PropTypes.string,
 };
 const mapStateToProps = (state) => ({
-  patients: state.patient.patients
+  patientTests: state.patientTest.patientTests
 })
-export default connect(mapStateToProps, { getPatients, deletePatient })(ReportManagement);
+export default connect(mapStateToProps, { getPatientTests, deletePatientTest })(ReportManagement);

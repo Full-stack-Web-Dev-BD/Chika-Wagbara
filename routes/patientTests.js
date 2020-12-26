@@ -27,7 +27,7 @@ router.post('/:id/sign', passport.authenticate('jwt', {session:false}), (req, re
 
 router.get('/allPatientTest', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    PatientTest.find({isComplete:false}).populate('patient')
+    PatientTest.find({isComplete:false}).populate('patient').populate('guardian').populate('referringPerson').populate('referringCenter')
      .then(data=> res.json(data))
      .catch(err=> res.json(err))
   }

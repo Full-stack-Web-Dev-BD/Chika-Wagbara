@@ -75,7 +75,7 @@ const OrderInventoryTable = (props) => {
       >
         <PerfectScrollbar>
           <Box minWidth={1050}>
-            <Table>
+            <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell >

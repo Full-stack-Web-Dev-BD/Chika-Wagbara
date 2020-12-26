@@ -6,7 +6,7 @@ import {
   Toolbar
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import SampleAndReportTab from './SampleAndReportTab';
+import SampleTable from './SampleTable';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -16,22 +16,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TestAndReport = () => {
+const Sample = () => {
   const classes = useStyles();
 
   return (
     <Page
       className={classes.root}
-      title="Customers"
+      title="Samples"
     >
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-          <SampleAndReportTab />
+          <SampleTable />
         </Box>
       </Container>
     </Page>
   );
 };
 
-export default TestAndReport;
+export default Sample;
