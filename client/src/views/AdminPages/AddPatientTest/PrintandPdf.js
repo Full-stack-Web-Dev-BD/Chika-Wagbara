@@ -74,7 +74,7 @@ const PrintandPdf=(props)=> {
         </Grid>
         <Grid container spacing={2}>
           <Grid item md={12} sm container style={{border:'1px solid', margin:'7px'}}>
-            <Typography variant="h3" style={{margin:'auto'}}>Md Selim Reza</Typography>
+            <Typography variant="h3" style={{margin:'auto'}}>{billTo}</Typography>
           </Grid>
         </Grid>
         <Grid container spacing={2}>
@@ -143,10 +143,10 @@ const PrintandPdf=(props)=> {
               }
               </Typography>
               <Typography variant="p" style={{fontSize:10}}><strong>Bill By:</strong>
-                <span style={{margin:3}}>{billBy}</span>
+                <span style={{margin:3}}>{billBy.name}</span>
               </Typography>
               <Typography variant="p" style={{fontSize:10}}><strong>Bill To:</strong>
-                <span style={{margin:3}}>{billTo.name}</span>
+                <span style={{margin:3}}>{billTo}</span>
               </Typography>
             </Grid>
           </Grid>

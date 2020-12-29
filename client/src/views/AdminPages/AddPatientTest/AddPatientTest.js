@@ -80,7 +80,7 @@ const AddPatientTest=(props)=> {
   const [searchData, setSearchData] = useState([])
   const [testIndex, setTestIndex] = useState('')
   const [totalBill, setTotalBill] = useState(null)
-  const [paidAmount, setPaidAmount] = useState(null)
+  const [paidAmount, setPaidAmount] = useState(0)
   const [remainingAmount, setRemainingAmount] = useState(null)
   const [testName, setTestName] = useState('')
   const [price, setPrice] = useState('')
@@ -733,12 +733,19 @@ const AddPatientTest=(props)=> {
                 Enter paid amount:
                 </Typography>
               </Grid>
-              <Grid item md={1}>
-                <Typography>
-                  {paidAmount?paidAmount:0}
-                </Typography>
+              <Grid item md={2} className="amountTextfield">
+              <TextField
+                variant="outlined"
+                style={{width:110}}
+                size="small"
+                id="paidAmount"
+                onChange={(e)=> setPaidAmount(e.target.value)}
+                type="text"
+                value={paidAmount}
+                fullWidth
+              />
               </Grid>
-              <Grid item md={3}>
+              <Grid item md={2}>
                 <Typography>
                  
                 </Typography>
@@ -808,7 +815,7 @@ const AddPatientTest=(props)=> {
           </Box>
         </PerfectScrollbar>
       </Card>:
-      <PrintandPdf testData={testData} totalDiscount={totalDiscount} totalPrice={totalPrice} totalFinalPrice={totalFinalPrice} testDiscount={testDiscount} patientNo={patient?patient.patientNo:0} paidAmount={paidAmount?paidAmount:0} remainingAmount={paidAmount?remainingAmount:totalBill} paymentMode={paymentMode} billBy={patient.firstName +" " +patient.lastName} billTo={user}/>
+      <PrintandPdf testData={testData} totalDiscount={totalDiscount} totalPrice={totalPrice} totalFinalPrice={totalFinalPrice} testDiscount={testDiscount} patientNo={patient?patient.patientNo:0} paidAmount={paidAmount?paidAmount:0} remainingAmount={paidAmount?remainingAmount:totalBill} paymentMode={paymentMode} billTo={patient.firstName +" " +patient.lastName} billBy={user}/>
     }
   </>
   );

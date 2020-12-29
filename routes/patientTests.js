@@ -27,15 +27,15 @@ router.post('/:id/sign', passport.authenticate('jwt', {session:false}), (req, re
 
 router.get('/allPatientTest', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    PatientTest.find({isComplete:false}).populate('patient').populate('guardian').populate('referringPerson').populate('referringCenter')
+    PatientTest.find().populate('patient').populate('guardian').populate('referringPerson').populate('referringCenter')
      .then(data=> res.json(data))
      .catch(err=> res.json(err))
   }
 })
 
-router.get('/allCompletePatientTest', passport.authenticate('jwt', {session:false}), (req, res)=>{
+router.get('/allIncompletePatientTest', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    PatientTest.find({isComplete:true})
+    PatientTest.find({isComplete:false})
      .then(data=> res.json(data))
      .catch(err=> res.json(err))
   }

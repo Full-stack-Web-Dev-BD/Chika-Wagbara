@@ -22,12 +22,9 @@ import AddPatient from './AddPatient';
 import UpdatePatient from './UpdatePatient'
 import ViewPatientDetails from './ViewPatientDetails'
 const useStyles = makeStyles((theme) => ({
-  root: {margin: theme.spacing(2)},
+  root: {},
   avatar: {
     marginRight: theme.spacing(2)
-  },
-  h2:{
-    margin: theme.spacing(2)
   }
 }));
 
@@ -65,11 +62,11 @@ const ReportManagement = (props) => {
 
   return (
     <div>
-      <div className="d-flex" style={{margin:'20px'}}>
+      <div className="d-flex">
         <h2 className="mb3">Patients</h2>
         <AddPatient />
       </div>
-      <div style={{marginBottom:'10px', marginLeft:'20px', marginRight:'20px'}}>
+      <div style={{marginBottom:'10px'}}>
         <TextField
           onChange={e=>setSearchTerm(e.target.value)}
           margin="dense"

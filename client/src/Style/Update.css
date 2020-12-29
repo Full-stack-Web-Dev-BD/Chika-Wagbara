@@ -20,6 +20,7 @@
 
 #contact-button:focus { outline: none; }
 
+#contact-button{ text-transform: none;}
 .iconButton, .discount-button{
     padding: 0px !important;
 }
@@ -38,7 +39,9 @@
 .search-button:focus{
     outline: none;
 }
-
+.search-button span{
+    text-transform: none;
+}
 .gridContainer{
     margin-top: 0px !important;
 }
@@ -64,3 +67,20 @@
     border-radius: 50%;
     display: inline-block;
   }
+.amountTextfield input{
+    height: 10px !important;
+    width: 100px;
+    padding-left: 7px;
+}
+.customSearch input{
+    height: 10px !important;
+    padding-left: 7px;
+}
+
+.rdrInputRanges{
+    display: none;
+}
+.rdrDefinedRangesWrapper{
+    z-index: 2;
+    position: absolute;
+}

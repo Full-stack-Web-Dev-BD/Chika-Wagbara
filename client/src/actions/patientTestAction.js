@@ -26,9 +26,9 @@ export const getPatientTests = () => dispatch => {
     });
 };
 
-export const getCompletePatientTests = () => dispatch => {
+export const getIncompletePatientTests = () => dispatch => {
   axios
-    .get('/api/patientTests/allCompletePatientTest')
+    .get('/api/patientTests/allIncompletePatientTest')
     .then(res =>
       dispatch({
         type: GET_COMPLETE_TEST,

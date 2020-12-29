@@ -13,34 +13,77 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Button,
   makeStyles
 } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import Popover from '@material-ui/core/Popover';
+import moment from 'moment'
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { connect } from 'react-redux'
-import { search } from '../../../utils/Search'
 import { getPatientTests, deletePatientTest } from '../../../actions/patientTestAction'
-import AddPatient from './AddPatient';
 import UpdatePatient from './UpdatePatient'
 import ViewPatientDetails from './ViewPatientDetails'
+import SelectDate from './SelectDate'
 const useStyles = makeStyles((theme) => ({
-  root: {margin: theme.spacing(2)},
+  root: {marginTop:18},
   avatar: {
     marginRight: theme.spacing(2)
   },
-  h2:{
-    margin: theme.spacing(2)
-  }
+  popover: {
+    pointerEvents: 'none',
+  },
+  paper: {
+    padding: theme.spacing(2),
+    //width:250,
+    marginTop:6,
+    zIndex:10
+
+  },
 }));
 
 const ReportManagement = (props) => {
   const { patientTests, className, ...rest }=props
 
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('')
+  const [patienAnchorEl, setPatientAnchorEl] = useState(null);
+  const [guardianAnchorEl, setGuardianAnchorEl] = useState(null);
+  const [referringPersonAnchorEl, setReferringPersonAnchorEl] = useState(null);
+  const [referringCenterAnchorEl, setReferringCenterAnchorEl] = useState(null);
+  const [patientSearchTerm, setPatientSearchTerm] = useState('')
+  const [guardianSearchTerm, setGuardianSearchTerm] = useState('')
+  const [referringPersonSearchTerm, setReferringPersonSearchTerm] = useState('')
+  const [referringCenterSearchTerm, setReferringCenterSearchTerm] = useState('')
   const [allPatientTest, setAllPatientTest] = useState('')
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [dateLebel, setDateLebel] = useState(false);
+
+  const handlePatientClick = () => {
+    setOpen(!open);
+  };
+
+  const showDateLevel=()=>{
+    setDateLebel(true)
+  }
+
+  useEffect(()=>{
+    if(startDate){
+      setDateLebel(false)
+    }
+  }, [startDate])
 
   useEffect(() => {
     props.getPatientTests();
+  }, [])
+
+  useEffect(()=>{
+    setStartDate(Date.now())
   }, [])
 
   useEffect(() => {
@@ -48,35 +91,212 @@ const ReportManagement = (props) => {
   }, [patientTests])
 
   useEffect(() => {
-    setAllPatientTest(patientTests.filter(data => Object.values(data.patient).filter(v => v.toString().toLowerCase().indexOf(searchTerm.toString().toLowerCase()) !== -1).length > 0))
-  }, [searchTerm])
+    let searchData=[]
+    if(startDate && endDate==''){
+      patientTests.filter(data =>{
+        if(moment(data.date).format('L')==moment(startDate).format('L')){
+          searchData.push(data);
+        }
+      })
+      setAllPatientTest(searchData)
+    }
+  }, [startDate])
 
+  useEffect(() => {
+    let searchData=[]
+    if(endDate){
+      patientTests.filter(data =>{
+        if(Math.abs(new Date(moment(data.date).format('L')))>=Math.abs(new Date(moment(startDate).format('L'))) && Math.abs(new Date(moment(data.date).format('L')))<=Math.abs(new Date(moment(endDate).format('L')))){
+          searchData.push(data);
+        }
+      })
+      setAllPatientTest(searchData)
+    }
+  }, [endDate])
+  useEffect(() => {
+    setAllPatientTest(patientTests.filter(data => {
+      if(data.patient){
+        return Object.values(data.patient).filter(v=> v.toString().toLowerCase().indexOf(patientSearchTerm.toString().toLowerCase()) !== -1).length>0
+      }
+    }))
+  }, [patientSearchTerm])
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  useEffect(() => {
+    setAllPatientTest(patientTests.filter(data => {
+      if(data.guardian){
+        return Object.values(data.guardian).filter(v=> v.toString().toLowerCase().indexOf(guardianSearchTerm.toString().toLowerCase()) !== -1).length>0
+      }
+    }))
+  }, [guardianSearchTerm])
+
+  useEffect(() => {
+    setAllPatientTest(patientTests.filter(data => {
+      if(data.referringPerson){
+        return Object.values(data.referringPerson).filter(v=> v.toString().toLowerCase().indexOf(referringPersonSearchTerm.toString().toLowerCase()) !== -1).length>0
+      }
+    }))
+  }, [referringPersonSearchTerm])
+
+  useEffect(() => {
+    setAllPatientTest(patientTests.filter(data => {
+      if(data.referringCenter){
+        return Object.values(data.referringCenter).filter(v=> v.toString().toLowerCase().indexOf(referringCenterSearchTerm.toString().toLowerCase()) !== -1).length>0
+      }
+    }))
+  }, [referringCenterSearchTerm])
+
+  const handlePatientPopoverOpen = (event, id) => {
+    setId(id)
+    setPatientAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+
+  const handlePatientPopoverClose = () => {
+    setPatientAnchorEl(null);
   };
+
+  const handleGuardianPopoverOpen = (event, id) => {
+    setId(id)
+    setGuardianAnchorEl(event.currentTarget);
+  };
+
+  const handleGuardianPopoverClose = () => {
+    setGuardianAnchorEl(null);
+  };
+
+  const handleReferringPersonPopoverOpen = (event, id) => {
+    setId(id)
+    setReferringPersonAnchorEl(event.currentTarget);
+  };
+
+  const handleReferringPersonPopoverClose = () => {
+    setReferringPersonAnchorEl(null);
+  };
+
+  const handleReferringCenterPopoverOpen = (event, id) => {
+    setId(id)
+    setReferringCenterAnchorEl(event.currentTarget);
+  };
+
+  const handleReferringCenterPopoverClose = () => {
+    setReferringCenterAnchorEl(null);
+  };
+  
+  const PatientPopOverOpen = Boolean(patienAnchorEl);
+  const guardianPopOverOpen = Boolean(guardianAnchorEl);
+  const referringPersonPopOverOpen = Boolean(referringPersonAnchorEl);
+  const referringCenterPopOverOpen = Boolean(referringCenterAnchorEl);
 
   const deletePatientTest=(id)=>{
     props.deletePatientTest(id)
   }
-  
+    
   return (
     <div>
-      <div className="d-flex" style={{margin:'20px'}}>
-        <h2 className="mb3">Patients</h2>
+      <div className="d-flex">
+        <h2 className="mb3">Patient Test</h2>
+        <div className="d-inline ml-auto">
+          <Button variant="outlined" color="primary" onClick={()=>showDateLevel()} className="search-button">
+            {
+              endDate?<span>{moment(endDate).format('MMMM Do YYYY')}-</span>:''
+            }
+          <span style={{marginRight:10}}>{startDate?moment(startDate).format('MMMM Do YYYY'):moment(Date.now()).format('MMMM Do YYYY')}</span><CalendarTodayIcon />
+          </Button>
+          {dateLebel?<SelectDate setStartDate={setStartDate} setEndDate={setEndDate} />:''}
+        </div>  
       </div>
-      <div style={{marginBottom:'10px', marginLeft:'20px', marginRight:'20px'}}>
-        <TextField
-          onChange={e=>setSearchTerm(e.target.value)}
-          margin="dense"
-          placeholder="Search by any field"
-          type="text"
-          value={searchTerm}
-          fullWidth
-        />
+      <div style={{marginBottom:'10px'}}>
+      <Grid container spacing={3} style={{width:'70%'}}>
+        <Grid item md={3} className="customSearch">
+          <Button
+            activeClassName={classes.active}
+            id="contact-button"
+            onClick={handlePatientClick}
+          >
+            Patients
+          {open ? <ExpandLess /> : <ExpandMore />}
+          </Button>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <TextField
+              onChange={e=>setPatientSearchTerm(e.target.value)}
+              placeholder="Search by any field"
+              variant="outlined"
+              size="small"
+              type="text"
+              value={patientSearchTerm}
+              fullWidth
+            />
+          </Collapse>
+        </Grid>
+        <Grid item md={3} className="customSearch">
+          <Button
+            activeClassName={classes.active}
+            className={classes.button}
+            id="contact-button"
+            onClick={handlePatientClick}
+          >
+            Guardians
+          {open ? <ExpandLess /> : <ExpandMore />}
+          </Button>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <TextField
+              onChange={e=>setGuardianSearchTerm(e.target.value)}
+              placeholder="Search by any field"
+              variant="outlined"
+              size="small"
+              type="text"
+              value={guardianSearchTerm}
+              fullWidth
+            />
+          </Collapse>
+        </Grid>
+        <Grid item md={3} className="customSearch">
+          <Button
+            activeClassName={classes.active}
+            className={classes.button}
+            id="contact-button"
+            onClick={handlePatientClick}
+          >
+            Referring Person
+          {open ? <ExpandLess /> : <ExpandMore />}
+          </Button>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <TextField
+              onChange={e=>setReferringPersonSearchTerm(e.target.value)}
+              placeholder="Search by any field"
+              variant="outlined"
+              size="small"
+              type="text"
+              value={referringPersonSearchTerm}
+              fullWidth
+            />
+          </Collapse>
+        </Grid>
+        <Grid item md={3} className="customSearch">
+          <Button
+            activeClassName={classes.active}
+            className={classes.button}
+            id="contact-button"
+            onClick={handlePatientClick}
+          >
+            Referring Center
+          {open ? <ExpandLess /> : <ExpandMore />}
+          </Button>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <TextField
+              onChange={e=>setReferringCenterSearchTerm(e.target.value)}
+              placeholder="Search by any field"
+              variant="outlined"
+              size="small"
+              type="text"
+              value={referringCenterSearchTerm}
+              fullWidth
+            />
+          </Collapse>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3} style={{width:'30%'}}>
+        
+      </Grid>
       </div>
       <Card
         className={clsx(classes.root, className)}
@@ -84,7 +304,7 @@ const ReportManagement = (props) => {
       >
         <PerfectScrollbar>
           <Box minWidth={1050}>
-            <Table>
+            <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell >
@@ -94,34 +314,34 @@ const ReportManagement = (props) => {
                     Patient Name
                 </TableCell>
                   <TableCell>
-                    Title
+                    Guardian
                 </TableCell>
                   <TableCell>
-                    Email
+                    Referring Person
                 </TableCell>
                 <TableCell>
-                    Mobile Number
+                    Referring Center
+                </TableCell>
+                <TableCell>
+                    Incomplete
                 </TableCell>
                   <TableCell>
-                    Age
+                    Completed
                 </TableCell>
                   <TableCell>
-                    Address
-                </TableCell>
-                  <TableCell style={{width:'120px'}}>
-                    Action
+                    Approved
                 </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {allPatientTest?
-                allPatientTest.map(el => (
+                allPatientTest.map((el, index) => (
                   <TableRow
                     hover
                     style={{cursor:'pointer'}}
                   >  
                      <TableCell>
-                      {el.patient.patientNo}
+                      {el.patient?el.patient.patientNo:''}
                     </TableCell>
                     <TableCell>
                       <Box
@@ -129,34 +349,177 @@ const ReportManagement = (props) => {
                         display="flex"
                       >
                         <Typography
-                          color="textPrimary"
-                          variant="body1"
+                          aria-owns={PatientPopOverOpen ? (index+1) : undefined}
+                          aria-haspopup="true"
+                          onMouseEnter={(e)=>handlePatientPopoverOpen(e, index+1)}
+                          onMouseLeave={handlePatientPopoverClose}
                         >
-                          {el.patient.firstName} {el.patient.lastName}
+                          {el.patient?el.patient.firstName:''} {el.patient?el.patient.lastName:''}
                         </Typography>
                       </Box>
+                      <Popover
+                          id={(index+1)}
+                          className={classes.popover}
+                          classes={{
+                            paper: classes.paper,
+                          }}
+                          open={PatientPopOverOpen}
+                          anchorEl={patienAnchorEl}
+                          anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                          }}
+                          transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                          }}
+                          onClose={handlePatientPopoverClose}
+                          disableRestoreFocus
+                        > 
+                          {el.patient && id==index+1?
+                            <div>
+                              <Typography style={{fontSize:12}}>Email: {el.patient.email}</Typography>
+                              <Typography style={{fontSize:12}}>Mobile Number: {el.patient.mobileNumber1}</Typography>
+                              <Typography style={{fontSize:12}}>Age: {el.patient.age}</Typography>
+                            </div>:''
+                          }
+                        </Popover>
                     </TableCell>
                     <TableCell>
-                      {el.patient.title}
+                      <Box
+                        alignItems="center"
+                        display="flex"
+                      >
+                        <Typography
+                          aria-owns={guardianPopOverOpen ? (index+2) : undefined}
+                          aria-haspopup="true"
+                          onMouseEnter={(e)=>handleGuardianPopoverOpen(e, index+1)}
+                          onMouseLeave={handleGuardianPopoverClose}
+                        >
+                          {el.guardian?el.guardian.firstName:''} {el.guardian?el.guardian.lastName:''}
+                        </Typography>
+                      </Box>  
+                      <Popover
+                      id={(index+2)}
+                      className={classes.popover}
+                      classes={{
+                        paper: classes.paper,
+                      }}
+                      open={guardianPopOverOpen}
+                      anchorEl={guardianAnchorEl}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                      }}
+                      onClose={handleGuardianPopoverClose}
+                      disableRestoreFocus
+                    >
+                      {el.guardian && id==index+1?
+                        <>
+                          <Typography style={{fontSize:12}}>Email: {el.guardian.email}</Typography>
+                          <Typography style={{fontSize:12}}>Mobile Number: {el.guardian.mobileNumber}</Typography>
+                          <Typography style={{fontSize:12}}>RelationshipToPatient: {el.guardian.relationshipToPatient}</Typography>
+                        </>:''
+                      }
+                    </Popover>
                     </TableCell>
                     <TableCell>
-                      {el.patient.email}
+                    <Box
+                        alignItems="center"
+                        display="flex"
+                      >
+                        <Typography
+                          aria-owns={referringPersonPopOverOpen ? (index+3) : undefined}
+                          aria-haspopup="true"
+                          onMouseEnter={(e)=>handleReferringPersonPopoverOpen(e, index+1)}
+                          onMouseLeave={handleReferringPersonPopoverClose}
+                        >
+                          {el.referringPerson?el.referringPerson.firstName:''} {el.referringPerson?el.referringPerson.lastName:''}
+                        </Typography>
+                      </Box> 
+                    </TableCell>
+                    <Popover
+                      id={(index+3)}
+                      className={classes.popover}
+                      classes={{
+                        paper: classes.paper,
+                      }}
+                      open={referringPersonPopOverOpen}
+                      anchorEl={referringPersonAnchorEl}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                      }}
+                      onClose={handleReferringPersonPopoverClose}
+                      disableRestoreFocus
+                    >
+                      {el.referringPerson && id==index+1?
+                        <>
+                          <Typography style={{fontSize:12}}>Email: {el.referringPerson.email}</Typography>
+                          <Typography style={{fontSize:12}}>Mobile Number: {el.referringPerson.mobileNumber}</Typography>
+                          <Typography style={{fontSize:12}}>Speciality: {el.referringPerson.speciality}</Typography>
+                        </>:''
+                      }
+                    </Popover>
+                    <TableCell>
+                      <Box
+                        alignItems="center"
+                        display="flex"
+                      >
+                        <Typography
+                          aria-owns={referringCenterPopOverOpen ? (index+4) : undefined}
+                          aria-haspopup="true"
+                          onMouseEnter={(e)=>handleReferringCenterPopoverOpen(e, index+1)}
+                          onMouseLeave={handleReferringCenterPopoverClose}
+                        >
+                          {el.referringCenter?el.referringCenter.nameofReferralCenter:''}
+                        </Typography>
+                      </Box> 
+                      <Popover
+                        id={(index+4)}
+                        className={classes.popover}
+                        classes={{
+                          paper: classes.paper,
+                        }}
+                        open={referringCenterPopOverOpen}
+                        anchorEl={referringCenterAnchorEl}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'left',
+                        }}
+                        onClose={handleReferringCenterPopoverClose}
+                        disableRestoreFocus
+                      >
+                        {el.referringCenter && id==index+1?
+                          <>
+                            <Typography style={{fontSize:12}}>Center Email: {el.referringCenter.centerEmail}</Typography>
+                            <Typography style={{fontSize:12}}>Phone1: {el.referringCenter.phone1}</Typography>
+                            <Typography style={{fontSize:12}}>Phone2: {el.referringCenter.phone2}</Typography>
+                            <Typography style={{fontSize:12}}>Name of Director: {el.referringCenter.nameofDirector}</Typography>
+                          </>:''
+                        }
+                      </Popover>
                     </TableCell>
                     <TableCell>
-                      {el.patient.mobileNumber1}
+                      {el.tests?el.tests.length:0}
                     </TableCell>
                     <TableCell>
-                      {el.patient.age}
+                    {0}
                     </TableCell>
                     <TableCell>
-                      {el.patient.address}
-                    </TableCell>
-                    <TableCell style={{width:'120px'}}>
-                      <div>
-                        <UpdatePatient id={el._id} />
-                        <span onClick={e => deletePatientTest(el._id)}><DeleteOutlineIcon style={{ cursor: "pointer" }} /></span>
-                        <ViewPatientDetails id={el._id} />
-                      </div>
+                      {0}
                     </TableCell>
                   </TableRow>
                 )):''}
