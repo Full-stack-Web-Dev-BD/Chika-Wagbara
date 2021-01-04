@@ -15,8 +15,8 @@ router.post('/newPatient', passport.authenticate('jwt', {session:false}), (req, 
 				name    :patient.firstName + patient.lastName,
 				email   :patient.email,
 				//photo:req.file.path,
-				user_role:patient.user_role,
-				password:patient.password
+				//user_role:patient.user_role,
+				password:patient.email
 			})
 
 			bcrypt.genSalt(10, (err,salt)=>{

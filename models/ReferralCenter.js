@@ -23,7 +23,8 @@ const referralCenterSchema=new Schema({
         type:String
     },
     user_role:{
-        type:String
+        type:String,
+        default: 'member'
     },
     nameofDirector:{
         type:String

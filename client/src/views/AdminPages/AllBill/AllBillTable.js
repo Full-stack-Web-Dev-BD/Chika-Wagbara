@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import queue from 'queue'
 import PropTypes from 'prop-types';
+import { BlobProvider } from '@react-pdf/renderer';
 import TextField from '@material-ui/core/TextField'
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -18,6 +20,7 @@ import {
 import Grid from '@material-ui/core/Grid';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Collapse from '@material-ui/core/Collapse';
 import Popover from '@material-ui/core/Popover';
 import moment from 'moment'
@@ -25,6 +28,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { connect } from 'react-redux'
 import { getPatientTests, deletePatientTest } from '../../../actions/patientTestAction'
 import SelectDate from './SelectDate'
+import PrintandPdf from './PrintandPdf'
 const useStyles = makeStyles((theme) => ({
   root: {marginTop:18},
   avatar: {
@@ -32,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   popover: {
     pointerEvents: 'none',
+    marginTop:7
   },
   paper: {
     padding: theme.spacing(2),
@@ -42,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ReportManagement = (props) => {
+const AllBillTable = (props) => {
   const { patientTests, className, ...rest }=props
 
   const classes = useStyles();
@@ -60,6 +65,13 @@ const ReportManagement = (props) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [dateLebel, setDateLebel] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isReady, setIsReady] = useState(false);
+  
+  useEffect(()=> {
+    setIsReady(true);
+  },[]);
+
 
   const handlePatientClick = () => {
     setOpen(!open);
@@ -151,15 +163,6 @@ const ReportManagement = (props) => {
     setPatientAnchorEl(null);
   };
 
-  const handleGuardianPopoverOpen = (event, id) => {
-    setId(id)
-    setGuardianAnchorEl(event.currentTarget);
-  };
-
-  const handleGuardianPopoverClose = () => {
-    setGuardianAnchorEl(null);
-  };
-
   const handleReferringPersonPopoverOpen = (event, id) => {
     setId(id)
     setReferringPersonAnchorEl(event.currentTarget);
@@ -177,20 +180,39 @@ const ReportManagement = (props) => {
   const handleReferringCenterPopoverClose = () => {
     setReferringCenterAnchorEl(null);
   };
+
+  const handleClick = (event, id) => {
+    setId(id)
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   
   const PatientPopOverOpen = Boolean(patienAnchorEl);
-  const guardianPopOverOpen = Boolean(guardianAnchorEl);
   const referringPersonPopOverOpen = Boolean(referringPersonAnchorEl);
   const referringCenterPopOverOpen = Boolean(referringCenterAnchorEl);
+  const popOpen = Boolean(anchorEl);
+  const popId = open ? 'simple-popover' : undefined;
 
   const deletePatientTest=(id)=>{
     props.deletePatientTest(id)
   }
-    
+
+  const renderQueue = queue({
+    autostart: true, // Directly start when pushing.
+    concurrency: 1 // One concurrent job => run in series.
+  })
+  
+  // Without a queue, render would happen in parallel, accessing the same
+  // stream, which will lead to "Error: stream.push() after EOF".
+  //renderQueue.push(() => renderPDF())
+  
   return (
     <div>
       <div className="d-flex">
-        <h2 className="mb3">Patient Test</h2>
+        <h2 className="mb3">All Bill</h2>
         <div className="d-inline ml-auto">
           <Button variant="outlined" color="primary" onClick={()=>showDateLevel()} className="search-button">
             {
@@ -203,7 +225,7 @@ const ReportManagement = (props) => {
       </div>
       <div style={{marginBottom:'10px'}}>
       <Grid container spacing={3} style={{width:'70%'}}>
-        <Grid item md={3} className="customSearch">
+        <Grid item md={4} className="customSearch">
           <Button
             activeClassName={classes.active}
             id="contact-button"
@@ -224,29 +246,7 @@ const ReportManagement = (props) => {
             />
           </Collapse>
         </Grid>
-        <Grid item md={3} className="customSearch">
-          <Button
-            activeClassName={classes.active}
-            className={classes.button}
-            id="contact-button"
-            onClick={handlePatientClick}
-          >
-            Guardians
-          {open ? <ExpandLess /> : <ExpandMore />}
-          </Button>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <TextField
-              onChange={e=>setGuardianSearchTerm(e.target.value)}
-              placeholder="Search by any field"
-              variant="outlined"
-              size="small"
-              type="text"
-              value={guardianSearchTerm}
-              fullWidth
-            />
-          </Collapse>
-        </Grid>
-        <Grid item md={3} className="customSearch">
+        <Grid item md={4} className="customSearch">
           <Button
             activeClassName={classes.active}
             className={classes.button}
@@ -268,7 +268,7 @@ const ReportManagement = (props) => {
             />
           </Collapse>
         </Grid>
-        <Grid item md={3} className="customSearch">
+        <Grid item md={4} className="customSearch">
           <Button
             activeClassName={classes.active}
             className={classes.button}
@@ -305,13 +305,10 @@ const ReportManagement = (props) => {
               <TableHead>
                 <TableRow>
                   <TableCell >
-                      Patient No
+                      Bill Id
                   </TableCell>
                   <TableCell >
                     Patient Name
-                </TableCell>
-                  <TableCell>
-                    Guardian
                 </TableCell>
                   <TableCell>
                     Referring Person
@@ -320,13 +317,30 @@ const ReportManagement = (props) => {
                     Referring Center
                 </TableCell>
                 <TableCell>
-                    Incomplete
+                  Bill Date
                 </TableCell>
-                  <TableCell>
-                    Completed
+                <TableCell>
+                  Bill Amount
                 </TableCell>
-                  <TableCell>
-                    Approved
+                <TableCell>
+                  Due
+                </TableCell>
+                <TableCell>
+                  Bill Status
+                </TableCell>
+                <TableCell>
+                {/* <Typography className={classes.typography} style={{fontSize:12, marginBottom:5}}>
+                  {
+                    isReady?
+                    <BlobProvider document={<PrintandPdf />}>
+                      {({ url }) => (
+                        <a className="button" href={url} target="_blank" rel="noopener noreferrer">
+                          Open in New Tab
+                        </a>
+                      )}
+                    </BlobProvider>:''
+                  }
+                </Typography> */}
                 </TableCell>
                 </TableRow>
               </TableHead>
@@ -338,7 +352,7 @@ const ReportManagement = (props) => {
                     style={{cursor:'pointer'}}
                   >  
                      <TableCell>
-                      {el.patient?el.patient.patientNo:''}
+                      {index}
                     </TableCell>
                     <TableCell>
                       <Box
@@ -379,45 +393,6 @@ const ReportManagement = (props) => {
                             </div>:''
                           }
                         </Popover>
-                    </TableCell>
-                    <TableCell>
-                      <Box
-                        alignItems="center"
-                        display="flex"
-                      >
-                        <Typography
-                          aria-owns={guardianPopOverOpen ? (index+2) : undefined}
-                          aria-haspopup="true"
-                          onMouseEnter={(e)=>handleGuardianPopoverOpen(e, index+1)}
-                          onMouseLeave={handleGuardianPopoverClose}
-                        >
-                          {el.guardian?el.guardian.firstName:''} {el.guardian?el.guardian.lastName:''}
-                        </Typography>
-                      </Box>  
-                      <Popover
-                        id={(index+2)}
-                        className={classes.popover}
-                        open={guardianPopOverOpen}
-                        anchorEl={guardianAnchorEl}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'left',
-                        }}
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'left',
-                        }}
-                        onClose={handleGuardianPopoverClose}
-                        disableRestoreFocus
-                      >
-                      {el.guardian && id==index+1?
-                        <div className="popover-layout">
-                          <Typography style={{fontSize:12}}>Email: {el.guardian.email}</Typography>
-                          <Typography style={{fontSize:12}}>Mobile Number: {el.guardian.mobileNumber}</Typography>
-                          <Typography style={{fontSize:12}}>RelationshipToPatient: {el.guardian.relationshipToPatient}</Typography>
-                        </div>:''
-                      }
-                    </Popover>
                     </TableCell>
                     <TableCell>
                     <Box
@@ -499,13 +474,54 @@ const ReportManagement = (props) => {
                       </Popover>
                     </TableCell>
                     <TableCell>
-                      {el.tests?el.tests.length:0}
+                      {moment(el.date).format('MMMM Do YYYY')}
                     </TableCell>
                     <TableCell>
-                    {0}
+                      {el.totalAmountToPay}
                     </TableCell>
                     <TableCell>
-                      {0}
+                      {el.remainingBalance}
+                    </TableCell>
+                    <TableCell>
+                      {
+                        el.totalAmountToPay-el.paidAmount>0?
+                        <span style={{backgroundColor:'yellow', padding:'3px 5px'}}>Pending</span>:
+                        <span style={{backgroundColor:'green', padding:'3px 5px'}}>Complete</span>
+                      }
+                    </TableCell>
+                    <TableCell>
+                      <Button className="pop-button" aria-describedby={id} onClick={(e)=>handleClick(e, index+1)}>
+                        <MoreVertIcon />
+                      </Button>
+                      <Popover
+                        id={popId}
+                        open={popOpen}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'center',
+                        }}
+                        style={{ marginTop:6 }}
+                      >
+                        {id==index+1?
+                        <div className="popover-layout">
+                          {/* <Typography className={classes.typography} style={{fontSize:12, marginBottom:5}}>
+                            <BlobProvider document={MyDoc}>
+                              {({ url }) => (
+                                <a href={`localhost:3000/admin/printPdf`} target="_blank">Open in new tab</a>
+                              )}
+                            </BlobProvider>
+                          </Typography> */}
+                          <Typography className={classes.typography} style={{fontSize:12, marginBottom:5}}>Print Bill</Typography>
+                          <Typography className={classes.typography} style={{fontSize:12}}>Edit Bill</Typography>
+                        </div>:''
+                        }
+                      </Popover>
                     </TableCell>
                   </TableRow>
                 )):''}
@@ -518,7 +534,7 @@ const ReportManagement = (props) => {
   );
 };
 
-ReportManagement.propTypes = {
+AllBillTable.propTypes = {
     getPatientTests:PropTypes.func.isRequired,
     deletePatientTest:PropTypes.func.isRequired,
     patientTests:PropTypes.array.isRequired,
@@ -527,4 +543,4 @@ ReportManagement.propTypes = {
 const mapStateToProps = (state) => ({
   patientTests: state.patientTest.patientTests
 })
-export default connect(mapStateToProps, { getPatientTests, deletePatientTest })(ReportManagement);
+export default connect(mapStateToProps, { getPatientTests, deletePatientTest })(AllBillTable);

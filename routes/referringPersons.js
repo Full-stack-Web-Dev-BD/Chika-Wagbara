@@ -12,7 +12,7 @@ router.post('/newReferringPerson', passport.authenticate('jwt', {session:false})
       const newUser= new User({
 				name    :rperson.firstName + rperson.lastName,
 				email   :rperson.email,
-				user_role:rperson.user_role,
+				//user_role:rperson.user_role,
 				password:rperson.password
 			})
 

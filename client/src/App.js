@@ -27,6 +27,8 @@ import ReferringPerson from './views/AdminPages/ReferringPerson/ReferringPerson'
 import ReferringCenter from './views/AdminPages/ReferringCenter/ReferringCenter'
 import AddPatientTest from './views/AdminPages/AddPatientTest/AddPatientTest'
 import PatientTest from './views/AdminPages/PatientTest/PatientTest'
+import AllBill from './views/AdminPages/AllBill/AllBill'
+import PrintandPdf from './views/AdminPages/AllBill/PrintandPdf'
 
 // Common Component 
 import LandingPage from './views/auth/LandingPage';
@@ -90,6 +92,14 @@ const App = () => {
           </Switch>
           <Switch>
             <RouteWithLayout
+              component={PrintandPdf}
+              exact
+              layout={MainLayout}
+              path="/admin/printPdf/:id"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
               component={Patient}
               exact
               layout={MainLayout}
@@ -110,6 +120,14 @@ const App = () => {
               exact
               layout={MainLayout}
               path="/admin/patientTest"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={AllBill}
+              exact
+              layout={MainLayout}
+              path="/admin/allBill"
             />
           </Switch>
           <Switch>

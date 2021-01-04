@@ -84,3 +84,20 @@
     z-index: 2;
     position: absolute;
 }
+.MuiPopover-paper{
+    min-width: 0px !important;
+}
+.popover-layout{
+    padding: 16px;
+}
+.pop-button{
+    min-width: 10px !important;
+    padding: 0px !important;
+}
+.pop-button:focus{
+    outline: none;
+}
+
+.pop-button span{
+    width: 15px !important;
+}

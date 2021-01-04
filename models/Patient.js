@@ -85,7 +85,8 @@ const patientSchema=new Schema({
 		type:String
 	},
 	user_role:{
-		type:String
+		type:String,
+		default: 'member'
 	},
 	password:{
 		type:String

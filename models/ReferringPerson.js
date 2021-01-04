@@ -43,6 +43,10 @@ const referringPersonSchema=new Schema({
     referringPersonMarketer:{
         type:String
     },
+    user_role:{
+        type:String,
+        default: 'member'
+    },
     password:{
         type:String
     },
