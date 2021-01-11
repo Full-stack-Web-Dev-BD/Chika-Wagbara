@@ -9,27 +9,28 @@ router.post('/newReferringCenter', passport.authenticate('jwt', {session:false})
     const newReferringCenter= new ReferralCenter(req.body)
     newReferringCenter.save()
     .then(rcenter=>{
-      const newUser= new User({
-				name    :rcenter.nameofReferralCenter,
-				email   :rcenter.centerEmail,
-				user_role:rcenter.user_role,
-				password:rcenter.password
-			})
+      res.json(rcenter)
+      // const newUser= new User({
+			// 	name    :rcenter.nameofReferralCenter,
+			// 	email   :rcenter.centerEmail,
+			// 	user_role:rcenter.user_role,
+			// 	password:rcenter.password
+			// })
 
-			bcrypt.genSalt(10, (err,salt)=>{
-				bcrypt.hash(newUser.password, salt, (err,hash)=>{
-					if(err) throw err;
-					newUser.password=hash;
-					newUser.save()
-					.then((user)=>{
-						res.json(rcenter);
-					})
-					.catch((err)=>{
-						res.json(err);
-					})
-				})
+			// bcrypt.genSalt(10, (err,salt)=>{
+			// 	bcrypt.hash(newUser.password, salt, (err,hash)=>{
+			// 		if(err) throw err;
+			// 		newUser.password=hash;
+			// 		newUser.save()
+			// 		.then((user)=>{
+			// 			res.json(rcenter);
+			// 		})
+			// 		.catch((err)=>{
+			// 			res.json(err);
+			// 		})
+			// 	})
 
-			})
+			// })
     })
     .catch(err=> res.json(err));
   }  

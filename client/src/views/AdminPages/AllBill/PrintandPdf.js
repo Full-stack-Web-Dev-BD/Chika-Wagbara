@@ -43,20 +43,20 @@ const useStyles = makeStyles((theme) => ({
 const PrintandPdf=(props)=> {
   const classes = useStyles();
   const componentRef = useRef();
-  const { testData, totalDiscount, totalPrice, totalFinalPrice, testDiscount, patientNo, paidAmount, remainingAmount, paymentMode, billBy, billTo }=props
+  const { data }=props
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-
+  console.log(data)
   return (
     <Document>
       <Page size="A4">
         <View>
-          <Text>Section #1</Text>
+          <Text>{data.patient.firstName} {data.patient.lastName}</Text>
         </View>
         <View>
-          <Text>Section #2</Text>
+          <Text>Section 2</Text>
         </View>
       </Page>
       </Document>

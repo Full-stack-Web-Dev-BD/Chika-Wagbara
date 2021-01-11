@@ -9,27 +9,28 @@ router.post('/newReferringPerson', passport.authenticate('jwt', {session:false})
     const newReferringPerson= new ReferringPerson(req.body)
     newReferringPerson.save()
     .then(rperson=>{
-      const newUser= new User({
-				name    :rperson.firstName + rperson.lastName,
-				email   :rperson.email,
-				//user_role:rperson.user_role,
-				password:rperson.password
-			})
+      res.json(rperson)
+      // const newUser= new User({
+			// 	name    :rperson.firstName + rperson.lastName,
+			// 	email   :rperson.email,
+			// 	//user_role:rperson.user_role,
+			// 	password:rperson.password
+			// })
 
-			bcrypt.genSalt(10, (err,salt)=>{
-				bcrypt.hash(newUser.password, salt, (err,hash)=>{
-					if(err) throw err;
-					newUser.password=hash;
-					newUser.save()
-					.then((user)=>{
-						res.json(rperson);
-					})
-					.catch((err)=>{
-						res.json(err);
-					})
-				})
+			// bcrypt.genSalt(10, (err,salt)=>{
+			// 	bcrypt.hash(newUser.password, salt, (err,hash)=>{
+			// 		if(err) throw err;
+			// 		newUser.password=hash;
+			// 		newUser.save()
+			// 		.then((user)=>{
+			// 			res.json(rperson);
+			// 		})
+			// 		.catch((err)=>{
+			// 			res.json(err);
+			// 		})
+			// 	})
 
-			})
+			// })
     })
     .catch(err=> res.json(err));
   }  

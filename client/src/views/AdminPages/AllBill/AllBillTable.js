@@ -196,18 +196,6 @@ const AllBillTable = (props) => {
   const popOpen = Boolean(anchorEl);
   const popId = open ? 'simple-popover' : undefined;
 
-  const deletePatientTest=(id)=>{
-    props.deletePatientTest(id)
-  }
-
-  const renderQueue = queue({
-    autostart: true, // Directly start when pushing.
-    concurrency: 1 // One concurrent job => run in series.
-  })
-  
-  // Without a queue, render would happen in parallel, accessing the same
-  // stream, which will lead to "Error: stream.push() after EOF".
-  //renderQueue.push(() => renderPDF())
   
   return (
     <div>
@@ -329,18 +317,7 @@ const AllBillTable = (props) => {
                   Bill Status
                 </TableCell>
                 <TableCell>
-                {/* <Typography className={classes.typography} style={{fontSize:12, marginBottom:5}}>
-                  {
-                    isReady?
-                    <BlobProvider document={<PrintandPdf />}>
-                      {({ url }) => (
-                        <a className="button" href={url} target="_blank" rel="noopener noreferrer">
-                          Open in New Tab
-                        </a>
-                      )}
-                    </BlobProvider>:''
-                  }
-                </Typography> */}
+                
                 </TableCell>
                 </TableRow>
               </TableHead>
@@ -350,6 +327,7 @@ const AllBillTable = (props) => {
                   <TableRow
                     hover
                     style={{cursor:'pointer'}}
+                    key={index}
                   >  
                      <TableCell>
                       {index}
@@ -510,14 +488,18 @@ const AllBillTable = (props) => {
                       >
                         {id==index+1?
                         <div className="popover-layout">
-                          {/* <Typography className={classes.typography} style={{fontSize:12, marginBottom:5}}>
-                            <BlobProvider document={MyDoc}>
-                              {({ url }) => (
-                                <a href={`localhost:3000/admin/printPdf`} target="_blank">Open in new tab</a>
-                              )}
-                            </BlobProvider>
-                          </Typography> */}
-                          <Typography className={classes.typography} style={{fontSize:12, marginBottom:5}}>Print Bill</Typography>
+                          <Typography className={classes.typography} style={{fontSize:12, marginBottom:5}}>
+                            {
+                              isReady?
+                              <BlobProvider document={<PrintandPdf data={el} />}>
+                                {({ url }) => (
+                                  <a className="button" href={url} target="_blank" rel="noopener noreferrer">
+                                    Print Bill
+                                  </a>
+                                )}
+                              </BlobProvider>:''
+                            }
+                          </Typography>
                           <Typography className={classes.typography} style={{fontSize:12}}>Edit Bill</Typography>
                         </div>:''
                         }

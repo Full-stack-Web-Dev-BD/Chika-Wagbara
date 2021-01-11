@@ -11,28 +11,29 @@ router.post('/newPatient', passport.authenticate('jwt', {session:false}), (req, 
     const newPatient= new Patient(req.body)
     newPatient.save()
     .then(patient=>{
-      const newUser= new User({
-				name    :patient.firstName + patient.lastName,
-				email   :patient.email,
-				//photo:req.file.path,
-				//user_role:patient.user_role,
-				password:patient.email
-			})
+      res.json(patient)
+      // const newUser= new User({
+			// 	name    :patient.firstName + patient.lastName,
+			// 	email   :patient.email,
+			// 	//photo:req.file.path,
+			// 	//user_role:patient.user_role,
+			// 	password:patient.email
+			// })
 
-			bcrypt.genSalt(10, (err,salt)=>{
-				bcrypt.hash(newUser.password, salt, (err,hash)=>{
-					if(err) throw err;
-					newUser.password=hash;
-					newUser.save()
-					.then((user)=>{
-						res.json(patient);
-					})
-					.catch((err)=>{
-						res.json(err);
-					})
-				})
+			// bcrypt.genSalt(10, (err,salt)=>{
+			// 	bcrypt.hash(newUser.password, salt, (err,hash)=>{
+			// 		if(err) throw err;
+			// 		newUser.password=hash;
+			// 		newUser.save()
+			// 		.then((user)=>{
+			// 			res.json(patient);
+			// 		})
+			// 		.catch((err)=>{
+			// 			res.json(err);
+			// 		})
+			// 	})
 
-			})
+			// })
     })
     .catch(err=>{
       console.log(err)
