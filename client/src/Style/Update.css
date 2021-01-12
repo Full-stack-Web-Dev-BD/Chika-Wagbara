@@ -101,3 +101,10 @@
 .pop-button span{
     width: 15px !important;
 }
+.select-test{
+    width: 200px;
+}
+
+.select-test TextField:focus{
+    border: none;
+}

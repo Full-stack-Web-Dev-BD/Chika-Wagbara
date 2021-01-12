@@ -34,7 +34,14 @@ const patientTestSchema=new Schema({
 	paymentMode:{
 		type:Array
 	},
+	totalDiscount:{
+		type:Number
+	},
 	isComplete:{
+		type:Boolean,
+		default:false
+	},
+	isSign:{
 		type:Boolean,
 		default:false
 	},

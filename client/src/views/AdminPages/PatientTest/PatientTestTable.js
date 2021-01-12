@@ -60,6 +60,7 @@ const ReportManagement = (props) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [dateLebel, setDateLebel] = useState(false);
+  const [isComplete, setIsComplete] = useState('');
 
   const handlePatientClick = () => {
     setOpen(!open);
@@ -86,6 +87,17 @@ const ReportManagement = (props) => {
   useEffect(() => {
     setAllPatientTest(patientTests)
   }, [patientTests])
+
+  useEffect(() => {
+    let searchData=[]
+    patientTests.filter(data =>{
+      if((data.isComplete).toString()==isComplete.toString()){
+        console.log(isComplete)
+        searchData.push(data);
+      }
+    })
+    setAllPatientTest(searchData)
+  }, [isComplete])
 
   useEffect(() => {
     let searchData=[]
@@ -186,11 +198,29 @@ const ReportManagement = (props) => {
   const deletePatientTest=(id)=>{
     props.deletePatientTest(id)
   }
-    
+  console.log(isComplete)  
   return (
     <div>
       <div className="d-flex">
         <h2 className="mb3">Patient Test</h2>
+        <div className="d-inline ml-auto select-test">
+        <TextField
+          onChange={e => setIsComplete(e.target.value)}
+          id="outlined-basic"
+          select
+          SelectProps={{
+            native: true,
+          }}
+          fullWidth
+          variant="outlined"
+          size="small"
+        >
+          <option selected disabled hidden >Select Type</option>
+          <option value="true">Complete</option>
+          <option value="false" >Incomplete</option>
+          <option value="true">Signed</option>
+        </TextField>
+        </div>
         <div className="d-inline ml-auto">
           <Button variant="outlined" color="primary" onClick={()=>showDateLevel()} className="search-button">
             {

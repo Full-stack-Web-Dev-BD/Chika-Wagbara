@@ -156,7 +156,8 @@ const AddPatientTest=(props)=> {
       totalAmountToPay:totalBill,
       paidAmount:paidAmount?paidAmount:0,
       remainingBalance:paidAmount?remainingAmount:totalBill,
-      paymentMode:paymentMode
+      paymentMode:paymentMode,
+      totalDiscount:totalDiscount?totalDiscount:0
     }
     props.addPatientTest(newPatientTest)
 

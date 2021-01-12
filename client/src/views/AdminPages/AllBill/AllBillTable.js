@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import queue from 'queue'
 import PropTypes from 'prop-types';
 import { BlobProvider } from '@react-pdf/renderer';
 import TextField from '@material-ui/core/TextField'
@@ -28,7 +27,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { connect } from 'react-redux'
 import { getPatientTests, deletePatientTest } from '../../../actions/patientTestAction'
 import SelectDate from './SelectDate'
-import PrintandPdf from './PrintandPdf'
+import PrintandPdf from './PrintandPdf/PrintandPdf'
 const useStyles = makeStyles((theme) => ({
   root: {marginTop:18},
   avatar: {

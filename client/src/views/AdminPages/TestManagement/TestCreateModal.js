@@ -138,7 +138,7 @@ const TestCreateModal=(props)=> {
                 />
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <TextField
                   onChange={e => setPositionPriority(e.target.value)}
                   required
@@ -150,7 +150,7 @@ const TestCreateModal=(props)=> {
                 />
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-6">
 
                 <TextField
                   onChange={e => setDepartment(e.target.value)}
@@ -164,7 +164,7 @@ const TestCreateModal=(props)=> {
                     native: true,
                   }}
                 >
-                  <option >Select Department</option>
+                  <option selected disabled hidden >Select Department</option>
                   {departments?
                     departments.map(el => (
                       <option value={el.name}> {el.name} </option>
@@ -173,7 +173,7 @@ const TestCreateModal=(props)=> {
                 </TextField>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <TextField
                   onChange={e => setCategory(e.target.value)}
                   margin="dense"
@@ -186,7 +186,7 @@ const TestCreateModal=(props)=> {
                     native: true,
                   }}
                 >
-                  <option >Select Category</option>
+                  <option selected disabled hidden>Select Category</option>
                   { categories?
                     categories.map(el => (
                       <option value={el.name}> {el.name} </option>
@@ -195,7 +195,7 @@ const TestCreateModal=(props)=> {
                 </TextField>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-6">
 
                 <TextField
                   onChange={e => setSampleType(e.target.value)}
@@ -209,10 +209,10 @@ const TestCreateModal=(props)=> {
                     native: true,
                   }}
                 >
-                  <option >Select Sample Type</option>
+                  <option selected disabled hidden>Select Sample Type</option>
                   { samples?
                     samples.map(el => (
-                      <option value={el.name}> {el.type} </option>
+                      <option value={el.name}> {el.type} {el.container} </option>
                     )):''
                   }
                 </TextField>
