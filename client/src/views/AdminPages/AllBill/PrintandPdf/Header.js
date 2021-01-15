@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         <View style={styles.header1}>
             <Text style={styles.headerText}>Bill Date: {moment(props.date).format('DD/MM/YYYY')}</Text>
             <Text style={styles.headerText}>Bill ID: 013445</Text>
-            <Text style={styles.headerText}>Patient ID: {props.patientNo}</Text>
+            <Text style={styles.headerText}>Patient ID: {props.patientNo?props.patientNo:null}</Text>
         </View>
         <View style={styles.header1}>
            <Image style={styles.logo} src={logo}></Image>

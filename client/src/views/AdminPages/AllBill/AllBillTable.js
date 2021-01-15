@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    //width:250,
     marginTop:6,
-    zIndex:10
-
+  },
+  popoverContent: {
+    pointerEvents: 'auto',
   },
 }));
 
@@ -51,7 +51,6 @@ const AllBillTable = (props) => {
 
   const classes = useStyles();
   const [patienAnchorEl, setPatientAnchorEl] = useState(null);
-  const [guardianAnchorEl, setGuardianAnchorEl] = useState(null);
   const [referringPersonAnchorEl, setReferringPersonAnchorEl] = useState(null);
   const [referringCenterAnchorEl, setReferringCenterAnchorEl] = useState(null);
   const [patientSearchTerm, setPatientSearchTerm] = useState('')
@@ -474,7 +473,11 @@ const AllBillTable = (props) => {
                         id={popId}
                         open={popOpen}
                         anchorEl={anchorEl}
-                        onClose={handleClose}
+                        onClick={handleClose}
+                        className={classes.popover}
+                        classes={{
+                          paper: classes.popoverContent,
+                        }}
                         anchorOrigin={{
                           vertical: 'bottom',
                           horizontal: 'center',
@@ -483,7 +486,7 @@ const AllBillTable = (props) => {
                           vertical: 'top',
                           horizontal: 'center',
                         }}
-                        style={{ marginTop:6 }}
+                        style={{ marginTop:6}}
                       >
                         {id==index+1?
                         <div className="popover-layout">
@@ -492,7 +495,7 @@ const AllBillTable = (props) => {
                               isReady?
                               <BlobProvider document={<PrintandPdf data={el} />}>
                                 {({ url }) => (
-                                  <a className="button" href={url} target="_blank" rel="noopener noreferrer">
+                                  <a className="button" href={url} target="_blank">
                                     Print Bill
                                   </a>
                                 )}

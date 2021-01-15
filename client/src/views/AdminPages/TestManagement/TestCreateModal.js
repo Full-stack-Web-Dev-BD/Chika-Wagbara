@@ -212,7 +212,7 @@ const TestCreateModal=(props)=> {
                   <option selected disabled hidden>Select Sample Type</option>
                   { samples?
                     samples.map(el => (
-                      <option value={el.name}> {el.type} {el.container} </option>
+                      <option value={el._id}> {el.type} {el.container} </option>
                     )):''
                   }
                 </TextField>

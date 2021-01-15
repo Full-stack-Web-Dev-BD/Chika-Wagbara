@@ -36,8 +36,8 @@ const testSchema=new Schema({
 		require:true
 	},
 	sampleType:{
-		type:String,
-		require:true
+		type:Schema.Types.ObjectId,
+		ref:'samples'
 	},
 	reportType:{
 		type:String,

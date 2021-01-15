@@ -20,11 +20,13 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import Popover from '@material-ui/core/Popover';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { connect } from 'react-redux'
 import { getPatientTests, deletePatientTest } from '../../../actions/patientTestAction'
 import SelectDate from './SelectDate'
+import PatientTestDetails from './PatientTestDetails'
 const useStyles = makeStyles((theme) => ({
   root: {marginTop:18},
   avatar: {
@@ -35,10 +37,10 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    //width:250,
     marginTop:6,
-    zIndex:10
-
+  },
+  popoverContent: {
+    pointerEvents: 'auto',
   },
 }));
 
@@ -59,6 +61,7 @@ const ReportManagement = (props) => {
   const [id, setId] = useState(false);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [anchorEl, setAnchorEl] = useState(null);
   const [dateLebel, setDateLebel] = useState(false);
   const [isComplete, setIsComplete] = useState('');
 
@@ -194,11 +197,26 @@ const ReportManagement = (props) => {
   const guardianPopOverOpen = Boolean(guardianAnchorEl);
   const referringPersonPopOverOpen = Boolean(referringPersonAnchorEl);
   const referringCenterPopOverOpen = Boolean(referringCenterAnchorEl);
+  const popOpen = Boolean(anchorEl);
+  const popId = open ? 'simple-popover' : undefined;
 
   const deletePatientTest=(id)=>{
     props.deletePatientTest(id)
   }
-  console.log(isComplete)  
+  
+  const handleClick = (event, id) => {
+    setId(id)
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const fetchPatientTestDetails = (data) => {
+    return <PatientTestDetails data={data} />
+  }
+
   return (
     <div>
       <div className="d-flex">
@@ -366,6 +384,7 @@ const ReportManagement = (props) => {
                   <TableRow
                     hover
                     style={{cursor:'pointer'}}
+                    onClick={()=> fetchPatientTestDetails(el)}
                   >  
                      <TableCell>
                       {el.patient?el.patient.patientNo:''}
@@ -536,6 +555,39 @@ const ReportManagement = (props) => {
                     </TableCell>
                     <TableCell>
                       {0}
+                    </TableCell>
+                    <TableCell>
+                      <Button className="pop-button" aria-describedby={id} onClick={(e)=>handleClick(e, index+1)}>
+                        <MoreVertIcon />
+                      </Button>
+                      <Popover
+                        id={popId}
+                        open={popOpen}
+                        anchorEl={anchorEl}
+                        onClick={handleClose}
+                        className={classes.popover}
+                        classes={{
+                          paper: classes.popoverContent,
+                        }}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'center',
+                        }}
+                        style={{ marginTop:6}}
+                      >
+                        {id==index+1?
+                        <div className="popover-layout">
+                          <Typography className={classes.typography} style={{fontSize:12, marginBottom:5}}>
+                            Sign All({el.tests.length})
+                          </Typography>
+                          <Typography className={classes.typography} style={{fontSize:12}}>Review All</Typography>
+                        </div>:''
+                        }
+                      </Popover>
                     </TableCell>
                   </TableRow>
                 )):''}
