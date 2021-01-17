@@ -39,6 +39,9 @@
 .search-button:focus{
     outline: none;
 }
+.button-main:focus{
+    outline: none;
+}
 .search-button span{
     text-transform: none;
 }

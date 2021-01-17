@@ -27,6 +27,7 @@ import ReferringPerson from './views/AdminPages/ReferringPerson/ReferringPerson'
 import ReferringCenter from './views/AdminPages/ReferringCenter/ReferringCenter'
 import AddPatientTest from './views/AdminPages/AddPatientTest/AddPatientTest'
 import PatientTest from './views/AdminPages/PatientTest/PatientTest'
+import PatientTestDetails from './views/AdminPages/PatientTest/PatientTestDetails'
 import AllBill from './views/AdminPages/AllBill/AllBill'
 
 // Common Component 
@@ -111,6 +112,14 @@ const App = () => {
               exact
               layout={MainLayout}
               path="/admin/patientTest"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={PatientTestDetails}
+              exact
+              layout={MainLayout}
+              path="/admin/patientTest/:id"
             />
           </Switch>
           <Switch>

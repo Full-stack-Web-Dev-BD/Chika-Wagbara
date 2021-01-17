@@ -26,7 +26,6 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { connect } from 'react-redux'
 import { getPatientTests, deletePatientTest } from '../../../actions/patientTestAction'
 import SelectDate from './SelectDate'
-import PatientTestDetails from './PatientTestDetails'
 const useStyles = makeStyles((theme) => ({
   root: {marginTop:18},
   avatar: {
@@ -200,11 +199,14 @@ const ReportManagement = (props) => {
   const popOpen = Boolean(anchorEl);
   const popId = open ? 'simple-popover' : undefined;
 
-  const deletePatientTest=(id)=>{
+  const deletePatientTest=(e, id)=>{
     props.deletePatientTest(id)
+    e.stopPropagation();
+    handleClose()
   }
   
   const handleClick = (event, id) => {
+    event.stopPropagation()
     setId(id)
     setAnchorEl(event.currentTarget);
   };
@@ -213,10 +215,10 @@ const ReportManagement = (props) => {
     setAnchorEl(null);
   };
 
-  const fetchPatientTestDetails = (data) => {
-    return <PatientTestDetails data={data} />
-  }
+  const fetchPatientTestDetails = (id) => {
 
+    window.location.href=`http://localhost:3000/admin/patientTest/${id}`
+  }
   return (
     <div>
       <div className="d-flex">
@@ -384,7 +386,7 @@ const ReportManagement = (props) => {
                   <TableRow
                     hover
                     style={{cursor:'pointer'}}
-                    onClick={()=> fetchPatientTestDetails(el)}
+                    onClick={()=> fetchPatientTestDetails(el._id)}
                   >  
                      <TableCell>
                       {el.patient?el.patient.patientNo:''}
@@ -585,6 +587,7 @@ const ReportManagement = (props) => {
                             Sign All({el.tests.length})
                           </Typography>
                           <Typography className={classes.typography} style={{fontSize:12}}>Review All</Typography>
+                          <Typography className={classes.typography} style={{fontSize:12, cursor:'pointer'}} onClick={(e)=>deletePatientTest(e, el._id)}>Clear Test</Typography>
                         </div>:''
                         }
                       </Popover>

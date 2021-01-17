@@ -28,6 +28,7 @@ import { connect } from 'react-redux'
 import { getPatientTests, deletePatientTest } from '../../../actions/patientTestAction'
 import SelectDate from './SelectDate'
 import PrintandPdf from './PrintandPdf/PrintandPdf'
+import EditBill from './EditBill'
 const useStyles = makeStyles((theme) => ({
   root: {marginTop:18},
   avatar: {

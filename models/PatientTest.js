@@ -19,9 +19,22 @@ const patientTestSchema=new Schema({
 		type:Schema.Types.ObjectId,
 		ref:'referralCenter'
 	},
-	tests:{
-		type:Array
-	},
+	tests:[{
+		test:{
+			type:Schema.Types.ObjectId,
+			ref:'tests'
+		},
+		discount:{
+			type:Number
+		},
+		finalPrice:{
+			type:Number
+		},
+		isComplete:{
+			type:Boolean,
+			default:false
+		}
+	}],
 	totalAmountToPay:{
 		type:Number
 	},

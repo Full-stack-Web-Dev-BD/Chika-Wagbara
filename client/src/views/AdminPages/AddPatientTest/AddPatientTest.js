@@ -167,6 +167,7 @@ const AddPatientTest=(props)=> {
 
   const addTest=(data)=>{
     const newTest={
+      test:data._id,
       testName:data.testName,
       testPrice:parseInt(data.testPrice),
       finalPrice:parseInt(data.testPrice)
@@ -273,7 +274,7 @@ const AddPatientTest=(props)=> {
                   variant="outlined"
                   className="search-field"
                   margin="dense"
-                  id="title"
+                  id="Patient"
                   label="Select Patient"
                   type="text"
                   value={patientSearchTerm}
@@ -584,7 +585,7 @@ const AddPatientTest=(props)=> {
                         onChange={e=>setSearchTerm(e.target.value)}
                         variant="outlined"
                         margin="dense"
-                        id="title"
+                        id="test"
                         label="Select test by test name or test code"
                         type="text"
                         value={searchTerm}
@@ -657,7 +658,7 @@ const AddPatientTest=(props)=> {
                             disabled
                             variant="outlined"
                             margin="dense"
-                            id="title"
+                            id="bill"
                             label="Select reason for additional bill"
                             type="text"
                             fullWidth

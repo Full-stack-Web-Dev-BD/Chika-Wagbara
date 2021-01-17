@@ -1,131 +1,85 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
-  Box,
-  Card,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
+  Typography,  
   makeStyles,
 } from '@material-ui/core';
+import { connect } from 'react-redux'
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import PersonIcon from '@material-ui/icons/Person';
+import { useParams } from 'react-router-dom'
+import { getPatientTest} from '../../../actions/patientTestAction'
+import TestDetails from './TestDetails'
 
 const useStyles = makeStyles((theme) => ({
-    root: {},
-    avatar: {
-      marginRight: theme.spacing(2)
-    }
+    root: {margin: theme.spacing(2)},
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
 }));
 
 const PatientTestDetails=(props)=>{
-    const { products, className, ...rest }=props
+    const { patientTest }=props
+    const { id } = useParams()
     const classes = useStyles();
 
+    useEffect(()=>{
+        props.getPatientTest(id)
+    }, [])
+
+    console.log(patientTest)
+   
     return(
         <div>
-      
-        <Card
-            className={clsx(classes.root, className)}
-            {...rest}
-        >
-            <PerfectScrollbar>
-            <Box minWidth={1050}>
-                <Table size="small">
-                <TableHead>
-                    <TableRow>
-                    <TableCell >
-                        Product Name
-                    </TableCell>
-                    <TableCell>
-                        Department
-                    </TableCell>
-                    <TableCell>
-                        Type
-                    </TableCell>
-                    <TableCell>
-                        Unit
-                    </TableCell>
-                    <TableCell>
-                        Purchase Code
-                    </TableCell>
-                    <TableCell>
-                        Matergial Safety Code
-                    </TableCell>
-                    <TableCell>
-                        Quantity
-                    </TableCell>
-                    <TableCell>
-                        Alert Level
-                    </TableCell>
-                    <TableCell>
-                        Tax
-                    </TableCell>
-                    <TableCell >
-                        Action
-                    </TableCell>
-                    </TableRow>
-                </TableHead>
-                {/* <TableBody>
-                    {allProduct?
-                    allProduct.map((data, index) => (
-                    <TableRow
-                        hover
-                        key={index}
-                    >
-                        <TableCell>
-                        <Box
-                            alignItems="center"
-                            display="flex"
-                        >
-                            <Typography
-                            color="textPrimary"
-                            variant="body1"
-                            >
-                            {data.name}
-                            </Typography>
-                        </Box>
-                        </TableCell>
-                        <TableCell>
-                        {data.department?data.department.name:0}
-                        </TableCell>
-                        <TableCell>
-                        {data.type}
-                        </TableCell>
-                        <TableCell>
-                        {data.unit}
-                        </TableCell>
-                        <TableCell>
-                        {data.purchaseCode}
-                        </TableCell>
-                        <TableCell>
-                        {data.materialSafetyCode}
-                        </TableCell>
-                        <TableCell>
-                        {data.quantity}
-                        </TableCell>
-                        <TableCell>
-                        {data.alertLevel}
-                        </TableCell>
-                        <TableCell>
-                        {data.tax}
-                        </TableCell>
-                        <TableCell>
-                    
-                        </TableCell>
-                    </TableRow>
-                    )):''}
-                </TableBody> */}
-                </Table>
-            </Box>
-            </PerfectScrollbar>
-        </Card>
-    </div>
+            <div className={classes.root}>
+                <Grid container spacing={1}>
+                    <Grid item md={3}>
+                      <Paper className={classes.paper}>
+                          <PersonIcon style={{float:'left', fontSize: "3em", paddingTop:0}}/>
+                          <Typography variant="p" style={{marginLeft:-80, marginTop:30}}>{patientTest.patient?(patientTest.patient.title +" " +patientTest.patient.firstName +" " +patientTest.patient.lastName):''}</Typography>
+                          <Typography variant="p" style={{display:'block'}}>{patientTest.patient?(patientTest.patient.email):''}</Typography>
+                          <Typography variant="p" style={{marginLeft:-35}}>{patientTest.patient?(patientTest.patient.mobileNumber1):''}</Typography>
+                      </Paper>
+                    </Grid>
+                    <Grid item md={3}>
+                        <Paper className={classes.paper}>
+                            <PersonIcon style={{float:'left', fontSize: "3em", paddingTop:0}}/>
+                            <Typography variant="p" style={{marginLeft:-80, marginTop:30}}>{patientTest.guardian?(patientTest.guardian.title +" " +patientTest.guardian.firstName +" " +patientTest.guardian.lastName):''}</Typography>
+                            <Typography variant="p" style={{display:'block'}}>{patientTest.guardian?(patientTest.guardian.email):''}</Typography>
+                            <Typography variant="p" style={{marginLeft:-35}}>{patientTest.guardian?(patientTest.guardian.mobileNumber):''}</Typography>
+                        </Paper>
+                    </Grid>
+                    <Grid item md={3}>
+                        <Paper className={classes.paper}>
+                          <PersonIcon style={{float:'left', fontSize: "3em", paddingTop:0}}/>
+                          <Typography variant="p" style={{marginLeft:-80, marginTop:30}}>{patientTest.patient?(patientTest.patient.title +" " +patientTest.patient.firstName +" " +patientTest.patient.lastName):''}</Typography>
+                          <Typography variant="p" style={{display:'block'}}>{patientTest.patient?(patientTest.patient.email):''}</Typography>
+                          <Typography variant="p" style={{marginLeft:-35}}>{patientTest.patient?(patientTest.patient.mobileNumber1):''}</Typography>
+                        </Paper>
+                    </Grid>
+                    <Grid item md={3}>
+                        <Paper className={classes.paper}>
+                          <PersonIcon style={{float:'left', fontSize: "3em", paddingTop:0}}/>
+                          <Typography variant="p" style={{marginLeft:-80, marginTop:30}}>{patientTest.patient?(patientTest.patient.title +" " +patientTest.patient.firstName +" " +patientTest.patient.lastName):''}</Typography>
+                          <Typography variant="p" style={{display:'block'}}>{patientTest.patient?(patientTest.patient.email):''}</Typography>
+                          <Typography variant="p" style={{marginLeft:-35}}>{patientTest.patient?(patientTest.patient.mobileNumber1):''}</Typography>
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </div>
+            <TestDetails patientTest={patientTest} />
+       </div>
     )
 }
-
-export default PatientTestDetails;
+PatientTestDetails.prototype={
+    getPatientTest:PropTypes.func.isRequired,
+    patientTest:PropTypes.object.isRequired
+}
+const mapStateToProps=(state)=>({
+    patientTest:state.patientTest.patientTest
+})
+export default connect(mapStateToProps, { getPatientTest })(PatientTestDetails);

@@ -46,7 +46,7 @@ router.get('/allIncompletePatientTest', passport.authenticate('jwt', {session:fa
 router.get('/:id', passport.authenticate('jwt', {session:false}), function(req, res) {
   let id = req.params.id;
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
-    PatientTest.findById(id)
+    PatientTest.findById(id).populate('tests.test').populate('patient').populate('guardian').populate('referringPerson').populate('referringCenter')
     .then(data=> res.json(data))
     .catch(err=> res.json(err));
   }
