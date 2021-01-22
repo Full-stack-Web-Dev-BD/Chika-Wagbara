@@ -217,7 +217,7 @@ const ReportManagement = (props) => {
 
   const fetchPatientTestDetails = (id) => {
 
-    window.location.href=`http://localhost:3000/admin/patientTest/${id}`
+    window.location.href=`https://biosystems-lts.herokuapp.com/admin/patientTest/${id}`
   }
   return (
     <div>
