@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as notifications } from 'react-notification-system-redux';
 import authReducer from './authReducer';
 import branchReducer from './branchReducer';
 import countryReducer from './countryReducer';
@@ -22,6 +23,7 @@ import patientTestReducer from './patientTestReducer'
 
 export default combineReducers({
   auth: authReducer,
+  notifications,
   errors: errorReducer,
   branch:branchReducer,
   country:countryReducer,

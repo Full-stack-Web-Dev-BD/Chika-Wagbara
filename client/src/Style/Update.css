@@ -1,3 +1,4 @@
+
 .vl {
     border-left: 1px solid black;
     height: 120px;
@@ -110,4 +111,17 @@
 
 .select-test TextField:focus{
     border: none;
+}
+
+.editBillForm{
+    margin: auto;
+    padding: 20px;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
 }

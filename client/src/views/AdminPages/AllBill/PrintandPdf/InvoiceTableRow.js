@@ -54,19 +54,28 @@ const styles = StyleSheet.create({
 
 
 const InvoiceTableRow = (props) => {
-    const { tests, totalDiscount, totalPrice, testDiscount, totalAmountToPay, paidAmount, remainingBalance, paymentMode } =props
-    console.log(tests)
-    const rows = tests.map( (test, index) => 
+    const { tests, totalDiscount, totalPrice, additionalBill, testDiscount, totalAmountToPay, paidAmount, remainingBalance } =props
+    console.log(Object.keys(additionalBill).length)
+    const rows = tests.map( (data, index) => 
         <View style={styles.row} key={index}>
-            <Text style={styles.description}>{test.testName}</Text>
-            <Text style={styles.qty}>{test.testPrice}</Text>
-            <Text style={styles.rate}>{test.discount?test.discount:0}</Text>
-            <Text style={styles.amount}>{test.finalPrice}</Text>
+            <Text style={styles.description}>{data.test.testName}</Text>
+            <Text style={styles.qty}>{data.test.testPrice}</Text>
+            <Text style={styles.rate}>{data.discount?data.discount:0}</Text>
+            <Text style={styles.amount}>{data.finalPrice}</Text>
         </View>
     )
     return (
     <Fragment>
         {rows}
+        {/* {
+            Object.keys(additionalBill).length>0?
+            <View style={styles.row}>
+                <Text style={styles.description}>{additionalBill.reason}</Text>
+                <Text style={styles.qty}>{additionalBill.price}</Text>
+                <Text style={styles.rate}>{additionalBill.discount?additionalBill.discount:0}</Text>
+                <Text style={styles.amount}>{additionalBill.price}</Text>
+            </View>:''
+        } */}
         <View style={styles.row}>
             <Text style={styles.description}>Additional Discount</Text>
             <Text style={styles.qty}></Text>

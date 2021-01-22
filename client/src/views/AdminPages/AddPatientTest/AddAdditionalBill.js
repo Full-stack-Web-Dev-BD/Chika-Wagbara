@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import { addGuardian } from '../../../actions/guardianAction'
 
 const GuardianCreateModal=(props)=> {
-    const { setTestName, setPrice }=props
+    const { setAdditionalBill }=props
     const [reason, setReason] = useState('')
     const [bill, setBill] = useState('')
     
@@ -25,8 +25,7 @@ const GuardianCreateModal=(props)=> {
 
     const addAdditionalBill=(event)=>{
         event.preventDefault()
-        setTestName(reason)
-        setPrice(bill)
+        setAdditionalBill({reason:reason, price:bill})
         handleClose();
     }
 

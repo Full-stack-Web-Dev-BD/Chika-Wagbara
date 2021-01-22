@@ -28,7 +28,6 @@ import { connect } from 'react-redux'
 import { getPatientTests, deletePatientTest } from '../../../actions/patientTestAction'
 import SelectDate from './SelectDate'
 import PrintandPdf from './PrintandPdf/PrintandPdf'
-import EditBill from './EditBill'
 const useStyles = makeStyles((theme) => ({
   root: {marginTop:18},
   avatar: {
@@ -49,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AllBillTable = (props) => {
   const { patientTests, className, ...rest }=props
+  const { user } =props.auth
 
   const classes = useStyles();
   const [patienAnchorEl, setPatientAnchorEl] = useState(null);
@@ -194,7 +194,11 @@ const AllBillTable = (props) => {
   const referringCenterPopOverOpen = Boolean(referringCenterAnchorEl);
   const popOpen = Boolean(anchorEl);
   const popId = open ? 'simple-popover' : undefined;
+  
+  const fetchPatientTestBill = (id) => {
 
+    window.location.href=`http://localhost:3000/admin/allBill/${id}`
+  }
   
   return (
     <div>
@@ -329,7 +333,7 @@ const AllBillTable = (props) => {
                     key={index}
                   >  
                      <TableCell>
-                      {index}
+                      {el.billId}
                     </TableCell>
                     <TableCell>
                       <Box
@@ -462,8 +466,8 @@ const AllBillTable = (props) => {
                     <TableCell>
                       {
                         el.totalAmountToPay-el.paidAmount>0?
-                        <span style={{backgroundColor:'yellow', padding:'3px 5px'}}>Pending</span>:
-                        <span style={{backgroundColor:'green', padding:'3px 5px'}}>Complete</span>
+                        <span style={{backgroundColor:'#f0ad4e', padding:'3px 5px', borderRadius:'2px', color:'white'}}>Pending</span>:
+                        <span style={{backgroundColor:'#5cb85c', padding:'3px 5px', borderRadius:'2px', color:'white'}}>Complete</span>
                       }
                     </TableCell>
                     <TableCell>
@@ -494,7 +498,7 @@ const AllBillTable = (props) => {
                           <Typography className={classes.typography} style={{fontSize:12, marginBottom:5}}>
                             {
                               isReady?
-                              <BlobProvider document={<PrintandPdf data={el} />}>
+                              <BlobProvider document={<PrintandPdf data={el} billBy={user.name} />}>
                                 {({ url }) => (
                                   <a className="button" href={url} target="_blank">
                                     Print Bill
@@ -503,7 +507,7 @@ const AllBillTable = (props) => {
                               </BlobProvider>:''
                             }
                           </Typography>
-                          <Typography className={classes.typography} style={{fontSize:12}}>Edit Bill</Typography>
+                          <Typography className={classes.typography} onClick={()=>fetchPatientTestBill(el._id)} style={{fontSize:12, cursor:'pointer'}}>Edit Bill</Typography>
                         </div>:''
                         }
                       </Popover>
@@ -524,8 +528,10 @@ AllBillTable.propTypes = {
     deletePatientTest:PropTypes.func.isRequired,
     patientTests:PropTypes.array.isRequired,
     className: PropTypes.string,
+    auth: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
-  patientTests: state.patientTest.patientTests
+  patientTests: state.patientTest.patientTests,
+  auth:state.auth
 })
 export default connect(mapStateToProps, { getPatientTests, deletePatientTest })(AllBillTable);

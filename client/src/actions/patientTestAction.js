@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { success } from 'react-notification-system-redux';
+
 import {
   ADD_PATIENT_TEST,
   GET_PATIENT_TESTS,
@@ -87,6 +89,15 @@ export const updatePatientTest = (id, postData) => dispatch => {
         type: UPDATE_PATIENT_TEST,
         payload: res.data
       })
+
+      if(res.status==200){
+        getPatientTest(id)
+        dispatch(success({
+          title: 'Data has updated successfully',
+          position: 'tr',
+          autoDismiss: 10
+        }))
+      }
     })
     .catch(err =>{
       dispatch({

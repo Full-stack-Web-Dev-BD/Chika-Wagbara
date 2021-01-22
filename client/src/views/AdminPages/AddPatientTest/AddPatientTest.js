@@ -92,6 +92,7 @@ const AddPatientTest=(props)=> {
   const [totalPrice, setTotalPrice]=useState('')  
   const [totalFinalPrice, setTotalFinalPrice]=useState(null)  
   const [testDiscount, setTestDiscount]=useState(null)  
+  const [additionalBill, setAdditionalBill]=useState({})  
   const [paymentMode, setPaymentMode]=useState([])
    
   useEffect(() => {
@@ -157,7 +158,8 @@ const AddPatientTest=(props)=> {
       paidAmount:paidAmount?paidAmount:0,
       remainingBalance:paidAmount?remainingAmount:totalBill,
       paymentMode:paymentMode,
-      totalDiscount:totalDiscount?totalDiscount:0
+      totalDiscount:totalDiscount?totalDiscount:0,
+      additionalBill:additionalBill?additionalBill:{}
     }
     props.addPatientTest(newPatientTest)
 
@@ -246,6 +248,13 @@ const AddPatientTest=(props)=> {
     setTotalBill(result)
   }, [totalDiscount])
 
+  useEffect(()=>{
+    if(Object.keys(additionalBill).length>0){
+      let result=totalBill+parseInt(additionalBill.price)
+      setTotalBill(result)
+    }
+  }, [additionalBill])
+
   const paymentMethod=[
     {name:'Payment Mode (Default: Cash)'},
     {name:'Cheque'},
@@ -257,6 +266,12 @@ const AddPatientTest=(props)=> {
     {name:'Online Payment'},
     {name:'Others'},
   ]
+  const deleteAdditionalBill=()=>{
+    let result=parseInt(totalBill)-parseInt(additionalBill.price)
+    setTotalBill(result)
+    console.log()
+    setAdditionalBill({})
+  }
 
   return (
     <>
@@ -650,6 +665,30 @@ const AddPatientTest=(props)=> {
                           </TableCell>
                       </TableRow>
                       )):''}
+                      {
+                        Object.keys(additionalBill).length>0?
+                        <TableRow>
+                          <TableCell colSpan={8}>
+                            <Typography>
+                              {additionalBill.reason}
+                            </Typography>
+                          </TableCell>
+                          <TableCell>
+                            {additionalBill.price}
+                          </TableCell>
+                          <TableCell>
+                            
+                          </TableCell>
+                          <TableCell>
+                            {additionalBill.price}
+                          </TableCell>
+                          <TableCell>
+                            <IconButton className="iconButton" onClick={()=> deleteAdditionalBill()}>
+                              <CloseIcon />
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>:''
+                      }
                       {testData.length>0?
                       <>
                       <TableRow hover>
@@ -665,7 +704,7 @@ const AddPatientTest=(props)=> {
                           />
                         </TableCell>
                         <TableCell>
-                          <AddAdditionalBill setTestName={setTestName} setPrice={setPrice}/>
+                          <AddAdditionalBill setAdditionalBill={setAdditionalBill}/>
                         </TableCell>
                         <TableCell>
                         

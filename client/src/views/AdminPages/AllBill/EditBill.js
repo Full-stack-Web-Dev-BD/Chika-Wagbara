@@ -1,83 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types'
+import { withRouter, useParams } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { addGuardian } from '../../../actions/guardianAction'
+import { getPatientTest } from '../../../actions/patientTestAction'
+import EditBillForm from './EditBillForm'
 
 const EditBill=(props)=> {
-    const { setTestName, setPrice }=props
-    const [reason, setReason] = useState('')
-    const [bill, setBill] = useState('')
-    
-    const [open, setOpen] = React.useState(false);
+    const { patientTest }=props
+    const { id }=useParams()
 
-    const handleClickOpen = (e) => {
-        setOpen(true);
-        e.stopPropagation();
-    };
-    const handleClose = (e) => {
-        setOpen(false);
-    };
-
-    const addAdditionalBill=(event)=>{
-        event.preventDefault()
-        setTestName(reason)
-        setPrice(bill)
-        handleClose();
-    }
+    useEffect(()=>{
+        props.getPatientTest(id)
+    }, [])
 
     return (
         <div className="d-inline ml-auto">
-        <Button className="search-button" onClick={handleClickOpen} style={{fontSize:12, marginBottom:5}}>
-          Edit Bill
-        </Button>
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Add Additional Bill</DialogTitle>
-            <DialogContent>
-            <form onSubmit={(e)=>addAdditionalBill(e)} style={{width:'400px'}}>
-                <div className="row">
-                    <div className="col-md-12">
-                        <TextField
-                        onChange={e=>setReason(e.target.value)}
-                        margin="dense"
-                        id="title"
-                        label="Reason for additional bill"
-                        type="text"
-                        fullWidth
-                        />
-                    </div>
-                    <div className="col-md-12">
-                        <TextField
-                            onChange={e=>setBill(e.target.value)}
-                            margin="dense"
-                            id="title"
-                            label="Price"
-                            type="number"
-                            fullWidth
-                        />
-                    </div>
-                </div>
-                <DialogActions>
-                <Button onClick={handleClose} color="primary">Cancel </Button>
-                <Button size="small"  variant="contained" type="submit">Add Bill</Button>
-                </DialogActions>
-            </form>
-            </DialogContent>
-        </Dialog>
+            <Button className="search-button" onClick={props.history.goBack} style={{fontSize:12, marginBottom:5}}>
+              Back
+            </Button>
+            <EditBillForm patientTest={patientTest} />
         </div>
     );
 }
 
 EditBill.propTypes = {
-  addGuardian:PropTypes.func.isRequired,
+  getPatientTest:PropTypes.func.isRequired,
   className: PropTypes.string,
+  patientTest:PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
-  
+  patientTest:state.patientTest.patientTest
 })
-export default connect(mapStateToProps, { addGuardian })(EditBill)
+export default withRouter(connect(mapStateToProps, { getPatientTest })(EditBill))

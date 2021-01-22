@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         marginLeft:0
       },
       
-      header1:{
+      header2:{
         width:'50%',
         marginRight:0
       },
@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     <View style={styles.header}>
         <View style={styles.header1}>
             <Text style={styles.headerText}>Bill Date: {moment(props.date).format('DD/MM/YYYY')}</Text>
-            <Text style={styles.headerText}>Bill ID: 013445</Text>
+            <Text style={styles.headerText}>Bill ID: {props.billId}</Text>
             <Text style={styles.headerText}>Patient ID: {props.patientNo?props.patientNo:null}</Text>
         </View>
-        <View style={styles.header1}>
+        <View style={styles.header2}>
            <Image style={styles.logo} src={logo}></Image>
         </View>
     </View>

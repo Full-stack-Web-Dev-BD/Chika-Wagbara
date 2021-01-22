@@ -36,6 +36,7 @@ app.use(bodyParser.json());
 app.use(cors())
 app.use('/uploads', express.static('./uploads'));
 app.use(passport.initialize());
+mongoose.set('useFindAndModify', false);
 
 require('./middleware/passport')(passport);
 

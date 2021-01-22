@@ -8,10 +8,28 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { AddCircle } from '@material-ui/icons';
+import { Divider } from '@material-ui/core';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import moment from 'moment'
+import {
+    Box,
+    Card,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    Typography,
+    makeStyles
+} from '@material-ui/core';
 import { addGuardian } from '../../../actions/guardianAction'
-
+const useStyles = makeStyles((theme) => ({
+    tableCell:{
+        padding:'6px 6px 6px 0px'
+    }
+}));
+  
 const method=[
     'Payment Mode (Default: Cash)',
     'Cheque',
@@ -23,8 +41,9 @@ const method=[
     'Online Payment',
     'Others'
 ]
-const GuardianCreateModal=(props)=> {
-    const { setPaidAmount, setPaymentMode }=props
+const ViewPayment=(props)=> {
+    const classes = useStyles();
+    const { paidAmount, setPaidAmount,  paymentMode, setPaymentMode, remainingBalance,  setRemainingBalance}=props
     const [methodType, setMetodType] = useState('')
     const [amount, setAmount] = useState('')
     const [totalPaidAmount, setTotalPaidAmount] = useState('')
@@ -38,13 +57,18 @@ const GuardianCreateModal=(props)=> {
     const handleClickOpen = () => {
         setOpen(true);
     };
+
     const handleClose = () => {
         setOpen(false);
     };
 
-    // useEffect(()=>{
-    //     setPaymentMethod(method)
-    // }, [])
+    useEffect(()=>{
+        setMethodData(paymentMode)
+    }, [paymentMode])
+
+    useEffect(()=>{
+        setTotalPaidAmount(paidAmount)
+    }, [paidAmount])
 
     useEffect(()=>{
         let fieldData=[]
@@ -96,7 +120,7 @@ const GuardianCreateModal=(props)=> {
     const addPaymentMode=(data)=>{
         var paymentMode=[...methodData]
         paymentMode.push(data);
-        setPaymentModeData(paymentMode)
+        setMethodData(paymentMode)
     }
     
     const AddField=()=>{
@@ -138,9 +162,9 @@ const GuardianCreateModal=(props)=> {
                     />
                 </div>
             </>)
-        if(methodData.indexOf(methodType)==-1){
+        if(methodData.indexOf(methodType)==-1 && methodData && amount){
             addMethod(methodType)
-            addPaymentMode({type:methodType, amount:amount})
+            addPaymentMode({type:methodType, amount:amount, date:Date.now()})
             fieldData.push(fields)
             setFormField([...formField, fieldData])
             setMetodType('')
@@ -154,9 +178,17 @@ const GuardianCreateModal=(props)=> {
         paid=paid+Number(amount)
         setTotalPaidAmount(paid)
         setPaidAmount(paid)
-        let paymentData=[...paymentModeData]
+        let paymentData=[...methodData]
+        if(methodData && amount){
+            paymentData.push({type:methodType, amount:amount, date:Date.now()})
+        }else{
+            setPaymentMode(paymentData)
+        }
         paymentData.push({type:methodType, amount:amount, date:Date.now()})
         setPaymentMode(paymentData)
+        let balance=Number(remainingBalance)
+        let remainBalance=(balance-paid)
+        setRemainingBalance(remainBalance)
         setMetodType('')
         setAmount('')
         handleClose();
@@ -171,16 +203,33 @@ const GuardianCreateModal=(props)=> {
         datas.splice(index, 1)
         setMethodData(datas)
     }
+
+    const deletePaymentData = (index) => {
+        let allPaymentdata=[...methodData]
+
+        let paid=Number(totalPaidAmount);
+        paid=paid-Number(allPaymentdata[index].amount)
+        setTotalPaidAmount(paid)
+        setPaidAmount(paid)
+       
+        let balance=Number(remainingBalance)
+        let remainBalance=balance+Number(allPaymentdata[index].amount)
+        setRemainingBalance(remainBalance)
+
+        allPaymentdata.splice(index, 1)
+        setMethodData(allPaymentdata)
+    }
     
     return (
         <div className="d-inline ml-auto">
-        <Button className="search-button" onClick={handleClickOpen} style={{float:'right', height:'16px', fontSize:'12px'}}>
-          Add Payment
+        <Button className="search-button" onClick={handleClickOpen} style={{height:'40px', fontSize:'14px', marginTop:-4}}>
+          View Payment
         </Button>
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <Divider light style={{margin:5, height:2}}/>
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" style={{minWidth:900}}>
             <DialogTitle id="form-dialog-title">Add Payment</DialogTitle>
             <DialogContent>
-            <form onSubmit={(e)=>addPayment(e)} style={{width:'550px'}}>
+            <form onSubmit={(e)=>addPayment(e)} style={{width:'100%'}}>
                 {
                     formField.map((data, index)=>(
                         <div className="row">
@@ -196,8 +245,55 @@ const GuardianCreateModal=(props)=> {
                 <Button className="addButton" onClick={()=> AddField()}>
                     <AddCircle/>
                 </Button>
+                <Table size="small">
+                    <TableHead>
+                        <TableRow>
+                        <TableCell className={classes.tableCell} >
+                          Transaction Date
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
+                          Payment Type
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
+                          Amount
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
+                          After Transaction
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
+                          
+                        </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {methodData? 
+                        methodData.map((data, index) => (
+                        <TableRow
+                            hover
+                        >
+                            <TableCell className={classes.tableCell}>
+                            {moment(data.date).format('MMMM Do YYYY, h:mm A')}
+                            </TableCell>
+                            <TableCell className={classes.tableCell}>
+                            {data.type}
+                            </TableCell>
+                            <TableCell className={classes.tableCell}>
+                            {data.amount}
+                            </TableCell>
+                            <TableCell className={classes.tableCell}>
+                            {data.amount}
+                            </TableCell>
+                            <TableCell className={classes.tableCell}>
+                                <IconButton className="iconButton" onClick={()=> deletePaymentData(index)} style={{}}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </TableCell>
+                        </TableRow>
+                        )):''}
+                    </TableBody>
+                </Table>
                 <DialogActions>
-                <Button onClick={handleClose} color="primary">Cancel </Button>
+                <Button disabled onClick={handleClose} color="primary">Cancel </Button>
                 <Button size="small"  variant="contained" type="submit">Submit</Button>
                 </DialogActions>
             </form>
@@ -207,11 +303,11 @@ const GuardianCreateModal=(props)=> {
     );
 }
 
-GuardianCreateModal.propTypes = {
+ViewPayment.propTypes = {
   addGuardian:PropTypes.func.isRequired,
   className: PropTypes.string,
 };
 const mapStateToProps = (state) => ({
   
 })
-export default connect(mapStateToProps, { addGuardian })(GuardianCreateModal)
+export default connect(mapStateToProps, { addGuardian })(ViewPayment)

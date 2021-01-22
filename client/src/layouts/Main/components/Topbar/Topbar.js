@@ -15,6 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import NotificationCard from './NotificationCard';
+import Notification from '../../../../views/AdminPages/Notification'
 
 
 
@@ -41,6 +42,7 @@ const TopBar = ({
       elevation={0}
       {...rest}
     >
+      <Notification />
       <Toolbar>
         <RouterLink to="/admin">{/* Here will need to write logic for diff dashboard for now admin is static  */}
           <img style={{width:'120px'}} src={logo} />

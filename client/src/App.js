@@ -29,6 +29,7 @@ import AddPatientTest from './views/AdminPages/AddPatientTest/AddPatientTest'
 import PatientTest from './views/AdminPages/PatientTest/PatientTest'
 import PatientTestDetails from './views/AdminPages/PatientTest/PatientTestDetails'
 import AllBill from './views/AdminPages/AllBill/AllBill'
+import EditBill from './views/AdminPages/AllBill/EditBill'
 
 // Common Component 
 import LandingPage from './views/auth/LandingPage';
@@ -128,6 +129,14 @@ const App = () => {
               exact
               layout={MainLayout}
               path="/admin/allBill"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={EditBill}
+              exact
+              layout={MainLayout}
+              path="/admin/allBill/:id"
             />
           </Switch>
           <Switch>

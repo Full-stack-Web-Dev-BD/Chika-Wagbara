@@ -35,6 +35,10 @@ const patientTestSchema=new Schema({
 			default:false
 		}
 	}],
+	billId:{
+		type:String,
+		required:true
+	},
 	totalAmountToPay:{
 		type:Number
 	},
@@ -50,6 +54,9 @@ const patientTestSchema=new Schema({
 	totalDiscount:{
 		type:Number
 	},
+	additionalBill:{
+		type:Object
+	},
 	isComplete:{
 		type:Boolean,
 		default:false
@@ -57,6 +64,9 @@ const patientTestSchema=new Schema({
 	isSign:{
 		type:Boolean,
 		default:false
+	},
+	emergency:{
+		type:Boolean,
 	},
 	date:{
 		type:Date,

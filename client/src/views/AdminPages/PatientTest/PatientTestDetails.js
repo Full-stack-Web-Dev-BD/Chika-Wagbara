@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   Typography,  
@@ -30,8 +29,6 @@ const PatientTestDetails=(props)=>{
     useEffect(()=>{
         props.getPatientTest(id)
     }, [])
-
-    console.log(patientTest)
    
     return(
         <div>
