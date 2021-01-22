@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
+import { success } from 'react-notification-system-redux';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -41,7 +42,7 @@ const method=[
     'Online Payment',
     'Others'
 ]
-const ViewPayment=(props)=> {
+const EditPayment=(props)=> {
     const classes = useStyles();
     const { paidAmount, setPaidAmount,  paymentMode, setPaymentMode}=props
     const [methodType, setMetodType] = useState('')
@@ -162,6 +163,7 @@ const ViewPayment=(props)=> {
                     />
                 </div>
             </>)
+           
         if(methodData.findIndex(x => x.type == methodType)==-1 && methodType && amount){
             addMethod(methodType)
             addPaymentMode({type:methodType, amount:amount, date:Date.now()})
@@ -210,10 +212,9 @@ const ViewPayment=(props)=> {
     
     return (
         <div className="d-inline ml-auto">
-        <Button className="search-button" onClick={handleClickOpen} style={{height:'40px', fontSize:'14px', marginTop:-4}}>
-          View Payment
+        <Button className="search-button" onClick={handleClickOpen} style={{height:'40px', fontSize:'16px'}}>
+          {paidAmount}
         </Button>
-        <Divider light style={{margin:5, height:2}}/>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" style={{minWidth:900}}>
             <DialogTitle id="form-dialog-title">Add Payment</DialogTitle>
             <DialogContent>
@@ -291,11 +292,11 @@ const ViewPayment=(props)=> {
     );
 }
 
-ViewPayment.propTypes = {
+EditPayment.propTypes = {
   addGuardian:PropTypes.func.isRequired,
   className: PropTypes.string,
 };
 const mapStateToProps = (state) => ({
   
 })
-export default connect(mapStateToProps, { addGuardian })(ViewPayment)
+export default connect(mapStateToProps, { addGuardian })(EditPayment)

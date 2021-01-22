@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import { Button, Divider } from '@material-ui/core';
@@ -14,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import moment from 'moment'
 import ViewPayment from './ViewPayment'
 import EditBillTest from './EditBillTest'
+import EditPayment from './EditPayment'
 import { updatePatientTest, getPatientTest } from '../../../actions/patientTestAction'
 
 
@@ -76,10 +72,10 @@ const EditBillForm=(props)=> {
 
 
   useEffect(()=>{
-    setPaidAmount(paidAmount)
+    setRemainingBalance(Number(totalAmountToPay)-Number(paidAmount))
   }, [paidAmount])
 
-  console.log(emergency)
+  console.log(paidAmount)
 
   useEffect(()=>{
     const allTest=[...tests]
@@ -397,7 +393,7 @@ const EditBillForm=(props)=> {
                   <Grid item md={12} style={{paddingTop:0, paddingBottom:0}}>
                     <div style={{margin:5}}>
                       <h6 className="mb3">
-                        <ViewPayment paymentMode={paymentMode} setPaymentMode={setPaymentMode} paidAmount={paidAmount} setPaidAmount={setPaidAmount} remainingBalance={remainingBalance} setRemainingBalance={setRemainingBalance}/>
+                        <ViewPayment paymentMode={paymentMode} setPaymentMode={setPaymentMode} paidAmount={paidAmount} setPaidAmount={setPaidAmount} />
                       </h6>
                     </div>
                   </Grid>
@@ -444,10 +440,8 @@ const EditBillForm=(props)=> {
                           </div>
                         </Grid>
                         <Grid item md={6} style={{paddingTop:0, paddingBottom:0}}>
-                          <div style={{textAlign:'left', marginLeft:7, cursor:'pointer', width:'100%', backgroundColor:'rgb(239, 239, 239)', border:'1px solid lightgray', borderRadius:2}}>
-                            <h6 className="mb3" style={{padding:'9px 9px 0px 9px'}}>
-                              {paidAmount}
-                            </h6>
+                          <div style={{textAlign:'left', marginLeft:7, width:'100%', backgroundColor:'rgb(239, 239, 239)', border:'1px solid lightgray', borderRadius:2}}>
+                          <EditPayment paymentMode={paymentMode} setPaymentMode={setPaymentMode} paidAmount={paidAmount} setPaidAmount={setPaidAmount} />
                           </div>
                         </Grid>
                         <Grid item md={6} style={{paddingTop:0, paddingBottom:0}}>

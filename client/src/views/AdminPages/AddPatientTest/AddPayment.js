@@ -138,7 +138,7 @@ const GuardianCreateModal=(props)=> {
                     />
                 </div>
             </>)
-        if(methodData.indexOf(methodType)==-1){
+        if(methodData.findIndex(x => x.type == methodType)==-1 && methodType && amount){
             addMethod(methodType)
             addPaymentMode({type:methodType, amount:amount})
             fieldData.push(fields)

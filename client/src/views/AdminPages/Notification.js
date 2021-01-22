@@ -11,7 +11,7 @@ const Notification =(props)=> {
   const style = {
     NotificationItem: {
       DefaultStyle: {
-        margin: '10px 5px 2px 1px'
+        margin: '10px 0px 2px 1px'
       },
       success: {
         color: 'red'
