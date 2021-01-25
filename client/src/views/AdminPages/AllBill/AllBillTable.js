@@ -197,7 +197,7 @@ const AllBillTable = (props) => {
   
   const fetchPatientTestBill = (id) => {
 
-    window.location.href=`http://localhost:3000/admin/allBill/${id}`
+    window.location.href=`https://biosystems-lts.herokuapp.com/admin/allBill/${id}`
   }
   
   return (
