@@ -24,11 +24,26 @@ import {
     Typography,
     makeStyles
 } from '@material-ui/core';
-import { addGuardian } from '../../../actions/guardianAction'
+import { addGuardian } from '../../../../actions/guardianAction'
 const useStyles = makeStyles((theme) => ({
     tableCell:{
         padding:'6px 6px 6px 0px'
-    }
+    },
+    reason:{
+        padding:'6px 6px 6px 0px',
+        width:'60%'
+    },
+    price:{
+        padding:'6px 6px 6px 0px',
+        width:'30%'
+    },
+    deleteButton:{
+        padding:'6px 6px 6px 0px',
+        width:'10%'
+    },
+    paper: { 
+        minWidth: "660px" 
+    },
 }));
   
 const method=[
@@ -44,7 +59,7 @@ const method=[
 ]
 const EditPayment=(props)=> {
     const classes = useStyles();
-    const { paidAmount, setPaidAmount,  paymentMode, setPaymentMode}=props
+    const { paidAmount, setPaidAmount, remainingBalance, setRemainingBalance,  paymentMode, setPaymentMode}=props
     const [methodType, setMetodType] = useState('')
     const [amount, setAmount] = useState('')
     const [totalPaidAmount, setTotalPaidAmount] = useState('')
@@ -124,10 +139,6 @@ const EditPayment=(props)=> {
     }
     
     const AddField=()=>{
-        if(methodType && amount){
-            let paid=(Number(totalPaidAmount)+Number(amount));
-            setTotalPaidAmount(paid)
-        }
         let fieldData=[]
         let fields=(
             <>
@@ -166,6 +177,7 @@ const EditPayment=(props)=> {
            
         if(methodData.findIndex(x => x.type == methodType)==-1 && methodType && amount){
             addMethod(methodType)
+            setTotalPaidAmount(Number(totalPaidAmount)+Number(amount))
             addPaymentMode({type:methodType, amount:amount, date:Date.now()})
             fieldData.push(fields)
             setFormField([...formField, fieldData])
@@ -182,10 +194,10 @@ const EditPayment=(props)=> {
         let paymentData=[...methodData]
         if(methodData && amount){
             paymentData.push({type:methodType, amount:amount, date:Date.now()})
+            setPaymentMode(paymentData)
         }else{
             setPaymentMode(paymentData)
         }
-        setPaymentMode(paymentData)
         setMetodType('')
         setAmount('')
         handleClose();
@@ -212,19 +224,19 @@ const EditPayment=(props)=> {
     
     return (
         <div className="d-inline ml-auto">
-        <Button className="search-button" onClick={handleClickOpen} style={{height:'40px', fontSize:'16px'}}>
-          {paidAmount}
+        <Button className="search-button" onClick={handleClickOpen}  style={{float:'right', height:'16px', fontSize:'12px'}}>
+          Add Payment
         </Button>
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" style={{minWidth:900}}>
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" classes={{ paper: classes.paper}}>
             <DialogTitle id="form-dialog-title">Add Payment</DialogTitle>
             <DialogContent>
-            <form onSubmit={(e)=>addPayment(e)} style={{width:'100%'}}>
+            <form onSubmit={(e)=>addPayment(e)} style={{width:'600px'}}>
                 {
                     formField.map((data, index)=>(
                         <div className="row">
                             {data}
                             <div className="col-md-1">
-                                <IconButton className="iconButton" onClick={()=> deleteElement(index)} style={{marginTop:'15px'}}>
+                                <IconButton disabled={formField.length==1?true:false} className="iconButton" onClick={()=> deleteElement(index)} style={{marginTop:'15px'}}>
                                 <CloseIcon />
                                 </IconButton>
                             </div>
@@ -282,8 +294,8 @@ const EditPayment=(props)=> {
                     </TableBody>
                 </Table>
                 <DialogActions>
-                <Button onClick={handleClose} color="primary">Cancel </Button>
-                <Button size="small"  variant="contained" type="submit">Submit</Button>
+                <Button onClick={handleClose} color="primary" size="small" style={{textTransform:'none', border:'1px solid lightgray'}}>Cancel </Button>
+                <Button size="small"  variant="contained" type="submit" style={{textTransform:'none'}}>Submit</Button>
                 </DialogActions>
             </form>
             </DialogContent>

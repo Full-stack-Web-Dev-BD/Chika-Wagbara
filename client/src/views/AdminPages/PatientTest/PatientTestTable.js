@@ -219,6 +219,7 @@ const ReportManagement = (props) => {
 
     window.location.href=`https://biosystems-lts.herokuapp.com/admin/patientTest/${id}`
   }
+  console.log(patientTests)
   return (
     <div>
       <div className="d-flex">

@@ -27,7 +27,6 @@ export const getReferringPersons = () => dispatch => {
 
 // Get single Patient
 export const getReferringPerson = (id) => dispatch => {
-  console.log(id)
   axios
     .get(`/api/referringPersons/${id}`)
     .then(res =>

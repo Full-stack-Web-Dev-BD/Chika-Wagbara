@@ -31,7 +31,6 @@ const GuardianCreateModal=(props)=> {
     const [formField, setFormField] = useState([])
     const [paymentMethod, setPaymentMethod] = useState(method)
     const [methodData, setMethodData] = useState([])
-    const [paymentModeData, setPaymentModeData] = useState([])
     
     const [open, setOpen] = React.useState(false);
 
@@ -87,22 +86,13 @@ const GuardianCreateModal=(props)=> {
             setFormField([...formField, fieldData])
     }, [])
 
-    const addMethod=(data)=>{
-        var payMethod=[...methodData]
-        payMethod.push(data);
-        setMethodData(payMethod)
-    }
-
     const addPaymentMode=(data)=>{
         var paymentMode=[...methodData]
         paymentMode.push(data);
-        setPaymentModeData(paymentMode)
+        setMethodData(paymentMode)
     }
     
     const AddField=()=>{
-        let paid=Number(totalPaidAmount);
-        paid=paid+Number(amount)
-        setTotalPaidAmount(paid)
         let fieldData=[]
         let fields=(
             <>
@@ -139,8 +129,8 @@ const GuardianCreateModal=(props)=> {
                 </div>
             </>)
         if(methodData.findIndex(x => x.type == methodType)==-1 && methodType && amount){
-            addMethod(methodType)
-            addPaymentMode({type:methodType, amount:amount})
+            setTotalPaidAmount(Number(totalPaidAmount)+Number(amount))
+            addPaymentMode({type:methodType, amount:amount, date:Date.now()})
             fieldData.push(fields)
             setFormField([...formField, fieldData])
             setMetodType('')
@@ -154,9 +144,13 @@ const GuardianCreateModal=(props)=> {
         paid=paid+Number(amount)
         setTotalPaidAmount(paid)
         setPaidAmount(paid)
-        let paymentData=[...paymentModeData]
-        paymentData.push({type:methodType, amount:amount, date:Date.now()})
-        setPaymentMode(paymentData)
+        let paymentData=[...methodData]
+        if(methodData && amount){
+            paymentData.push({type:methodType, amount:amount, date:Date.now()})
+            setPaymentMode(paymentData)
+        }else{
+            setPaymentMode(paymentData)
+        }
         setMetodType('')
         setAmount('')
         handleClose();
@@ -186,7 +180,7 @@ const GuardianCreateModal=(props)=> {
                         <div className="row">
                             {data}
                             <div className="col-md-1">
-                                <IconButton className="iconButton" onClick={()=> deleteElement(index)} style={{marginTop:'15px'}}>
+                                <IconButton disabled={formField.length==1?true:false} className="iconButton" onClick={()=> deleteElement(index)} style={{marginTop:'15px'}}>
                                 <CloseIcon />
                                 </IconButton>
                             </div>

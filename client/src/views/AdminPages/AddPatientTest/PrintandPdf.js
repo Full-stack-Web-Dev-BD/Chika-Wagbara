@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 const PrintandPdf=(props)=> {
   const classes = useStyles();
   const componentRef = useRef();
-  const { testData, totalDiscount, totalPrice, totalFinalPrice, testDiscount, patientNo, paidAmount, remainingAmount, paymentMode, billBy, billTo }=props
+  const { testData, totalDiscount, additionalBill, totalPrice, totalFinalPrice, testDiscount, patientNo, paidAmount, remainingAmount, paymentMode, billBy, billTo }=props
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -100,6 +100,15 @@ const PrintandPdf=(props)=> {
                     <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{data.finalPrice}</TableCell>
                   </TableRow>
                 ))}
+                {additionalBill.length>0?
+                additionalBill.map((data, index) => (
+                  <TableRow key={index}>
+                    <TableCell colSpan={3} style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{data.additionalBillReason}</TableCell>
+                    <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{data.additionalBillPrice}</TableCell>
+                    <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{data.discount?data.discount:0}</TableCell>
+                    <TableCell align="right" style={{fontSize:9, padding:'2px 2px 2px 2px'}}>{data.additionalBillPrice}</TableCell>
+                  </TableRow>
+                )):''}
               </TableBody>
               <TableBody>
                 <TableRow>

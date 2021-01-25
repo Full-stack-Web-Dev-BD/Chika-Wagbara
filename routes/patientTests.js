@@ -85,7 +85,7 @@ router.post('/update/:id', passport.authenticate('jwt', {session:false}), functi
     PatientTest.findByIdAndUpdate({_id:req.params.id}, req.body).then(data=>{
       res.status(200).json(data)
     }).catch((err)=>{
-      console.log(err);
+      res.json(err)
     })
   }  
 });

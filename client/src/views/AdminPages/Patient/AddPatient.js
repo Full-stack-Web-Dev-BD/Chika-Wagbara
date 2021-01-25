@@ -119,9 +119,9 @@ const AddPatient=(props)=> {
             <div className="col-md-6">
               <TextField
                 onChange={e=>setPatientNo(e.target.value)}
-                autoFocus
                 required
                 margin="dense"
+                variant="outlined"
                 id="name"
                 label="Patient No"
                 type="text"
@@ -134,6 +134,7 @@ const AddPatient=(props)=> {
                 required
                 margin="dense"
                 id="name"
+                variant="outlined"
                 label="Title"
                 type="text"
                 fullWidth
@@ -144,6 +145,7 @@ const AddPatient=(props)=> {
                 onChange={e=>setFirstName(e.target.value)}
                 required
                 margin="dense"
+                variant="outlined"
                 id="location"
                 label="First Name"
                 type="text"
@@ -155,6 +157,7 @@ const AddPatient=(props)=> {
                 onChange={e=>setLastName(e.target.value)}
                 required
                 margin="dense"
+                variant="outlined"
                 id="address"
                 label="Last Name"
                 type="text"
@@ -166,6 +169,7 @@ const AddPatient=(props)=> {
                 onChange={e=>setOtherName(e.target.value)}
                 margin="dense"
                 id="phone1"
+                variant="outlined"
                 label="Other Name"
                 type="text"
                 fullWidth
@@ -177,6 +181,7 @@ const AddPatient=(props)=> {
                 margin="dense"
                 id="selectLocationType"
                 label="Select Gender"
+                variant="outlined"
                 select
                 SelectProps={{
                   native: true,
@@ -184,7 +189,7 @@ const AddPatient=(props)=> {
                 fullWidth
                 required
               >
-                <option >Select Gender</option>
+                <option selected disabled hidden>Select Gender</option>
                 <option value="male" >Male</option>
                 <option value="female">Female</option>
                 <option value="Other">Other</option>
@@ -195,6 +200,7 @@ const AddPatient=(props)=> {
                 onChange={e=>setDateofBirth(e.target.value)}
                 required
                 margin="dense"
+                variant="outlined"
                 id="phone1"
                 label="Date of Birth"
                 type="date"
@@ -207,6 +213,7 @@ const AddPatient=(props)=> {
                 required
                 margin="dense"
                 id="email"
+                variant="outlined"
                 label="Mobile Number1"
                 type="text"
                 fullWidth
@@ -216,7 +223,8 @@ const AddPatient=(props)=> {
               <TextField
                 onChange={e=>setMobileNumber2(e.target.value)}
                 margin="dense"
-                id="email"
+                id="number"
+                variant="outlined"
                 label="Mobile Number2"
                 type="text"
                 fullWidth
@@ -227,6 +235,7 @@ const AddPatient=(props)=> {
                 onChange={e=>setEmail(e.target.value)}
                 required
                 margin="dense"
+                variant="outlined"
                 id="email"
                 label="Email 1"
                 type="email"
@@ -239,6 +248,7 @@ const AddPatient=(props)=> {
                 margin="dense"
                 id="email"
                 label="Email 2"
+                variant="outlined"
                 type="email"
                 fullWidth
               />
@@ -249,6 +259,7 @@ const AddPatient=(props)=> {
                 margin="dense"
                 id="email"
                 label="Address"
+                variant="outlined"
                 type="text"
                 fullWidth
               />
@@ -258,6 +269,7 @@ const AddPatient=(props)=> {
                 onChange={e=>setLocationofAddress(e.target.value)}
                 margin="dense"
                 id="email"
+                variant="outlined"
                 label="Location of Address"
                 type="text"
                 fullWidth
@@ -269,6 +281,7 @@ const AddPatient=(props)=> {
                 margin="dense"
                 id="email"
                 label="Nationality"
+                variant="outlined"
                 type="text"
                 fullWidth
               />
@@ -278,6 +291,7 @@ const AddPatient=(props)=> {
                 onChange={e=>setStateofOrigin(e.target.value)}
                 margin="dense"
                 id="email"
+                variant="outlined"
                 label="State of Origin"
                 type="text"
                 fullWidth
@@ -289,6 +303,7 @@ const AddPatient=(props)=> {
                 margin="dense"
                 id="email"
                 label="Religion"
+                variant="outlined"
                 type="text"
                 fullWidth
               />
@@ -299,6 +314,7 @@ const AddPatient=(props)=> {
                 margin="dense"
                 id="email"
                 label="Primary Insurer"
+                variant="outlined"
                 type="text"
                 fullWidth
               />
@@ -310,6 +326,7 @@ const AddPatient=(props)=> {
                 id="email"
                 label="Primary Insurance Policy"
                 type="text"
+                variant="outlined"
                 fullWidth
               />
             </div>
@@ -320,6 +337,7 @@ const AddPatient=(props)=> {
                 id="email"
                 label="Primary Insurence Number"
                 type="text"
+                variant="outlined"
                 fullWidth
               />
             </div>
@@ -330,6 +348,7 @@ const AddPatient=(props)=> {
                 id="email"
                 label="Where Hear About Us"
                 type="text"
+                variant="outlined"
                 fullWidth
               />
             </div>
@@ -339,6 +358,7 @@ const AddPatient=(props)=> {
                 margin="dense"
                 id="email"
                 label="Credit Limit"
+                variant="outlined"
                 type="text"
                 fullWidth
               />
@@ -350,6 +370,7 @@ const AddPatient=(props)=> {
                 id="email"
                 label="Discount for Patient"
                 type="text"
+                variant="outlined"
                 fullWidth
               />
             </div>
@@ -359,6 +380,7 @@ const AddPatient=(props)=> {
                 margin="dense"
                 id="email"
                 label="Openning Balance"
+                variant="outlined"
                 type="text"
                 fullWidth
               />
@@ -369,14 +391,15 @@ const AddPatient=(props)=> {
                 margin="dense"
                 id="email"
                 label="Patients Marketer"
+                variant="outlined"
                 type="text"
                 fullWidth
               />
             </div>
           </div>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">Cancel </Button>
-            <Button size="small"  variant="contained" type="submit" >Create</Button>
+            <Button onClick={handleClose} color="primary" size="small" style={{textTransform:'none', border:'1px solid lightgray'}}>Cancel </Button>
+            <Button size="small"  variant="contained" type="submit" style={{textTransform:'none', background:'transparent', backgroundColor:'green', border:'1px solid lightgray'}}>Create</Button>
           </DialogActions>
         </form>
         </DialogContent>

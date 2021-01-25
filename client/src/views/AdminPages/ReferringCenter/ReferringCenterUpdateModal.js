@@ -24,9 +24,7 @@ const  ReferringCenterUpdateModal=(props)=> {
   const handleClose = () => {
     setOpen(false);
   };
-
-  console.log(id)
-
+  
   return (
     <div className="d-inline ml-auto">
       <span title="Edit Branch" style={{cursor:"pointer"}} onClick={handleClickOpen}><EditOutlinedIcon/></span>

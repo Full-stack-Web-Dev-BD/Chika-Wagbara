@@ -125,3 +125,19 @@ button:focus {
     -webkit-appearance:none;
     box-shadow: none !important;
 }
+
+.strikeout TableCell { position: relative; background-color: red; }
+
+.strikeout TableCell:before {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-bottom: 1px solid #111;
+  width: 100%;
+}
+
+.strikeout TableCell:after {
+  content: "\00B7";
+  font-size: 1px;
+}

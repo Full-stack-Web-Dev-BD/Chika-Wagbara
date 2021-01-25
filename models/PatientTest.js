@@ -30,6 +30,9 @@ const patientTestSchema=new Schema({
 		finalPrice:{
 			type:Number
 		},
+		completed:{
+			type:Boolean
+		},
 		isComplete:{
 			type:Boolean,
 			default:false
@@ -55,7 +58,7 @@ const patientTestSchema=new Schema({
 		type:Number
 	},
 	additionalBill:{
-		type:Object
+		type:Array
 	},
 	isComplete:{
 		type:Boolean,

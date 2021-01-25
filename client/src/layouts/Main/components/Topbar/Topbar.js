@@ -44,7 +44,7 @@ const TopBar = ({
     >
       <Notification />
       <Toolbar>
-        <RouterLink to="/admin">{/* Here will need to write logic for diff dashboard for now admin is static  */}
+        <RouterLink to="/admin/dashboard">{/* Here will need to write logic for diff dashboard for now admin is static  */}
           <img style={{width:'120px'}} src={logo} />
         </RouterLink>
         <Box flexGrow={1} />

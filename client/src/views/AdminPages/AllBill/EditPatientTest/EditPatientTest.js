@@ -3,8 +3,8 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types'
 import { withRouter, useParams } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { getPatientTest } from '../../../actions/patientTestAction'
-import EditBillForm from './EditBillForm'
+import { getPatientTest } from '../../../../actions/patientTestAction'
+import EditPatientTest from './EditPatientTestForm'
 
 const EditBill=(props)=> {
     const { patientTest }=props
@@ -19,7 +19,7 @@ const EditBill=(props)=> {
             <Button className="search-button" onClick={props.history.goBack} style={{fontSize:12, marginBottom:5}}>
               Back
             </Button>
-            <EditBillForm patientTest={patientTest} />
+            <EditPatientTest patientTest={patientTest} />
         </div>
     );
 }

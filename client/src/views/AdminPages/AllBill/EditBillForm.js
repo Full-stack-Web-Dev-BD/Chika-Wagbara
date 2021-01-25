@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import moment from 'moment'
 import ViewPayment from './ViewPayment'
 import EditBillTest from './EditBillTest'
-import EditPayment from './EditPayment'
+import EditPayment from './EditPatientTest/AddPayment'
 import { updatePatientTest, getPatientTest } from '../../../actions/patientTestAction'
 
 

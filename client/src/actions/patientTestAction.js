@@ -91,7 +91,6 @@ export const updatePatientTest = (id, postData) => dispatch => {
       })
 
       if(res.status==200){
-        getPatientTest(id)
         dispatch(success({
           title: 'Data has updated successfully',
           position: 'tr',

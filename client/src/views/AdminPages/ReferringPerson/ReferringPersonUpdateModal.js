@@ -16,9 +16,7 @@ const  ReferringPersonUpdateModal=(props)=> {
   useEffect(()=>{
     props.getReferringPerson(id);
   }, [])
-  
-  console.log(referringPerson)
-  
+    
   const handleClickOpen = () => {
     setOpen(true);
   };
