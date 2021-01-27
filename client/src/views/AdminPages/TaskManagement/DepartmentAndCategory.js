@@ -55,7 +55,7 @@ const DepartmentAndCategory = (props) => {
                 <PerfectScrollbar>
                     <Box minWidth={1050}>
                     <div className="row">
-                            <div className="col-md-6">
+                            <div className="col-md-7" style={{borderRight:'1px solid'}}>
                                 <h3 className="text-center pt-4">All Department</h3>
                                 <Table>
                                     <TableHead>
@@ -79,7 +79,6 @@ const DepartmentAndCategory = (props) => {
                                     </TableBody>
                                 </Table>
                             </div>
-                            <div class="vl"></div>
                             <div className="col-md-5">
                                 <h3 className="text-center pt-4">All Category</h3>
                                 <Table>

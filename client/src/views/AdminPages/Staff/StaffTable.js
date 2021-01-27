@@ -83,7 +83,7 @@ const StaffTable = ({ className, customers, ...rest }) => {
       })
   }
   return (
-    <div>
+    <div className="table-data">
       <div className="d-flex">
         <h2 className="mb3">All Staff</h2>
         <StaffCreateModal getAllStaff={getAllStaff} />

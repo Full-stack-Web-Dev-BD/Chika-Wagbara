@@ -39,8 +39,6 @@ const useStyles = makeStyles((theme) => ({
 const SampleTable=(props)=> {
     const {samples, className, ...rest }=props
     const classes = useStyles();
-    const [allTest, setAllTest] = useState(['adsf', 'asdf'])
-
 
     useEffect(()=>{
         props.getSamples();
@@ -51,7 +49,7 @@ const SampleTable=(props)=> {
     }
 
     return (
-        <div>
+        <div className="table-data">
         <div className="d-flex">
             <h2 className="mb3">Samples</h2>
             <SampleCreateModal />

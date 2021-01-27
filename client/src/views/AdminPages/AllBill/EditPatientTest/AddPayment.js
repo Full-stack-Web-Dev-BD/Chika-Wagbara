@@ -9,19 +9,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { AddCircle } from '@material-ui/icons';
-import { Divider } from '@material-ui/core';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import {
-    Box,
-    Card,
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
-    Typography,
     makeStyles
 } from '@material-ui/core';
 import { addGuardian } from '../../../../actions/guardianAction'

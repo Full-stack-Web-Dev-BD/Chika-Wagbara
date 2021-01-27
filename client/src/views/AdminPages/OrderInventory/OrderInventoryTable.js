@@ -55,7 +55,7 @@ const OrderInventoryTable = (props) => {
   }
 
   return (
-    <div>
+    <div className="table-data">
       <div className="d-flex">
         <h2 className="mb3">Order Inventories</h2>
       </div>

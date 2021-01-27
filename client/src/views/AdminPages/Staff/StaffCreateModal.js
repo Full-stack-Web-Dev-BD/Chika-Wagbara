@@ -633,8 +633,8 @@ const StaffCreateModal=(props)=> {
 
             </div>
             <DialogActions>
-              <Button onClick={handleClose} color="primary" size="small" variant="contained" >Cancel</Button>
-              <Button onClick={e => { }} color="primary" size="small" variant="contained" type="submit" >Submit</Button>
+              <Button onClick={handleClose} size="small" style={{textTransform:'none', border:'1px solid lightgray'}}>Cancel</Button>
+              <Button color="primary" size="small" variant="contained" type="submit" >Submit</Button>
             </DialogActions>
           </form>
         </DialogContent>

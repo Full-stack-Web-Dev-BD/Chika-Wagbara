@@ -20,6 +20,7 @@ import Grid from '@material-ui/core/Grid';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { Divider } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import Popover from '@material-ui/core/Popover';
 import moment from 'moment'
@@ -201,7 +202,7 @@ const AllBillTable = (props) => {
   }
   
   return (
-    <div>
+    <div className="table-data">
       <div className="d-flex">
         <h2 className="mb3">All Bill</h2>
         <div className="d-inline ml-auto">
@@ -214,6 +215,7 @@ const AllBillTable = (props) => {
           {dateLebel?<SelectDate setStartDate={setStartDate} setEndDate={setEndDate} />:''}
         </div>  
       </div>
+      <Divider />
       <div style={{marginBottom:'10px'}}>
       <Grid container spacing={3} style={{width:'70%'}}>
         <Grid item md={4} className="customSearch">

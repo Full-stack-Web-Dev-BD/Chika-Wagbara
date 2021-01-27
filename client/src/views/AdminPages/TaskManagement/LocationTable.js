@@ -51,7 +51,7 @@ const LocationTable = (props) => {
         props.deleteCity(id)
     }
     return (
-        <div>
+        <div className="table-data">
             <div>
                 <h2 className="mb3">Location Tree</h2>
                 <LocationCreateModal />
@@ -63,7 +63,7 @@ const LocationTable = (props) => {
                 <PerfectScrollbar>
                     <Box minWidth={1050}>
                         <div className="row">
-                            <div className="col-md-4">
+                            <div className="col-md-4" style={{borderRight:'1px solid'}}>
                                 <h3 className="text-center pt-4">All Country</h3>
                                 <Table>
                                     <TableHead>
@@ -85,8 +85,7 @@ const LocationTable = (props) => {
                                     </TableBody>
                                 </Table>
                             </div>
-                            <div class="vl"></div>
-                            <div className="col-md-4">
+                            <div className="col-md-4"  style={{borderRight:'1px solid'}}>
                                 <h3 className="text-center pt-4">All State</h3>
                                 <Table>
                                     <TableHead>
@@ -108,8 +107,7 @@ const LocationTable = (props) => {
                                     </TableBody>
                                 </Table>
                             </div>
-                            <div class="vl"></div>
-                            <div className="col-md-3">
+                            <div className="col-md-4">
                                 <h3 className="text-center pt-4">All City</h3>
                                 <Table>
                                     <TableHead>

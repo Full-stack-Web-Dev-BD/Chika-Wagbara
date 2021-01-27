@@ -110,7 +110,7 @@ const WarehouseTab=(props)=> {
     }, [searchTerm])
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root} style={{marginTop:-90}}>
             <AppBar position="static" color="default">
                 <Tabs
                     value={value}

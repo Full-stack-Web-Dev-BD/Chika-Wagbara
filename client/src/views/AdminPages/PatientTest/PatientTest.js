@@ -24,7 +24,7 @@ const Patient = () => {
   return (
     <Page
       className={classes.root}
-      title="Customers"
+      title="Patient Test"
     >
       <Container maxWidth={false}>
         <Toolbar />

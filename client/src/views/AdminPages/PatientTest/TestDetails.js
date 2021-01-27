@@ -16,6 +16,7 @@ import {
 import Popover from '@material-ui/core/Popover';
 import moment from 'moment'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ReportPdfView from './ReportPdfView'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +29,8 @@ const TestDetails=(props)=>{
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
 
   const popOpen = Boolean(anchorEl);
   const popId = open ? 'simple-popover' : undefined;
@@ -46,6 +49,11 @@ const TestDetails=(props)=>{
     e.stopPropagation();
     handleClose()
   }
+
+  const handleClickOpen = () => {
+    setModalOpen(true);
+  };
+  
   return(
       <Card
           className={clsx(classes.root, className)}
@@ -93,6 +101,7 @@ const TestDetails=(props)=>{
                 <TableRow
                   hover
                   key={index}
+                  onClick={handleClickOpen}
                 >
                   <TableCell>
                     <Box
@@ -129,10 +138,10 @@ const TestDetails=(props)=>{
                   <TableCell>
                     
                   </TableCell>
-                  <TableCell style={{paddingRight:'0px'}}>
+                  <TableCell style={{paddingRight:'5px'}}>
                     <Button variant="outlined" className="button-main" color="primary" style={{height:30, marginRight:-30}}>Preview</Button>
                   </TableCell>
-                  <TableCell style={{paddingRight:'0px'}}>
+                  <TableCell style={{paddingRight:'10px'}}>
                   <Button variant="outlined" className="button-main" color="primary" style={{height:30, marginRight:-30}}>Sign</Button>
                   </TableCell>
                   <TableCell>
@@ -170,6 +179,7 @@ const TestDetails=(props)=>{
                       }
                     </Popover>
                   </TableCell>
+                  <ReportPdfView modalOpen={modalOpen} setModalOpen={setModalOpen} test={el.test}/>
                 </TableRow>
               )):''}
             </TableBody>

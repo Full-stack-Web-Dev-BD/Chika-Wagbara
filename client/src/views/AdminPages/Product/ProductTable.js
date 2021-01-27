@@ -63,7 +63,7 @@ const ProductTable = (props) => {
   };
 
   return (
-    <div>
+    <div className="table-data">
       <div className="d-flex">
         <h2 className="mb3">Products</h2>
         <ProductCreateModal />

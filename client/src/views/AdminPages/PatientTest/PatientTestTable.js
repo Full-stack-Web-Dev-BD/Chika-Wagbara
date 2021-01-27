@@ -20,6 +20,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import Popover from '@material-ui/core/Popover';
+import { Divider } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -221,37 +222,40 @@ const ReportManagement = (props) => {
   }
   console.log(patientTests)
   return (
-    <div>
+    <div className="table-data">
       <div className="d-flex">
-        <h2 className="mb3">Patient Test</h2>
-        <div className="d-inline ml-auto select-test">
-        <TextField
-          onChange={e => setIsComplete(e.target.value)}
-          id="outlined-basic"
-          select
-          SelectProps={{
-            native: true,
-          }}
-          fullWidth
-          variant="outlined"
-          size="small"
-        >
-          <option selected disabled hidden >Select Type</option>
-          <option value="true">Complete</option>
-          <option value="false" >Incomplete</option>
-          <option value="true">Signed</option>
-        </TextField>
-        </div>
+        <h2 className="mb3" style={{float:'left', marginTop:18}}>Patient Test</h2>
         <div className="d-inline ml-auto">
-          <Button variant="outlined" color="primary" onClick={()=>showDateLevel()} className="search-button">
-            {
-              endDate?<span>{moment(endDate).format('MMMM Do YYYY')}-</span>:''
-            }
-          <span style={{marginRight:10}}>{startDate?moment(startDate).format('MMMM Do YYYY'):moment(Date.now()).format('MMMM Do YYYY')}</span><CalendarTodayIcon />
-          </Button>
-          {dateLebel?<SelectDate setStartDate={setStartDate} setEndDate={setEndDate} />:''}
+          <div className="select-test" style={{marginTop:-10}}>
+            <TextField
+                onChange={e => setIsComplete(e.target.value)}
+                id="outlined-basic"
+                style={{width:'200px', height:'40px'}}
+                select
+                SelectProps={{
+                  native: true,
+                }}
+                variant="outlined"
+                size="small"
+              >
+                <option selected disabled hidden >Select Type</option>
+                <option value="true">Complete</option>
+                <option value="false" >Incomplete</option>
+                <option value="true">Signed</option>
+              </TextField>
+          </div>    
+          <div className="select-test" style={{paddingLeft:10}}>
+            <Button variant="outlined" color="primary" onClick={()=>showDateLevel()} className="search-button" style={{marginTop:15}}>
+              {
+                endDate?<span>{moment(endDate).format('MMMM Do YYYY')}-</span>:''
+              }
+            <span style={{marginRight:10}}>{startDate?moment(startDate).format('MMMM Do YYYY'):moment(Date.now()).format('MMMM Do YYYY')}</span><CalendarTodayIcon />
+            </Button>
+            {dateLebel?<SelectDate setStartDate={setStartDate} setEndDate={setEndDate} />:''}
+          </div>
         </div>  
       </div>
+      <Divider style={{margin:'10px 0px 10px 0px'}}/>
       <div style={{marginBottom:'10px'}}>
       <Grid container spacing={3} style={{width:'70%'}}>
         <Grid item md={3} className="customSearch">

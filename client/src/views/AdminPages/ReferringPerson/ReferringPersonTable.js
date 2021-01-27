@@ -63,7 +63,7 @@ const ReferringPersonTable = (props) => {
   };
   console.log(referringPersons)
   return (
-    <div>
+    <div className="table-data">
       <div className="d-flex">
         <h2 className="mb3">Referring Persons</h2>
         <ReferringPersonCreateModal />
