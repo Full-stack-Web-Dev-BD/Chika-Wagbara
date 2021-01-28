@@ -30,6 +30,7 @@ const TestDetails=(props)=>{
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [test, setTest] = useState({});
 
 
   const popOpen = Boolean(anchorEl);
@@ -50,9 +51,17 @@ const TestDetails=(props)=>{
     handleClose()
   }
 
-  const handleClickOpen = () => {
-    setModalOpen(true);
+  const handleClickOpen = (test) => {
+    setTest(test)
+    setModalOpen(true)
   };
+
+  const handleClickClose = () => {
+    setModalOpen(false);
+  };
+
+
+  console.log(modalOpen)
   
   return(
       <Card
@@ -101,7 +110,7 @@ const TestDetails=(props)=>{
                 <TableRow
                   hover
                   key={index}
-                  onClick={handleClickOpen}
+                  onClick={()=>handleClickOpen(el.test)}
                 >
                   <TableCell>
                     <Box
@@ -112,7 +121,7 @@ const TestDetails=(props)=>{
                         color="textPrimary"
                         variant="body1"
                       >
-                        2002
+                        {patientTest.patient.patientNo}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -179,9 +188,9 @@ const TestDetails=(props)=>{
                       }
                     </Popover>
                   </TableCell>
-                  <ReportPdfView modalOpen={modalOpen} setModalOpen={setModalOpen} test={el.test}/>
                 </TableRow>
               )):''}
+              <ReportPdfView modalOpen={modalOpen} handleClickClose={handleClickClose} test={test}/>
             </TableBody>
           </Table>
         </Box>

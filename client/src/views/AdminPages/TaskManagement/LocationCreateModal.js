@@ -105,7 +105,7 @@ const LocationCreateModal=(props)=> {
           Add A Location
         </DialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
+          <Typography gutterBottom style={{height:20}}>
             Please Select What you like to Add . <span style={{ visibility: 'hidden' }}>(For Example you can select country to add a country )</span>
           </Typography>
 

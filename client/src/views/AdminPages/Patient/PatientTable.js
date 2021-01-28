@@ -114,10 +114,7 @@ const ReportManagement = (props) => {
               <TableBody>
                 {allPatient?
                 allPatient.map(el => (
-                  <TableRow
-                    hover
-                    style={{cursor:'pointer'}}
-                  >  
+                  <TableRow>  
                      <TableCell>
                       {el.patientNo}
                     </TableCell>

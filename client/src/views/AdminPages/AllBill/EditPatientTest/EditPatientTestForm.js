@@ -159,13 +159,17 @@ const EditPatientTest=(props)=> {
   }
   
   const addGuardian=(data)=>{
+    setGuadianSearchData([])
     setGuardian(data)
-    setGuardianSearchTerm('')
+    setGuardianSearchTerm(data.firstName +" " +data.lastName)
+    setGuardianId(data._id)
   }
 
   const addReferringPerson=(data)=>{
+    setReferringPersonSearchData([])
     setReferringPerson(data)
-    setReferringPersonSearchTerm('')
+    setReferringPersonSearchTerm(data.firstName +" " +data.lastName);
+    setReferringPersonId(data._id)
   }
 
   const addReferringCenter=(data)=>{
@@ -272,8 +276,6 @@ const EditPatientTest=(props)=> {
       setRemainingBalance(remainingBalance+Number(allTest[index].finalPrice?allTest[index].finalPrice:allTest[index].test.testPrice))
     }
  }
-
- console.log(patientTest)
 
   return (
     <div className="editBillForm" style={{width:'100%'}}>
