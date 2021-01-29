@@ -59,9 +59,6 @@ const TestDetails=(props)=>{
   const handleClickClose = () => {
     setModalOpen(false);
   };
-
-
-  console.log(modalOpen)
   
   return(
       <Card

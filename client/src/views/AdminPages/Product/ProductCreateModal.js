@@ -95,7 +95,7 @@ const ProductCreateModal=(props)=> {
                     fullWidth
                     required
                   >
-                    <option >Select Department</option>
+                    <option selected disabled hidden>Select Department</option>
                     {departments?
                       departments.map(data => (
                         <option value={data._id} > {data.name} </option>

@@ -90,6 +90,14 @@ router.post('/update/:id', passport.authenticate('jwt', {session:false}), functi
   }  
 });
 
+router.post('/:id/addReportResult', (req, res)=>{
+  PatientTest.updateOne({_id:req.params.id}, { $set:{tests:req.body.tests}}).then(data=>{
+    res.json(data)
+  }).catch((err)=>{
+    res.json(err)
+  })
+})
+
 router.delete('/delete/:id', passport.authenticate('jwt', {session:false}), (req, res)=>{
   if(req.user.user_role==="admin" || req.user.user_role==="branchAdmin" || req.user.user_role==="staff"){
     PatientTest.findByIdAndRemove({_id:req.params.id})

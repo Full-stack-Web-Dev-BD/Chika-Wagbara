@@ -106,6 +106,23 @@ export const updatePatientTest = (id, postData) => dispatch => {
     });
 };
 
+export const addReportResult = (id, postData) => dispatch => {
+  axios
+    .post(`/api/patientTests/${id}/addReportResult`, postData)
+    .then(res =>{
+      dispatch({
+        type: UPDATE_PATIENT_TEST,
+        payload: res.data
+      })
+    })
+    .catch(err =>{
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    });
+};
+
 // Delete Branch
 export const deletePatientTest = id => dispatch => {
   axios

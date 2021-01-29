@@ -5,6 +5,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { addReportResult } from '../../../actions/patientTestAction'
 
 const useStyles = makeStyles((theme) => ({
     paper: { 
@@ -21,17 +24,19 @@ const ReportPdfView = (props) => {
         props.handleClickClose()
     }
 
-    console.log(reportValue)
+    const updateReport=(id, data)=>{
+        props.addReportResult(id, data)
+    }
 
-        return (
+    return (
         <Dialog open={modalOpen} aria-labelledby="form-dialog-title" classes={{ paper: classes.paper}}>
-            <DialogContent>
-                <div className="row">
-                    <Card style={{width:'100%'}}>
-                        <div className="PDF-header text-center pt-5 pb-5">
+            <DialogContent style={{padding:0}}>
+                <div className="row" style={{margin:0}}>
+                    <Card style={{width:'100%', padding:10}}>
+                        <div className="PDF-header text-center pt-2 pb-2">
                             <h3>{test.testName}</h3>
                         </div>
-                        <div className="PDF-body" style={{ minHeight: '400px' }}>
+                        <div className="PDF-body" style={{ minHeight: '200px' }}>
                             <Table >
                                 <thead className="text-center table-active mb-3">
                                     <th>Test Name</th>
@@ -98,5 +103,10 @@ const ReportPdfView = (props) => {
         </Dialog>
     )
 }
+ReportPdfView.prototype={
+    addReportResult:PropTypes.func.isRequired
+}
+const mapStateToProps=()=>({
 
-export default ReportPdfView;
+})
+export default connect(mapStateToProps, { addReportResult })(ReportPdfView);
