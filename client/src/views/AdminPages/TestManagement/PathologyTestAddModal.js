@@ -100,17 +100,6 @@ export default function PathologyTestAddModal({ addTestToPDF }) {
                   fullWidth
                 />
               </div>
-              <div className="col-md-6">
-                <TextField
-                  onChange={e => setPreviusValue(e.target.value)}
-                  required
-                  margin="dense"
-                  id="testPrice"
-                  label="Previus Value"
-                  type="number"
-                  fullWidth
-                />
-              </div>
             </div>
             <DialogActions>
               {
@@ -118,13 +107,12 @@ export default function PathologyTestAddModal({ addTestToPDF }) {
                   testName &&
                   unit &&
                   normalRangeFrom &&
-                  normalRangeTo &&
-                  previusValue
+                  normalRangeTo
                 ) ?
                   <Button size="small" color="secondary" variant="contained" type="submit" >Create</Button> :
                   <Button size="small" variant="contained" type="submit" >Create</Button>
               }
-              <Button onClick={handleClose} color="primary">Cancel </Button>
+              <Button onClick={handleClose} color="primary" size="small" style={{textTransform:'none', border:'1px solid lightgray'}}>Cancel </Button>
             </DialogActions>
           </form>
         </DialogContent>

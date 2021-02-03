@@ -30,7 +30,6 @@ const Test1PdfView = ({ pdfContent, data, deleteElement }) => {
                             {
                                 pdfContent.map((el, i) => (
                                     <>
-                                    {/* <td>done</td> */}
                                         {el.rowType === 'whiteSpaceRow' ?
                                             <tr>
                                                 <td colSpan="5">&nbsp;   </td>

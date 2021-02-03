@@ -79,6 +79,11 @@ const Sidebar = props => {
           title: 'All Bill'
         },
         {
+          href: '/admin/sample-accession',
+          icon: <Business/>,
+          title: 'Accession'
+        },
+        {
           href: '/admin/patient',
           icon: <Business/>,
           title: 'Patient'

@@ -29,6 +29,7 @@ import AddPatientTest from './views/AdminPages/AddPatientTest/AddPatientTest'
 import PatientTest from './views/AdminPages/PatientTest/PatientTest'
 import PatientTestDetails from './views/AdminPages/PatientTest/PatientTestDetails'
 import AllBill from './views/AdminPages/AllBill/AllBill'
+import Accession from './views/AdminPages/Accession/Accession'
 import EditPatientTest from './views/AdminPages/AllBill/EditPatientTest/EditPatientTest'
 
 // Common Component 
@@ -129,6 +130,14 @@ const App = () => {
               exact
               layout={MainLayout}
               path="/admin/allBill"
+            />
+          </Switch>
+          <Switch>
+            <RouteWithLayout
+              component={Accession}
+              exact
+              layout={MainLayout}
+              path="/admin/sample-accession"
             />
           </Switch>
           <Switch>

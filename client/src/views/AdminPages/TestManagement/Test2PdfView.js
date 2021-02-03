@@ -48,7 +48,7 @@ const Test2PdfView = ({ pdfContent, deleteElement }) => {
                                         {
                                             el.rowType == 'divider' ?
                                                 <tr>
-                                                    <td colSpan="5">&nbsp; <hr /> </td>
+                                                    <td colSpan="5"><hr /> </td>
                                                     <td className="delete-icon"> <span onClick={e => deleteElement(i)}> <DeleteOutlineIcon /></span>  </td>
                                                 </tr> : ''
                                         }
